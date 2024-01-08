@@ -267,7 +267,7 @@ GameObject:
   - component: {fileID: 359421006}
   m_Layer: 0
   m_Name: Plane
-  m_TagString: Untagged
+  m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -605,6 +605,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 17
+  jumpPower: 15
 --- !u!4 &684963914 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5903297864969995812, guid: 8f5e135a19626f544908fc8f156144b9, type: 3}
