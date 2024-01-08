@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class FollowCameraCS : MonoBehaviour
 {
+    private Camera cam; // 카메라 컴포넌트 참조
+
     bool viewDown; //  1-3인칭 시점 변환 KEY: V
 
     public Transform target; // 이 카메라가 따라가야 할 타겟
-    public Vector3 offset; // 카메라와 타겟 사이의 거리
+    // public Vector3 offset; // 카메라와 타겟 사이의 거리
     public Vector3 thirdPersonOffset; // Distance between camera and target in third-person view
     public Vector3 firstPersonOffset; // Offset for first-person view
 
@@ -23,6 +25,11 @@ public class FollowCameraCS : MonoBehaviour
     private Vector3 currentVel;
 
     private bool isFirstPersonView = false; // 1-3인칭 시점 변환
+
+    void Awake()
+    {
+        cam = GetComponent<Camera>(); // 카메라 컴포넌트 참조
+    }
 
     // Update is called once per frame
     void Update()
@@ -53,13 +60,13 @@ public class FollowCameraCS : MonoBehaviour
 
         if (isFirstPersonView)
         {
-            // For first-person view, position the camera at the target's position plus the first-person offset
             transform.position = target.position + firstPersonOffset;
+            cam.cullingMask &= ~(1 << LayerMask.NameToLayer("MyPlayer")); // 'MyPlayer' 레이어 제외
         }
         else
         {
-            // For third-person view, adjust the position as originally implemented
             transform.position = target.position - transform.forward * thirdPersonOffset.magnitude + thirdPersonOffset.y * Vector3.up;
+            cam.cullingMask |= 1 << LayerMask.NameToLayer("MyPlayer"); // 'MyPlayer' 레이어 포함
         }
     }
     void GetInput()
