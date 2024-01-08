@@ -5,6 +5,15 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public enum PlayerState
+    {
+        Idle,
+        Walking,
+        Running,
+        Jumping
+    }
+    private PlayerState currentState;
+
     public float speed; // 인스펙터에서 설정 가능하도록 public
     public float jumpPower; // 인스펙터에서 설정 가능하도록 public
     float hAxis;
@@ -13,7 +22,8 @@ public class Player : MonoBehaviour
     bool isJump;
     bool isDodge;
     bool runDown; // left shift
-    bool jDown; // space
+    bool jumpDown; // space
+    bool dodgeDown; // left ctrl
 
     Vector3 moveVec;
     Vector3 dodgeVec;
@@ -51,7 +61,8 @@ public class Player : MonoBehaviour
         hAxis = Input.GetAxisRaw("Horizontal");
         vAxis = Input.GetAxisRaw("Vertical");
         runDown = Input.GetButton("Run");
-        jDown = Input.GetButtonDown("Jump");
+        jumpDown = Input.GetButtonDown("Jump");
+        dodgeDown = Input.GetButtonDown("Dodge");
     }
     
     void Move()
@@ -78,9 +89,10 @@ public class Player : MonoBehaviour
 
     void Jump()
     {
-        if (jDown && moveVec == Vector3.zero && !isJump && !isDodge)
-        {
-            rigidbody.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
+        // if (jumpDown && moveVec == Vector3.zero && !isJump && !isDodge)
+        if (jumpDown && !isJump && !isDodge)
+            {
+                rigidbody.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
             animator.SetBool("isJump", true); 
             animator.SetTrigger("doJump"); 
             isJump = true;
@@ -90,7 +102,8 @@ public class Player : MonoBehaviour
     /** 회피 **/
     void Dodge()
     {
-        if (jDown && moveVec != Vector3.zero && !isJump && !isDodge) // 움직임을 조건으로 추가해서 Jump 와 Dodge 를 나누었습니다.
+        //if (jumpDown && moveVec != Vector3.zero && !isJump && !isDodge) // 움직임을 조건으로 추가해서 Jump 와 Dodge 를 나누었습니다.
+        if (dodgeDown && moveVec != Vector3.zero && !isJump && !isDodge)
         {
             dodgeVec = moveVec;
             speed *= 2; // 회피는 이동 속도의 2배
