@@ -11,7 +11,7 @@ public class SceneManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(gameObject); // 씬 전환 시에도 이 객체가 파괴되지 않도록 설정
         }
         else if (instance != this)
         {
