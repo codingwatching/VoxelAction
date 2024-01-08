@@ -150,13 +150,18 @@ public class Player : MonoBehaviour
         isDodge = false;
     }
 
+    /** 상호작용: E키 **/
     void Interaction()
     {
         if(iteractionDown && nearObject != null && !isJump && !isDodge)
         {
-            if(nearObject.tag=="Weapon")
+            if(nearObject.tag=="Weapon") // 무기 입수
             {
-                // 무기 입수
+                ItemCS item = nearObject.GetComponent<ItemCS>();
+                int weaponIndex = item.value;
+                hasWeapons[weaponIndex] = true;
+
+                Destroy(nearObject);
             }
         }
     }

@@ -1198,7 +1198,7 @@ MonoBehaviour:
   speed: 17
   jumpPower: 15
   weapons: []
-  hasWeapons: 
+  hasWeapons: 000000
 --- !u!4 &684963914 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5903297864969995812, guid: 8f5e135a19626f544908fc8f156144b9, type: 3}
@@ -2242,13 +2242,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1433180383364727650, guid: 333a46758108adf459cb120dc2a59b58, type: 3}
+      propertyPath: m_Radius
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1433180383364727650, guid: 333a46758108adf459cb120dc2a59b58, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7608000024280307399, guid: 333a46758108adf459cb120dc2a59b58, type: 3}
+      propertyPath: value
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 8327995043694465851, guid: 333a46758108adf459cb120dc2a59b58, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -9.72
+      value: 12.78
       objectReference: {fileID: 0}
     - target: {fileID: 8327995043694465851, guid: 333a46758108adf459cb120dc2a59b58, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.52
+      value: 0.83
       objectReference: {fileID: 0}
     - target: {fileID: 8327995043694465851, guid: 333a46758108adf459cb120dc2a59b58, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2256,31 +2268,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8327995043694465851, guid: 333a46758108adf459cb120dc2a59b58, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.001887907
       objectReference: {fileID: 0}
     - target: {fileID: 8327995043694465851, guid: 333a46758108adf459cb120dc2a59b58, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0.2763455
       objectReference: {fileID: 0}
     - target: {fileID: 8327995043694465851, guid: 333a46758108adf459cb120dc2a59b58, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0.9593937
       objectReference: {fileID: 0}
     - target: {fileID: 8327995043694465851, guid: 333a46758108adf459cb120dc2a59b58, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: -0.056509882
       objectReference: {fileID: 0}
     - target: {fileID: 8327995043694465851, guid: 333a46758108adf459cb120dc2a59b58, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: 6.165
       objectReference: {fileID: 0}
     - target: {fileID: 8327995043694465851, guid: 333a46758108adf459cb120dc2a59b58, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 177.991
       objectReference: {fileID: 0}
     - target: {fileID: 8327995043694465851, guid: 333a46758108adf459cb120dc2a59b58, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
+      value: -32.245
       objectReference: {fileID: 0}
     - target: {fileID: 8415097608579367625, guid: 333a46758108adf459cb120dc2a59b58, type: 3}
       propertyPath: m_Name
@@ -2417,13 +2429,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Weapon HandGun
       objectReference: {fileID: 0}
+    - target: {fileID: 2759018877280821608, guid: ca88cf23420455443be2e02f3cb59333, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7296273022916437779, guid: ca88cf23420455443be2e02f3cb59333, type: 3}
+      propertyPath: value
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 9026643014229169116, guid: ca88cf23420455443be2e02f3cb59333, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.16
+      value: 6.51
       objectReference: {fileID: 0}
     - target: {fileID: 9026643014229169116, guid: ca88cf23420455443be2e02f3cb59333, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.32
+      value: 0.94
       objectReference: {fileID: 0}
     - target: {fileID: 9026643014229169116, guid: ca88cf23420455443be2e02f3cb59333, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2470,6 +2490,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2366573397400294551, guid: 6f6ecbffdefc82545bddbc1d573beb28, type: 3}
+      propertyPath: value
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3383734554893223204, guid: 6f6ecbffdefc82545bddbc1d573beb28, type: 3}
       propertyPath: m_Name
       value: Weapon Hammer
