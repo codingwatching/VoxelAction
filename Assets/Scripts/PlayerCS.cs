@@ -28,12 +28,13 @@ public class Player : MonoBehaviour
     public float jumpPower; // 인스펙터에서 설정 가능하도록 public
     public GameObject[] weapons;
     public bool[] hasWeapons;
+    public GameObject[] grenades;
+    public int hasGrenades;
 
     // 소모품
     public int ammo;
     public int coin;
     public int health;
-    public int hasGrenades;
     // 소유 가능한 최대치
     public int maxAmmo;
     public int maxCoin;
@@ -283,6 +284,7 @@ public class Player : MonoBehaviour
                         health = maxHealth;
                     break;
                 case ItemCS.Type.Grenade:
+                    grenades[hasGrenades].SetActive(true);
                     hasGrenades += item.value;
                     if (hasGrenades > maxHasGrenades)
                         hasGrenades = maxHasGrenades;
