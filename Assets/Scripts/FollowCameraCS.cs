@@ -9,9 +9,8 @@ public class FollowCameraCS : MonoBehaviour
     bool viewDown; //  1-3인칭 시점 변환 KEY: V
 
     public Transform target; // 이 카메라가 따라가야 할 타겟
-    // public Vector3 offset; // 카메라와 타겟 사이의 거리
-    public Vector3 thirdPersonOffset; // Distance between camera and target in third-person view
-    public Vector3 firstPersonOffset; // Offset for first-person view
+    public Vector3 thirdPersonOffset; 
+    public Vector3 firstPersonOffset; 
 
     public float Yaxis;
     public float Xaxis;
@@ -53,10 +52,6 @@ public class FollowCameraCS : MonoBehaviour
         // SmoothDamp를 통해 부드러운 카메라 회전
         targetRotation = Vector3.SmoothDamp(targetRotation, new Vector3(Xaxis, Yaxis), ref currentVel, smoothTime);
         this.transform.eulerAngles = targetRotation;
-
-        // 카메라의 위치는 플레이어보다 설정한 값만큼 떨어져있게 계속 변경된다.
-        // transform.position = target.position + offset;
-        // transform.position = target.position - transform.forward * offset.magnitude + offset.y * Vector3.up;
 
         if (isFirstPersonView)
         {

@@ -29,11 +29,20 @@ public class Player : MonoBehaviour
     public GameObject[] weapons;
     public bool[] hasWeapons;
 
+    // 소모품
+    public int ammo;
+    public int coin;
+    public int health;
+    public int hasGrenades;
+    // 소유 가능한 최대치
+    public int maxAmmo;
+    public int maxCoin;
+    public int maxHealth;
+    public int maxHasGrenades;
+
     float hAxis;
     float vAxis;
-    bool isWalking;
-    bool isJump;
-    bool isDodge;
+
     bool runDown; // KEY: left shift
     bool jumpDown; // KEY: space
     bool dodgeDown; // KEY: left ctrl
@@ -42,6 +51,11 @@ public class Player : MonoBehaviour
     bool swapDown2; // Weapon KEY: 2
     bool swapDown3; // Weapon KEY: 3
 
+    bool isWalking;
+    bool isJump;
+    bool isDodge;
+    bool isSwap; // 교체 시간차를 위한 플래그 로직
+
     Vector3 moveVec;
     Vector3 dodgeVec;
 
@@ -49,6 +63,8 @@ public class Player : MonoBehaviour
     Animator animator;
 
     GameObject nearObject;
+    GameObject equippedWeapon;
+    int equippedWeaponIndex = -1; // 인벤토리 초기화
 
     // Initialization
     void Awake()
@@ -109,6 +125,9 @@ public class Player : MonoBehaviour
         if (isDodge)
             moveVec = dodgeVec;
 
+        if (isSwap)
+            moveVec = Vector3.zero;
+
         transform.position += moveVec * speed * (runDown ? 2f : 1f) * Time.deltaTime; // 달리기 시 이동 속도 증가
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(moveVec), Time.deltaTime * rotateSpeed);
 
@@ -137,11 +156,11 @@ public class Player : MonoBehaviour
         }
     }
 
-    /** 점프 **/
+    /** 점프, 더블 점프 **/
     void Jump()
     {
         bool isDoubleJump = (jumpDown && (Time.time - lastJumpTime < doubleJumpDelay));
-        if ((jumpDown && !isJump && !isDodge) || isDoubleJump && jumpCount<2)
+        if ((jumpDown && !isJump && !isDodge && !isSwap) || isDoubleJump && jumpCount<2)
         {
             float jumpForce = jumpPower;
 
@@ -163,7 +182,7 @@ public class Player : MonoBehaviour
     /** 회피 **/
     void Dodge()
     {
-        if (dodgeDown && moveVec != Vector3.zero && !isJump && !isDodge)
+        if (dodgeDown && moveVec != Vector3.zero && !isJump && !isDodge && !isSwap)
         {
             dodgeVec = moveVec;
             speed *= 2; // 회피는 이동 속도의 2배
@@ -182,6 +201,13 @@ public class Player : MonoBehaviour
 
     void Swap()
     {
+        if (swapDown1 && (!hasWeapons[0] || equippedWeaponIndex == 0))
+            return;
+        if (swapDown2 && (!hasWeapons[1] || equippedWeaponIndex == 1))
+            return;
+        if (swapDown3 && (!hasWeapons[2] || equippedWeaponIndex == 2))
+            return;
+
         int weaponIndex = -1;
         if (swapDown1) weaponIndex = 0;
         if (swapDown2) weaponIndex = 1;
@@ -189,8 +215,22 @@ public class Player : MonoBehaviour
 
         if(swapDown1 || swapDown2 || swapDown3 && !isJump && !isDodge)
         {
-            weapons[weaponIndex].SetActive(true);
+            if(equippedWeapon!=null)
+                equippedWeapon.SetActive(false);
+
+            equippedWeaponIndex = weaponIndex;
+            equippedWeapon = weapons[weaponIndex];
+            equippedWeapon.SetActive(true);
+
+            animator.SetTrigger("doSwap");
+            isSwap = true;
+            Invoke("SwapOut", 0.4f);
         }
+    }
+
+    void SwapOut()
+    {
+        isSwap = false;
     }
 
     /** 상호작용: E키 **/
@@ -219,8 +259,42 @@ public class Player : MonoBehaviour
         }
     }
 
+    void OnTriggerEnter(Collider other)
+    {
+        // 아이템 입수
+        if (other.tag == "Item")
+        {
+            ItemCS item = other.GetComponent<ItemCS>();
+            switch (item.type)
+            {
+                case ItemCS.Type.Ammo:
+                    ammo += item.value;
+                    if (ammo > maxAmmo)
+                        ammo = maxAmmo;
+                    break;
+                case ItemCS.Type.Coin:
+                    coin += item.value;
+                    if (coin > maxCoin)
+                        coin = maxCoin;
+                    break;
+                case ItemCS.Type.Heart:
+                    health += item.value;
+                    if (health > maxHealth)
+                        health = maxHealth;
+                    break;
+                case ItemCS.Type.Grenade:
+                    hasGrenades += item.value;
+                    if (hasGrenades > maxHasGrenades)
+                        hasGrenades = maxHasGrenades;
+                    break;
+            }
+            Destroy(other.gameObject);
+        }
+    }
+
     void OnTriggerStay(Collider other)
     {
+        // 무기 입수
         if (other.tag == "Weapon")
             nearObject = other.gameObject;
 
