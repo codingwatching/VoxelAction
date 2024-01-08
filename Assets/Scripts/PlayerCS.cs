@@ -15,6 +15,9 @@ public class Player : MonoBehaviour
     }
     private PlayerState currentState;
 
+    // Camera
+    private Transform cameraTransform;
+
     // Jump
     private float lastJumpTime;
     private const float doubleJumpDelay = 0.5f;
@@ -56,7 +59,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        cameraTransform = Camera.main.transform;
     }
 
     // Update is called once per frame 입력 처리나 애니메이션 관련 코드 
@@ -96,7 +99,10 @@ public class Player : MonoBehaviour
     {
         isWalking = moveVec != Vector3.zero;
 
-        moveVec = new Vector3(hAxis, 0, vAxis).normalized; // 방향 값 1로 보정
+        // moveVec = new Vector3(hAxis, 0, vAxis).normalized; // 방향 값 1로 보정
+        // 카메라의 방향에 따라 이동 벡터를 조정합니다.
+        moveVec = cameraTransform.right * hAxis + cameraTransform.forward * vAxis;
+        moveVec.y = 0; // y축 이동 제거
 
         // 회피 중에는 움직임 벡터에서 회피방향 벡터로 바뀌도록 설정
         if (isDodge)
@@ -111,7 +117,19 @@ public class Player : MonoBehaviour
     /** 회전 **/
     void Turn()
     {
-        transform.LookAt(transform.position + moveVec); // 나아가는 방향을 바라보도록 설정
+        // transform.LookAt(transform.position + moveVec); // 나아가는 방향을 바라보도록 설정
+        
+        // 카메라의 y축 회전 값만 가져옵니다.
+        Vector3 cameraRotation = cameraTransform.eulerAngles;
+        cameraRotation.x = 0;
+        cameraRotation.z = 0;
+
+        // 플레이어가 이동 중일 때만 회전합니다.
+        if (moveVec != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.Euler(cameraRotation);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
+        }
     }
 
     /** 점프 **/

@@ -10,10 +10,10 @@ public class FollowCameraCS : MonoBehaviour
     public float Yaxis;
     public float Xaxis;
 
-    private float rotSensitive = 3f; // 카메라 회전 감도
+    private float rotSensitive = 4f; // 카메라 회전 감도
     private float RotationMin = -90f; // 카메라 회전각도 최소
     private float RotationMax = 90f; // 카메라 회전각도 최대
-    private float smoothTime = 0.12f; // 카메라가 회전하는데 걸리는 시간
+    private float smoothTime = 0.1f; // 카메라가 회전하는데 걸리는 시간
 
     private Vector3 targetRotation;
     private Vector3 currentVel;
@@ -38,6 +38,8 @@ public class FollowCameraCS : MonoBehaviour
         this.transform.eulerAngles = targetRotation;
 
         // 카메라의 위치는 플레이어보다 설정한 값만큼 떨어져있게 계속 변경된다.
-        transform.position = target.position + offset;
+        // transform.position = target.position + offset;
+        transform.position = target.position - transform.forward * offset.magnitude + offset.y * Vector3.up;
+
     }
 }
