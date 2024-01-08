@@ -35,6 +35,9 @@ public class Player : MonoBehaviour
         transform.position += moveVec * speed * (runDown ? 2f : 1f) * Time.deltaTime; // 달리기 시 이동 속도 증가
 
         animator.SetBool("isWalk", moveVec != Vector3.zero); // 비교 연산자 설정
-        animator.SetBool("isRun", moveVec != Vector3.zero && runDown); 
+        animator.SetBool("isRun", moveVec != Vector3.zero && runDown);
+
+        // 회전
+        transform.LookAt(transform.position + moveVec); // 나아가는 방향을 바라보도록 설정
     }
 }
