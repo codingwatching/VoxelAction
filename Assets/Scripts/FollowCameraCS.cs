@@ -42,4 +42,6 @@ public class FollowCameraCS : MonoBehaviour
         transform.position = target.position - transform.forward * offset.magnitude + offset.y * Vector3.up;
 
     }
+
+
 }

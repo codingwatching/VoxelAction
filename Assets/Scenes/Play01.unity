@@ -1269,10 +1269,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9840e6ec727d524491d83069983eee2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smoothRotationTime: 0.3
-  smoothMoveTime: 0.3
-  moveSpeed: 10
   speed: 17
+  rotateSpeed: 17
   jumpPower: 15
   weapons:
   - {fileID: 1946393045}
@@ -1738,7 +1736,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 684963914}
-  offset: {x: 0, y: 5, z: -18}
+  offset: {x: 0, y: 4.03, z: -11.5}
   Yaxis: 0
   Xaxis: 0
 --- !u!1 &973604718

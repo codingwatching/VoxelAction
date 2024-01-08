@@ -24,6 +24,7 @@ public class Player : MonoBehaviour
     private int jumpCount = 0;
 
     public float speed; // 인스펙터에서 설정 가능하도록 public
+    public float rotateSpeed;
     public float jumpPower; // 인스펙터에서 설정 가능하도록 public
     public GameObject[] weapons;
     public bool[] hasWeapons;
@@ -109,6 +110,7 @@ public class Player : MonoBehaviour
             moveVec = dodgeVec;
 
         transform.position += moveVec * speed * (runDown ? 2f : 1f) * Time.deltaTime; // 달리기 시 이동 속도 증가
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(moveVec), Time.deltaTime * rotateSpeed);
 
         animator.SetBool("isWalk", isWalking); // 비교 연산자 설정
         animator.SetBool("isRun", moveVec != Vector3.zero && runDown);
@@ -127,8 +129,11 @@ public class Player : MonoBehaviour
         // 플레이어가 이동 중일 때만 회전합니다.
         if (moveVec != Vector3.zero)
         {
-            Quaternion targetRotation = Quaternion.Euler(cameraRotation);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
+            // 플레이어가 이동하는 방향으로 회전합니다.
+            Quaternion targetRotation = Quaternion.LookRotation(moveVec);
+
+            // 보간을 사용하여 부드러운 회전을 구현합니다.
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
         }
     }
 
