@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    // State
     public enum PlayerState
     {
         Idle,
@@ -14,16 +15,25 @@ public class Player : MonoBehaviour
     }
     private PlayerState currentState;
 
+    // Jump
+    private float lastJumpTime;
+    private const float doubleJumpDelay = 0.5f;
+    private int jumpCount = 0;
+
     public float speed; // 인스펙터에서 설정 가능하도록 public
     public float jumpPower; // 인스펙터에서 설정 가능하도록 public
+    public GameObject[] weapons;
+    public bool[] hasWeapons;
+
     float hAxis;
     float vAxis;
     bool isWalking;
     bool isJump;
     bool isDodge;
-    bool runDown; // left shift
-    bool jumpDown; // space
-    bool dodgeDown; // left ctrl
+    bool runDown; // KEY: left shift
+    bool jumpDown; // KEY: space
+    bool dodgeDown; // KEY: left ctrl
+    bool iteractionDown; // KEY: e
 
     Vector3 moveVec;
     Vector3 dodgeVec;
@@ -46,16 +56,24 @@ public class Player : MonoBehaviour
         
     }
 
-    // Update is called once per frame
+    // Update is called once per frame 입력 처리나 애니메이션 관련 코드 
     void Update()
     {
         GetInput();
-        Move();
         Turn();
         Jump();
         Dodge();
+        Interaction();
     }
 
+    // 물리 연산과 관련된 코드
+    private void FixedUpdate()
+    {
+        Move();
+        Jump();
+    }
+
+    /** 입력 **/
     void GetInput()
     {
         hAxis = Input.GetAxisRaw("Horizontal");
@@ -63,8 +81,10 @@ public class Player : MonoBehaviour
         runDown = Input.GetButton("Run");
         jumpDown = Input.GetButtonDown("Jump");
         dodgeDown = Input.GetButtonDown("Dodge");
+        iteractionDown = Input.GetButtonDown("Interaction");
     }
     
+    /** 이동 **/
     void Move()
     {
         isWalking = moveVec != Vector3.zero;
@@ -81,28 +101,38 @@ public class Player : MonoBehaviour
         animator.SetBool("isRun", moveVec != Vector3.zero && runDown);
     }
 
-    /**회전**/
+    /** 회전 **/
     void Turn()
     {
         transform.LookAt(transform.position + moveVec); // 나아가는 방향을 바라보도록 설정
     }
 
+    /** 점프 **/
     void Jump()
     {
-        // if (jumpDown && moveVec == Vector3.zero && !isJump && !isDodge)
-        if (jumpDown && !isJump && !isDodge)
+        bool isDoubleJump = (jumpDown && (Time.time - lastJumpTime < doubleJumpDelay));
+        if ((jumpDown && !isJump && !isDodge) || isDoubleJump && jumpCount<2)
+        {
+            float jumpForce = jumpPower;
+
+            if (isDoubleJump && jumpCount == 1)
             {
-                rigidbody.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
-            animator.SetBool("isJump", true); 
-            animator.SetTrigger("doJump"); 
+                jumpForce *= 1.5f; // 더블 점프 시에만 증가된 힘을 사용
+            }
+
+            rigidbody.velocity = Vector3.zero; // 속도 초기화
+            rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            animator.SetBool("isJump", true);
+            animator.SetTrigger("doJump");
             isJump = true;
+            jumpCount++;
+            lastJumpTime = Time.time;
         }
     }
 
     /** 회피 **/
     void Dodge()
     {
-        //if (jumpDown && moveVec != Vector3.zero && !isJump && !isDodge) // 움직임을 조건으로 추가해서 Jump 와 Dodge 를 나누었습니다.
         if (dodgeDown && moveVec != Vector3.zero && !isJump && !isDodge)
         {
             dodgeVec = moveVec;
@@ -120,12 +150,24 @@ public class Player : MonoBehaviour
         isDodge = false;
     }
 
+    void Interaction()
+    {
+        if(iteractionDown && nearObject != null && !isJump && !isDodge)
+        {
+            if(nearObject.tag=="Weapon")
+            {
+                // 무기 입수
+            }
+        }
+    }
+
     void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.tag == "Floor")
         {
             animator.SetBool("isJump", false);
             isJump = false;
+            jumpCount = 0;
         }
     }
 
