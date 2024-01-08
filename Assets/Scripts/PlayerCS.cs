@@ -34,6 +34,9 @@ public class Player : MonoBehaviour
     bool jumpDown; // KEY: space
     bool dodgeDown; // KEY: left ctrl
     bool iteractionDown; // KEY: e
+    bool swapDown1; // Weapon KEY: 1
+    bool swapDown2; // Weapon KEY: 2
+    bool swapDown3; // Weapon KEY: 3
 
     Vector3 moveVec;
     Vector3 dodgeVec;
@@ -63,6 +66,7 @@ public class Player : MonoBehaviour
         Turn();
         Jump();
         Dodge();
+        Swap();
         Interaction();
     }
 
@@ -82,6 +86,9 @@ public class Player : MonoBehaviour
         jumpDown = Input.GetButtonDown("Jump");
         dodgeDown = Input.GetButtonDown("Dodge");
         iteractionDown = Input.GetButtonDown("Interaction");
+        swapDown1 = Input.GetButtonDown("Swap1");
+        swapDown2 = Input.GetButtonDown("Swap2");
+        swapDown3 = Input.GetButtonDown("Swap3");
     }
     
     /** 이동 **/
@@ -148,6 +155,19 @@ public class Player : MonoBehaviour
     {
         speed *= 0.5f; // 회피 동작 후에 속도를 원래대로 돌립니다.
         isDodge = false;
+    }
+
+    void Swap()
+    {
+        int weaponIndex = -1;
+        if (swapDown1) weaponIndex = 0;
+        if (swapDown2) weaponIndex = 1;
+        if(swapDown3) weaponIndex = 2;
+
+        if(swapDown1 || swapDown2 || swapDown3 && !isJump && !isDodge)
+        {
+            weapons[weaponIndex].SetActive(true);
+        }
     }
 
     /** 상호작용: E키 **/
