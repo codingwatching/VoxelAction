@@ -160,32 +160,11 @@ public class CharacterControllerCS : MonoBehaviour {
         }
         animator.SetBool("isWalk", isWalking); // 비교 연산자 설정
         animator.SetBool("isRun", characterBody.forward != Vector3.zero && runDown);
-        // transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(moveVec), Time.deltaTime * rotateSpeed);
-
-
     }
 
     // 회전 
     void Turn()
     {
-        /*
-        //transform.LookAt(transform.position + moveVec); // 나아가는 방향을 바라보도록 설정
-
-        // 카메라의 y축 회전 값만 가져옵니다.
-        Vector3 cameraRotation = cameraTransform.eulerAngles;
-        cameraRotation.x = 0;
-        cameraRotation.z = 0;
-
-        // 플레이어가 이동 중일 때만 회전합니다.
-        if (moveVec != Vector3.zero)
-        {
-            // 플레이어가 이동하는 방향으로 회전합니다.
-            Quaternion targetRotation = Quaternion.LookRotation(moveVec);
-
-            // 보간을 사용하여 부드러운 회전을 구현합니다.
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
-        }
-        */
         // 카메라의 방향을 기준으로 캐릭터가 회전하도록 설정
         Vector3 lookDirection = new Vector3(cameraArm.forward.x, 0f, cameraArm.forward.z).normalized;
         if (lookDirection != Vector3.zero)
