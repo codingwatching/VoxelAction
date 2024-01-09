@@ -38,6 +38,7 @@ public class FollowCameraCS : MonoBehaviour
     // Player가 움직이고 그 후 카메라가 따라가야 하므로 LateUpdate
     void LateUpdate()
     {
+        /*
         // Xaxis는 마우스를 아래로 했을때(음수값이 입력 받아질때) 값이 더해져야 카메라가 아래로 회전한다 
         Yaxis += Input.GetAxis("Mouse X") * rotSensitive; // 마우스 좌우움직임을 입력받아서 카메라의 Y축을 회전시킨다
         Xaxis -= Input.GetAxis("Mouse Y") * rotSensitive; // 마우스 상하움직임을 입력받아서 카메라의 X축을 회전시킨다
@@ -47,7 +48,7 @@ public class FollowCameraCS : MonoBehaviour
         // SmoothDamp를 통해 부드러운 카메라 회전
         targetRotation = Vector3.SmoothDamp(targetRotation, new Vector3(Xaxis, Yaxis), ref currentVel, smoothTime);
         this.transform.eulerAngles = targetRotation;
-
+        */
         if (isFirstPersonView)
         {
             transform.position = target.position + firstPersonOffset;

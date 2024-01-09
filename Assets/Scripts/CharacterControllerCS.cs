@@ -1,10 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class Player : MonoBehaviour
-{
+public class CharacterControllerCS : MonoBehaviour { 
     // State
     public enum PlayerState
     {
@@ -19,9 +17,7 @@ public class Player : MonoBehaviour
     private Transform characterBody;
     [SerializeField]
     private Transform cameraArm;
-
-    // Camera
-    private Transform cameraTransform;
+        private float rotSensitive = 5f; // 카메라 회전 감도
 
     // Jump
     private float lastJumpTime;
@@ -84,14 +80,6 @@ public class Player : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        cameraTransform = Camera.main.transform;
-        
-        
-    }
-
     // Update is called once per frame 입력 처리나 애니메이션 관련 코드 
     void Update()
     {
@@ -148,33 +136,40 @@ public class Player : MonoBehaviour
     /** 이동 **/
     void Move()
     {
-        isWalking = moveVec != Vector3.zero;
+        Vector2 moveInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        bool isWalking = moveInput.magnitude != 0;
 
-        // moveVec = new Vector3(hAxis, 0, vAxis).normalized; // 방향 값 1로 보정
-        // 카메라의 방향에 따라 이동 벡터를 조정합니다.
-        moveVec = cameraTransform.right * hAxis + cameraTransform.forward * vAxis;
-        moveVec.y = 0; // y축 이동 제거
+        if (isWalking)
+        {
+            Vector3 lookForward = new Vector3(cameraArm.forward.x, 0f, cameraArm.forward.z).normalized;
+            Vector3 lookRight = new Vector3(cameraArm.right.x, 0f, cameraArm.right.z).normalized;
+            Vector3 moveDir = lookForward * moveInput.y + lookRight * moveInput.x;
+            characterBody.forward = moveDir;
+            transform.position += moveDir * speed * (runDown ? 2f : 1f) * Time.deltaTime; // 달리기 시 이동 속도 증가
 
-        // 회피 중에는 움직임 벡터에서 회피방향 벡터로 바뀌도록 설정
-        if (isDodge)
-            moveVec = dodgeVec;
+            isWalking = moveDir != Vector3.zero;
 
-        // 무기 교체, 망치를 휘두르고 있는 중에는 정지
-        if (isSwap || !isFireReady)
-            moveVec = Vector3.zero;
+            // 회피 중에는 움직임 벡터에서 회피방향 벡터로 바뀌도록 설정
+            if (isDodge)
+                moveDir = dodgeVec;
 
-        transform.position += moveVec * speed * (runDown ? 2f : 1f) * Time.deltaTime; // 달리기 시 이동 속도 증가
+            // 무기 교체, 망치를 휘두르고 있는 중에는 정지
+            if (isSwap || !isFireReady)
+                moveDir = Vector3.zero;
+        }
+        animator.SetBool("isWalk", isWalking); // 비교 연산자 설정
+        animator.SetBool("isRun", characterBody.forward != Vector3.zero && runDown);
         // transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(moveVec), Time.deltaTime * rotateSpeed);
 
-        animator.SetBool("isWalk", isWalking); // 비교 연산자 설정
-        animator.SetBool("isRun", moveVec != Vector3.zero && runDown);
+
     }
 
-    /** 회전 **/
+    // 회전 
     void Turn()
     {
-        // transform.LookAt(transform.position + moveVec); // 나아가는 방향을 바라보도록 설정
-        
+        /*
+        //transform.LookAt(transform.position + moveVec); // 나아가는 방향을 바라보도록 설정
+
         // 카메라의 y축 회전 값만 가져옵니다.
         Vector3 cameraRotation = cameraTransform.eulerAngles;
         cameraRotation.x = 0;
@@ -189,13 +184,21 @@ public class Player : MonoBehaviour
             // 보간을 사용하여 부드러운 회전을 구현합니다.
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
         }
+        */
+        // 카메라의 방향을 기준으로 캐릭터가 회전하도록 설정
+        Vector3 lookDirection = new Vector3(cameraArm.forward.x, 0f, cameraArm.forward.z).normalized;
+        if (lookDirection != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
+            characterBody.rotation = Quaternion.Slerp(characterBody.rotation, targetRotation, Time.deltaTime * rotateSpeed);
+        }
     }
 
     /** 점프, 더블 점프 **/
     void Jump()
     {
         bool isDoubleJump = (jumpDown && (Time.time - lastJumpTime < doubleJumpDelay));
-        if ((jumpDown && !isJump && !isDodge && !isSwap) || isDoubleJump && jumpCount<2)
+        if ((jumpDown && !isJump && !isDodge && !isSwap) || isDoubleJump && jumpCount < 2)
         {
             leftzet.SetActive(true);
             rightzet.SetActive(true);
@@ -221,9 +224,9 @@ public class Player : MonoBehaviour
     /** 회피 **/
     void Dodge()
     {
-        if (dodgeDown && moveVec != Vector3.zero && !isJump && !isDodge && !isSwap)
+        if (dodgeDown && characterBody.forward != Vector3.zero && !isJump && !isDodge && !isSwap)
         {
-            dodgeVec = moveVec;
+            dodgeVec = characterBody.forward;
             speed *= 2; // 회피는 이동 속도의 2배
             animator.SetTrigger("doDodge");
             isDodge = true;
@@ -250,11 +253,11 @@ public class Player : MonoBehaviour
         int weaponIndex = -1;
         if (swapDown1) weaponIndex = 0;
         if (swapDown2) weaponIndex = 1;
-        if(swapDown3) weaponIndex = 2;
+        if (swapDown3) weaponIndex = 2;
 
-        if(swapDown1 || swapDown2 || swapDown3 && !isJump && !isDodge)
+        if (swapDown1 || swapDown2 || swapDown3 && !isJump && !isDodge)
         {
-            if(equippedWeapon!=null)
+            if (equippedWeapon != null)
                 equippedWeapon.gameObject.SetActive(false);
 
             equippedWeaponIndex = weaponIndex;
@@ -274,13 +277,13 @@ public class Player : MonoBehaviour
 
     void Attack()
     {
-        
+
         if (equippedWeapon == null) return;
 
         fireDelayTime += Time.deltaTime; // 공격딜레이에 시간을 더해주고 공격 가능 여부를 확인
         isFireReady = equippedWeapon.rate < fireDelayTime; // 공격속도보다 시간이 커지면, 공격 가능
-        
-        if(fireDown && isFireReady && !isDodge && !isSwap)
+
+        if (fireDown && isFireReady && !isDodge && !isSwap)
         {
             equippedWeapon.Use();
             animator.SetTrigger("doSwing");
@@ -292,9 +295,9 @@ public class Player : MonoBehaviour
     /** 상호작용: E키 **/
     void Interaction()
     {
-        if(iteractionDown && nearObject != null && !isJump && !isDodge)
+        if (iteractionDown && nearObject != null && !isJump && !isDodge)
         {
-            if(nearObject.tag=="Weapon") // 무기 입수
+            if (nearObject.tag == "Weapon") // 무기 입수
             {
                 ItemCS item = nearObject.GetComponent<ItemCS>();
                 int weaponIndex = item.value;
@@ -307,7 +310,7 @@ public class Player : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "Floor")
+        if (collision.gameObject.tag == "Floor")
         {
             animator.SetBool("isJump", false);
             isJump = false;
@@ -315,7 +318,7 @@ public class Player : MonoBehaviour
 
             leftzet.SetActive(false);
             rightzet.SetActive(false);
-            Debug.Log("SetActive False");
+            Debug.Log("SetActive False!!!!!!!!!!");
         }
     }
 
