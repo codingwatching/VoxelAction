@@ -2755,7 +2755,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterBody: {fileID: 684963914}
   cameraArm: {fileID: 588415215}
-  rotSensitivity: 2
+  rotSensitivity: 3
+  followCam: {fileID: 963194227}
   speed: 10
   rotateSpeed: 0
   jumpPower: 20

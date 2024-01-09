@@ -18,7 +18,8 @@ public class CharacterControllerCS : MonoBehaviour {
     [SerializeField]
     private Transform cameraArm;
     [SerializeField]
-    private float rotSensitivity = 2f; // 카메라 회전 감도
+    private float rotSensitivity = 3f; // 카메라 회전 감도
+    public Camera followCam;
 
     // Jump
     private float lastJumpTime;
@@ -75,23 +76,22 @@ public class CharacterControllerCS : MonoBehaviour {
     int equippedWeaponIndex = -1; // 인벤토리 초기화
 
     float fireDelayTime;
+    private float originalSpeed; // Store original speed for dodging
 
     // Initialization
     void Awake()
     {
         rigidbody = GetComponent<Rigidbody>();
         animator = GetComponentInChildren<Animator>();
+        originalSpeed = speed; // Store the original speed
     }
 
     // Update is called once per frame 입력 처리나 애니메이션 관련 코드 
     void Update()
     {
         GetInput();
-        Turn();
-        Dodge();
         Swap();
         Interaction();
-        Jump();
         Attack();
         Reload();
         LookAround();
@@ -101,6 +101,9 @@ public class CharacterControllerCS : MonoBehaviour {
     private void FixedUpdate()
     {
         Move();
+        Turn();
+        Dodge();
+        Jump();
     }
 
     /** 입력 **/
@@ -175,6 +178,28 @@ public class CharacterControllerCS : MonoBehaviour {
             Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
             characterBody.rotation = Quaternion.Slerp(characterBody.rotation, targetRotation, Time.deltaTime * rotateSpeed);
         }
+
+        /*// 마우스에 의한 회전
+        if(fireDown)
+        {
+            Ray cameraRay = followCam.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(cameraRay, out hit, Mathf.Infinity))
+            {
+                Debug.DrawRay(cameraRay.origin, cameraRay.direction*20, Color.red, 10f);
+                Debug.Log(hit);
+                Vector3 targetPoint = hit.point;
+                Debug.Log(targetPoint);
+                targetPoint.y = characterBody.position.y; // 캐릭터의 높이를 유지하도록 Y 축 조정
+                Debug.Log(targetPoint.y);
+                Vector3 directionToLook = targetPoint - characterBody.position; // 바라볼 방향 계산
+                Debug.Log(directionToLook);
+                Quaternion targetRotation = Quaternion.LookRotation(directionToLook);
+                Debug.Log("마우스에 의한 회전 7 ");
+                characterBody.rotation = Quaternion.Slerp(characterBody.rotation, targetRotation, Time.deltaTime * rotateSpeed);
+                Debug.Log("마우스에 의한 회전 8 ");
+            }
+        }*/
     }
 
     /** 점프, 더블 점프 **/
@@ -183,8 +208,7 @@ public class CharacterControllerCS : MonoBehaviour {
         bool isDoubleJump = (jumpDown && (Time.time - lastJumpTime < doubleJumpDelay));
         if ((jumpDown && !isJump && !isDodge && !isSwap) || isDoubleJump && jumpCount < 2)
         {
-            leftzet.SetActive(true);
-            rightzet.SetActive(true);
+            SetJetActive(isJump);
             Debug.Log("SetActive True");
             float jumpForce = jumpPower;
 
@@ -204,12 +228,20 @@ public class CharacterControllerCS : MonoBehaviour {
         }
     }
 
+    void SetJetActive(bool active)
+    {
+        leftzet.SetActive(active);
+        rightzet.SetActive(active);
+    }
+
     /** 회피 **/
     void Dodge()
     {
         if (dodgeDown && characterBody.forward != Vector3.zero && !isJump && !isDodge && !isSwap)
         {
             dodgeVec = characterBody.forward;
+            originalSpeed = speed; // 현재 속도 저장
+
             speed *= 2; // 회피는 이동 속도의 2배
             animator.SetTrigger("doDodge");
             isDodge = true;
@@ -220,7 +252,7 @@ public class CharacterControllerCS : MonoBehaviour {
 
     void DodgeOut()
     {
-        speed *= 0.5f; // 회피 동작 후에 속도를 원래대로 돌립니다.
+        speed = originalSpeed; // 원래 속도로 복원
         isDodge = false;
     }
 
@@ -277,12 +309,12 @@ public class CharacterControllerCS : MonoBehaviour {
     void Reload()
     {
         // 근접무기이거나 총알이나 무기가 없다면 return
-        if (equippedWeapon.type == WeaponCS.Type.Melee) return; 
-        if (ammo == 0) return;
         if (equippedWeapon == null) return;
+        if (equippedWeapon.type == WeaponCS.Type.Melee) return;
+        if (ammo == 0) return;
 
         // 재장전 가능
-        if(reloadDown && !isJump && !isDodge && !isSwap && isFireReady)
+        if (reloadDown && !isJump && !isDodge && !isSwap && isFireReady)
         {
             animator.SetTrigger("doReload");
             isReload = true;
@@ -322,8 +354,7 @@ public class CharacterControllerCS : MonoBehaviour {
             isJump = false;
             jumpCount = 0;
 
-            leftzet.SetActive(false);
-            rightzet.SetActive(false);
+            SetJetActive(isJump);
             Debug.Log("SetActive False!!!!!!!!!!");
         }
     }
