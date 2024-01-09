@@ -17,7 +17,8 @@ public class CharacterControllerCS : MonoBehaviour {
     private Transform characterBody;
     [SerializeField]
     private Transform cameraArm;
-        private float rotSensitive = 5f; // 카메라 회전 감도
+    [SerializeField]
+    private float rotSensitivity = 2f; // 카메라 회전 감도
 
     // Jump
     private float lastJumpTime;
@@ -123,13 +124,13 @@ public class CharacterControllerCS : MonoBehaviour {
         float x = camAngle.x - mouseDelta.y;
         if (x < 180f)
         {
-            x = Mathf.Clamp(x, -1f, 70f);
+            x = Mathf.Clamp(x, -1f, 80f);
         }
         else
         {
             x = Mathf.Clamp(x, 335f, 361f);
         }
-        cameraArm.rotation = Quaternion.Euler(x, camAngle.y + mouseDelta.x, camAngle.z); // 국내에서는 일치한다
+        cameraArm.rotation = Quaternion.Euler(x, camAngle.y + mouseDelta.x * rotSensitivity, camAngle.z); // 국내에서는 일치한다
         // cameraArm.rotation = Quaternion.Euler(camAngle.x + mouseDelta.y, camAngle.y + mouseDelta.x, camAngle.z); // 해외
     }
 
