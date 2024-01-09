@@ -30,6 +30,8 @@ public class Player : MonoBehaviour
     public bool[] hasWeapons;
     public GameObject[] grenades;
     public int hasGrenades;
+    public GameObject leftzet;
+    public GameObject rightzet;
 
     // 소모품
     public int ammo;
@@ -66,6 +68,7 @@ public class Player : MonoBehaviour
     GameObject nearObject;
     GameObject equippedWeapon;
     int equippedWeaponIndex = -1; // 인벤토리 초기화
+
 
     // Initialization
     void Awake()
@@ -163,6 +166,9 @@ public class Player : MonoBehaviour
         bool isDoubleJump = (jumpDown && (Time.time - lastJumpTime < doubleJumpDelay));
         if ((jumpDown && !isJump && !isDodge && !isSwap) || isDoubleJump && jumpCount<2)
         {
+            leftzet.SetActive(true);
+            rightzet.SetActive(true);
+            Debug.Log("SetActive True");
             float jumpForce = jumpPower;
 
             if (isDoubleJump && jumpCount == 1)
@@ -177,6 +183,7 @@ public class Player : MonoBehaviour
             isJump = true;
             jumpCount++;
             lastJumpTime = Time.time;
+
         }
     }
 
@@ -257,6 +264,10 @@ public class Player : MonoBehaviour
             animator.SetBool("isJump", false);
             isJump = false;
             jumpCount = 0;
+
+            leftzet.SetActive(false);
+            rightzet.SetActive(false);
+            Debug.Log("SetActive False");
         }
     }
 
