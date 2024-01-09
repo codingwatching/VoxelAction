@@ -59,7 +59,7 @@ public class Player : MonoBehaviour
     bool isJump;
     bool isDodge;
     bool isSwap; // 교체 시간차를 위한 플래그 로직
-    bool isFireReady; // fireDelayTime 을 기다리면 공격 가능!
+    bool isFireReady = true; // fireDelayTime 을 기다리면 공격 가능!
     Vector3 moveVec;
     Vector3 dodgeVec;
 
@@ -133,7 +133,8 @@ public class Player : MonoBehaviour
         if (isDodge)
             moveVec = dodgeVec;
 
-        if (isSwap)
+        // 무기 교체, 망치를 휘두르고 있는 중에는 정지
+        if (isSwap || !isFireReady)
             moveVec = Vector3.zero;
 
         transform.position += moveVec * speed * (runDown ? 2f : 1f) * Time.deltaTime; // 달리기 시 이동 속도 증가
