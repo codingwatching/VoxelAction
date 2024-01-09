@@ -83,6 +83,8 @@ public class Player : MonoBehaviour
     void Start()
     {
         cameraTransform = Camera.main.transform;
+        
+        
     }
 
     // Update is called once per frame 입력 처리나 애니메이션 관련 코드 
@@ -138,7 +140,7 @@ public class Player : MonoBehaviour
             moveVec = Vector3.zero;
 
         transform.position += moveVec * speed * (runDown ? 2f : 1f) * Time.deltaTime; // 달리기 시 이동 속도 증가
-        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(moveVec), Time.deltaTime * rotateSpeed);
+        // transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(moveVec), Time.deltaTime * rotateSpeed);
 
         animator.SetBool("isWalk", isWalking); // 비교 연산자 설정
         animator.SetBool("isRun", moveVec != Vector3.zero && runDown);

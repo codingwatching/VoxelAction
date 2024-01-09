@@ -4,69 +4,69 @@ using UnityEngine;
 
 public class FollowCameraCS : MonoBehaviour
 {
-    private Camera cam; // Ä«¸Ş¶ó ÄÄÆ÷³ÍÆ® ÂüÁ¶
+    private Camera cam; 
 
-    bool viewDown; //  1-3ÀÎÄª ½ÃÁ¡ º¯È¯ KEY: V
+    bool viewDown; //  1-3ì¸ì¹­ ì‹œì  ë³€í™˜ KEY: V
 
-    public Transform target; // ÀÌ Ä«¸Ş¶ó°¡ µû¶ó°¡¾ß ÇÒ Å¸°Ù
-    public Vector3 thirdPersonOffset; 
-    public Vector3 firstPersonOffset; 
+    public Transform target; // ì´ ì¹´ë©”ë¼ê°€ ë”°ë¼ê°€ì•¼ í•  íƒ€ê²Ÿ
+    public Vector3 thirdPersonOffset;
+    public Vector3 firstPersonOffset;
 
     public float Yaxis;
     public float Xaxis;
 
-    private float rotSensitive = 4f; // Ä«¸Ş¶ó È¸Àü °¨µµ
-    private float RotationMin = -90f; // Ä«¸Ş¶ó È¸Àü°¢µµ ÃÖ¼Ò
-    private float RotationMax = 90f; // Ä«¸Ş¶ó È¸Àü°¢µµ ÃÖ´ë
-    private float smoothTime = 0.2f; // Ä«¸Ş¶ó°¡ È¸ÀüÇÏ´Âµ¥ °É¸®´Â ½Ã°£
+    private float rotSensitive = 5f; // ì¹´ë©”ë¼ íšŒì „ ê°ë„
+    private float clampAngle = 80f; // ì¹´ë©”ë¼ íšŒì „ê°ë„ ì œí•œ
+    private float smoothTime = 0.1f; // ì¹´ë©”ë¼ê°€ íšŒì „í•˜ëŠ”ë° ê±¸ë¦¬ëŠ” ì‹œê°„
 
     private Vector3 targetRotation;
     private Vector3 currentVel;
 
-    private bool isFirstPersonView = false; // 1-3ÀÎÄª ½ÃÁ¡ º¯È¯
+    private bool isFirstPersonView = false; // 1-3ì¸ì¹­ ì‹œì  ë³€í™˜
 
     void Awake()
     {
-        cam = GetComponent<Camera>(); // Ä«¸Ş¶ó ÄÄÆ÷³ÍÆ® ÂüÁ¶
+        cam = GetComponent<Camera>(); // ì¹´ë©”ë¼ ì»´í¬ë„ŒíŠ¸ ì°¸ì¡°
     }
 
     // Update is called once per frame
     void Update()
     {
         GetInput();
-        if(viewDown)
-        {
-            isFirstPersonView = !isFirstPersonView;
-        }
-    } 
+    }
 
-    // Player°¡ ¿òÁ÷ÀÌ°í ±× ÈÄ Ä«¸Ş¶ó°¡ µû¶ó°¡¾ß ÇÏ¹Ç·Î LateUpdate
-    void LateUpdate() 
+    // Playerê°€ ì›€ì§ì´ê³  ê·¸ í›„ ì¹´ë©”ë¼ê°€ ë”°ë¼ê°€ì•¼ í•˜ë¯€ë¡œ LateUpdate
+    void LateUpdate()
     {
-        // Xaxis´Â ¸¶¿ì½º¸¦ ¾Æ·¡·Î ÇßÀ»¶§(À½¼ö°ªÀÌ ÀÔ·Â ¹Ş¾ÆÁú¶§) °ªÀÌ ´õÇØÁ®¾ß Ä«¸Ş¶ó°¡ ¾Æ·¡·Î È¸ÀüÇÑ´Ù 
-        Yaxis += Input.GetAxis("Mouse X") * rotSensitive; // ¸¶¿ì½º ÁÂ¿ì¿òÁ÷ÀÓÀ» ÀÔ·Â¹Ş¾Æ¼­ Ä«¸Ş¶óÀÇ YÃàÀ» È¸Àü½ÃÅ²´Ù
-        Xaxis -= Input.GetAxis("Mouse Y") * rotSensitive; // ¸¶¿ì½º »óÇÏ¿òÁ÷ÀÓÀ» ÀÔ·Â¹Ş¾Æ¼­ Ä«¸Ş¶óÀÇ XÃàÀ» È¸Àü½ÃÅ²´Ù
-        // XÃà È¸Àü (°í°³ À§, ¾Æ·¡) ÀÌ ÇÑ°èÄ¡¸¦ ³ÑÁö¾Ê°Ô Á¦ÇÑÇØÁØ´Ù.
-        Xaxis = Mathf.Clamp(Xaxis, RotationMin, RotationMax);
+        // XaxisëŠ” ë§ˆìš°ìŠ¤ë¥¼ ì•„ë˜ë¡œ í–ˆì„ë•Œ(ìŒìˆ˜ê°’ì´ ì…ë ¥ ë°›ì•„ì§ˆë•Œ) ê°’ì´ ë”í•´ì ¸ì•¼ ì¹´ë©”ë¼ê°€ ì•„ë˜ë¡œ íšŒì „í•œë‹¤ 
+        Yaxis += Input.GetAxis("Mouse X") * rotSensitive; // ë§ˆìš°ìŠ¤ ì¢Œìš°ì›€ì§ì„ì„ ì…ë ¥ë°›ì•„ì„œ ì¹´ë©”ë¼ì˜ Yì¶•ì„ íšŒì „ì‹œí‚¨ë‹¤
+        Xaxis -= Input.GetAxis("Mouse Y") * rotSensitive; // ë§ˆìš°ìŠ¤ ìƒí•˜ì›€ì§ì„ì„ ì…ë ¥ë°›ì•„ì„œ ì¹´ë©”ë¼ì˜ Xì¶•ì„ íšŒì „ì‹œí‚¨ë‹¤
+        // Xì¶• íšŒì „ (ê³ ê°œ ìœ„, ì•„ë˜) ì´ í•œê³„ì¹˜ë¥¼ ë„˜ì§€ì•Šê²Œ ì œí•œí•´ì¤€ë‹¤.
+        Xaxis = Mathf.Clamp(Xaxis, -clampAngle, clampAngle);
 
-        // SmoothDamp¸¦ ÅëÇØ ºÎµå·¯¿î Ä«¸Ş¶ó È¸Àü
+        // SmoothDampë¥¼ í†µí•´ ë¶€ë“œëŸ¬ìš´ ì¹´ë©”ë¼ íšŒì „
         targetRotation = Vector3.SmoothDamp(targetRotation, new Vector3(Xaxis, Yaxis), ref currentVel, smoothTime);
         this.transform.eulerAngles = targetRotation;
 
         if (isFirstPersonView)
         {
             transform.position = target.position + firstPersonOffset;
-            cam.cullingMask &= ~(1 << LayerMask.NameToLayer("MyPlayer")); // 'MyPlayer' ·¹ÀÌ¾î Á¦¿Ü
+            cam.cullingMask &= ~(1 << LayerMask.NameToLayer("MyPlayer")); // 'MyPlayer' ë ˆì´ì–´ ìˆ¨ê¹€
         }
         else
         {
             transform.position = target.position - transform.forward * thirdPersonOffset.magnitude + thirdPersonOffset.y * Vector3.up;
-            cam.cullingMask |= 1 << LayerMask.NameToLayer("MyPlayer"); // 'MyPlayer' ·¹ÀÌ¾î Æ÷ÇÔ
+            cam.cullingMask |= 1 << LayerMask.NameToLayer("MyPlayer");  // 'MyPlayer' ë ˆì´ì–´ í¬í•¨
         }
     }
     void GetInput()
     {
         viewDown = Input.GetButtonDown("CameraView");
-
+        if (viewDown)
+        {
+            isFirstPersonView = !isFirstPersonView;
+        }
     }
 }
+
+
