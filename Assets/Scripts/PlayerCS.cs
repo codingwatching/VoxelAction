@@ -53,12 +53,13 @@ public class Player : MonoBehaviour
     bool swapDown1; // Weapon KEY: 1
     bool swapDown2; // Weapon KEY: 2
     bool swapDown3; // Weapon KEY: 3
+    bool fireDown; // Attack KEY: (default) left mouse click
 
     bool isWalking;
     bool isJump;
     bool isDodge;
     bool isSwap; // 교체 시간차를 위한 플래그 로직
-
+    bool isFireReady; // fireDelayTime 을 기다리면 공격 가능!
     Vector3 moveVec;
     Vector3 dodgeVec;
 
@@ -66,9 +67,10 @@ public class Player : MonoBehaviour
     Animator animator;
 
     GameObject nearObject;
-    GameObject equippedWeapon;
+    WeaponCS equippedWeapon;
     int equippedWeaponIndex = -1; // 인벤토리 초기화
 
+    float fireDelayTime;
 
     // Initialization
     void Awake()
@@ -89,6 +91,7 @@ public class Player : MonoBehaviour
         GetInput();
         Turn();
         Jump();
+        Attack();
         Dodge();
         Swap();
         Interaction();
@@ -110,9 +113,11 @@ public class Player : MonoBehaviour
         jumpDown = Input.GetButtonDown("Jump");
         dodgeDown = Input.GetButtonDown("Dodge");
         iteractionDown = Input.GetButtonDown("Interaction");
+        fireDown = Input.GetButtonDown("Fire1");
         swapDown1 = Input.GetButtonDown("Swap1");
         swapDown2 = Input.GetButtonDown("Swap2");
         swapDown3 = Input.GetButtonDown("Swap3");
+
     }
     
     /** 이동 **/
@@ -224,11 +229,11 @@ public class Player : MonoBehaviour
         if(swapDown1 || swapDown2 || swapDown3 && !isJump && !isDodge)
         {
             if(equippedWeapon!=null)
-                equippedWeapon.SetActive(false);
+                equippedWeapon.gameObject.SetActive(false);
 
             equippedWeaponIndex = weaponIndex;
-            equippedWeapon = weapons[weaponIndex];
-            equippedWeapon.SetActive(true);
+            equippedWeapon = weapons[weaponIndex].GetComponent<WeaponCS>();
+            equippedWeapon.gameObject.SetActive(true);
 
             animator.SetTrigger("doSwap");
             isSwap = true;
@@ -239,6 +244,21 @@ public class Player : MonoBehaviour
     void SwapOut()
     {
         isSwap = false;
+    }
+
+    void Attack()
+    {
+        if (equippedWeapon == null) return;
+
+        fireDelayTime += Time.deltaTime; // 공격딜레이에 시간을 더해주고 공격 가능 여부를 확인
+        isFireReady = equippedWeapon.rate < fireDelayTime; // 공격속도보다 시간이 커지면, 공격 가능
+        
+        if(fireDown && isFireReady && !isDodge && !isSwap)
+        {
+            equippedWeapon.Use();
+            animator.SetTrigger("doSwing");
+            fireDelayTime = 0; // 공격했으니 초기화
+        }
     }
 
     /** 상호작용: E키 **/
