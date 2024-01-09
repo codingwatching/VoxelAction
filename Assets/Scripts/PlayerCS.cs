@@ -90,18 +90,17 @@ public class Player : MonoBehaviour
     {
         GetInput();
         Turn();
-        Jump();
-        Attack();
         Dodge();
         Swap();
         Interaction();
+        Jump();
+        Attack();
     }
 
     // 물리 연산과 관련된 코드
     private void FixedUpdate()
     {
         Move();
-        Jump();
     }
 
     /** 입력 **/
@@ -248,6 +247,7 @@ public class Player : MonoBehaviour
 
     void Attack()
     {
+        
         if (equippedWeapon == null) return;
 
         fireDelayTime += Time.deltaTime; // 공격딜레이에 시간을 더해주고 공격 가능 여부를 확인
@@ -258,6 +258,7 @@ public class Player : MonoBehaviour
             equippedWeapon.Use();
             animator.SetTrigger("doSwing");
             fireDelayTime = 0; // 공격했으니 초기화
+            Debug.Log("Swing");
         }
     }
 
@@ -330,8 +331,6 @@ public class Player : MonoBehaviour
         // 무기 입수
         if (other.tag == "Weapon")
             nearObject = other.gameObject;
-
-        Debug.Log(nearObject.name);
     }
 
     void OnTriggerExit(Collider other)

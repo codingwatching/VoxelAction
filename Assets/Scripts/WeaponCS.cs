@@ -33,9 +33,7 @@ public class WeaponCS : MonoBehaviour
         meleeArea.enabled = false;
 
         // 3
-        yield returnnew WaitForSeconds(0.3f); // 1프레임 대기
+        yield return new WaitForSeconds(0.3f); // 1프레임 대기
         trailRendererEffect.enabled = false;
-
-        yield break;
     }
 }
