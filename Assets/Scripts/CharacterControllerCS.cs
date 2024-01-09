@@ -56,12 +56,14 @@ public class CharacterControllerCS : MonoBehaviour {
     bool swapDown2; // Weapon KEY: 2
     bool swapDown3; // Weapon KEY: 3
     bool fireDown; // Attack KEY: (default) left mouse click
+    bool reloadDown; // Key: 
 
     bool isWalking;
     bool isJump;
     bool isDodge;
     bool isSwap; // 교체 시간차를 위한 플래그 로직
     bool isFireReady = true; // fireDelayTime 을 기다리면 공격 가능!
+    bool isReload;
     Vector3 moveVec;
     Vector3 dodgeVec;
 
@@ -91,6 +93,7 @@ public class CharacterControllerCS : MonoBehaviour {
         Interaction();
         Jump();
         Attack();
+        Reload();
         LookAround();
     }
 
@@ -109,11 +112,11 @@ public class CharacterControllerCS : MonoBehaviour {
         jumpDown = Input.GetButtonDown("Jump");
         dodgeDown = Input.GetButtonDown("Dodge");
         iteractionDown = Input.GetButtonDown("Interaction");
-        fireDown = Input.GetButtonDown("Fire1");
+        fireDown = Input.GetButton("Fire1");
+        reloadDown = Input.GetButtonDown("Reload");
         swapDown1 = Input.GetButtonDown("Swap1");
         swapDown2 = Input.GetButtonDown("Swap2");
         swapDown3 = Input.GetButtonDown("Swap3");
-
     }
 
     /** 마우스 움직임에 따라 카메라 회전 **/
@@ -155,7 +158,7 @@ public class CharacterControllerCS : MonoBehaviour {
                 moveDir = dodgeVec;
 
             // 무기 교체, 망치를 휘두르고 있는 중에는 정지
-            if (isSwap || !isFireReady)
+            if (isSwap || !isFireReady || isReload)
                 moveDir = Vector3.zero;
         }
         animator.SetBool("isWalk", isWalking); // 비교 연산자 설정
@@ -257,7 +260,6 @@ public class CharacterControllerCS : MonoBehaviour {
 
     void Attack()
     {
-
         if (equippedWeapon == null) return;
 
         fireDelayTime += Time.deltaTime; // 공격딜레이에 시간을 더해주고 공격 가능 여부를 확인
@@ -266,10 +268,34 @@ public class CharacterControllerCS : MonoBehaviour {
         if (fireDown && isFireReady && !isDodge && !isSwap)
         {
             equippedWeapon.Use();
-            animator.SetTrigger("doSwing");
+            animator.SetTrigger(equippedWeapon.type == WeaponCS.Type.Melee ?  "doSwing" : "doShot"); // HandGun 또는 SubMachineGun
             fireDelayTime = 0; // 공격했으니 초기화
             Debug.Log("Swing");
         }
+    }
+
+    void Reload()
+    {
+        // 근접무기이거나 총알이나 무기가 없다면 return
+        if (equippedWeapon.type == WeaponCS.Type.Melee) return; 
+        if (ammo == 0) return;
+        if (equippedWeapon == null) return;
+
+        // 재장전 가능
+        if(reloadDown && !isJump && !isDodge && !isSwap && isFireReady)
+        {
+            animator.SetTrigger("doReload");
+            isReload = true;
+            Invoke("ReloadOut", 1f);
+        }
+    }
+
+    void ReloadOut()
+    {
+        int reAmmo = ammo < equippedWeapon.maxAmmo ? ammo : equippedWeapon.maxAmmo;
+        equippedWeapon.curAmmo = reAmmo;
+        ammo -= reAmmo;
+        isReload = false;
     }
 
     /** 상호작용: E키 **/
