@@ -386,7 +386,8 @@ public class CharacterControllerCS : MonoBehaviour {
         if (grenadeObject != null && hasGrenades > 0)
         {
             // 목표 지점 계산
-            Vector3 targetPosition = characterBody.position + characterBody.forward * 5f; // 캐릭터 앞으로 5 미터
+            Vector3 targetPosition = characterBody.position + characterBody.forward * 3f; // 캐릭터 앞으로 3 미터
+            targetPosition.y = 10; // 높이
             Vector3 throwDirection = (targetPosition - characterBody.position).normalized;
 
             // 발사 각도 및 힘 계산
