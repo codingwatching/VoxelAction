@@ -113,6 +113,8 @@ public class CharacterControllerCS : MonoBehaviour {
         LookAround();
         Jump();
         Grenade();
+        Dodge();
+
     }
 
     // 물리 연산과 관련된 코드
@@ -120,7 +122,6 @@ public class CharacterControllerCS : MonoBehaviour {
     {
         Move();
         Turn();
-        Dodge();
         
         FreezeRotation();
         StopToWall();
