@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyCS : MonoBehaviour
 {
@@ -8,6 +9,9 @@ public class EnemyCS : MonoBehaviour
     public int curHealth;
     public Transform target; // 추적할 상대 (플레이어 캐릭터)
     public bool isChase=false;
+    public bool isAttack; // 공격 중입니다
+    public BoxCollider meleeArea; // 일반형 몬스터 EnemyA 타입의 EnemyBullet
+
 
     Rigidbody rigid;
     BoxCollider boxCollider;
@@ -35,10 +39,11 @@ public class EnemyCS : MonoBehaviour
 
     void Update()
     {
-        if(isChase)
+        /*if(nav.enabled)
         {
             // nav.SetDestination(target.position)
-        }
+            // Navigation.isStopped = !isChase;
+        }*/
     }
 
     void FixedUpdate()

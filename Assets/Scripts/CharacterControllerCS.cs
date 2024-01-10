@@ -76,11 +76,14 @@ public class CharacterControllerCS : MonoBehaviour {
     bool isFireReady = true; // fireDelayTime 을 기다리면 공격 가능!
     bool isReload;
     bool isBorder; // 벽 충돌 플래그
+    bool isDamage; // 무적 타임을 위해
+
     Vector3 moveVec;
     Vector3 dodgeVec;
 
     Rigidbody rigidbody;
     Animator animator;
+    MeshRenderer[] meshs;
 
     GameObject nearObject;
     WeaponCS equippedWeapon;
@@ -96,6 +99,7 @@ public class CharacterControllerCS : MonoBehaviour {
         rigidbody = GetComponent<Rigidbody>();
         animator = GetComponentInChildren<Animator>();
         originalSpeed = speed; // Store the original speed
+        meshs = GetComponentsInChildren<MeshRenderer>();
     }
 
     // Update is called once per frame 입력 처리나 애니메이션 관련 코드 
@@ -496,6 +500,34 @@ public class CharacterControllerCS : MonoBehaviour {
                     break;
             }
             Destroy(other.gameObject);
+        }
+        else if (other.tag == "EnemyBullet")
+        {
+            if (!isDamage)
+            {
+                // 데미지는 언제나 피격받는 입장이 자신의 체력을 깎도록 합니다.
+                // 이후 리액션 코루틴을 호출합니다.
+                BulletCS enemyBullet = other.GetComponent<BulletCS>();
+                health -= enemyBullet.damage;
+                StartCoroutine("OnDamage");
+            }
+        }
+    }
+
+    /** AI 몬스터로부터 피격 시 리액션 **/
+    IEnumerator OnDamage()
+    {
+        isDamage = true;
+        foreach(MeshRenderer mesh in meshs){
+            mesh.material.color = Color.yellow;
+        }
+
+        yield return new WaitForSeconds(1f); // 1초 무적 타임
+        
+        isDamage = false;
+        foreach (MeshRenderer mesh in meshs)
+        {
+            mesh.material.color = Color.white;
         }
     }
 
