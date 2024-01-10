@@ -6,10 +6,14 @@ public class EnemyCS : MonoBehaviour
 {
     public int maxHealth;
     public int curHealth;
+    public Transform target; // 추적할 상대 (플레이어 캐릭터)
+    public bool isChase=false;
 
     Rigidbody rigid;
     BoxCollider boxCollider;
     Material mat;
+    Animator animator;
+    // NavMeshAgent nav;
 
     void Awake()
     {
@@ -17,7 +21,38 @@ public class EnemyCS : MonoBehaviour
 
         rigid = GetComponent<Rigidbody>();
         boxCollider = GetComponent<BoxCollider>();
-        mat = GetComponent<MeshRenderer>().material;
+        mat = GetComponentInChildren<MeshRenderer>().material;
+        animator = GetComponentInChildren<Animator>();
+        // nav = GetComponent<NavMeshAgent>();
+        Invoke("ChaseStart", 2); // 생성되면 2초 후에 추적을 시작
+    }
+
+    void ChaseStart()
+    {
+        isChase = true;
+        animator.SetBool("isWalk", true);
+    }
+
+    void Update()
+    {
+        if(isChase)
+        {
+            // nav.SetDestination(target.position)
+        }
+    }
+
+    void FixedUpdate()
+    {
+        FreezeVelocity();
+    }
+
+    void FreezeVelocity()
+    {
+        if (isChase)
+        {
+            rigid.velocity = Vector3.zero;
+            rigid.angularVelocity = Vector3.zero;
+        }
     }
 
     public void HitByGrenade(Vector3 explosionPos)
@@ -70,6 +105,10 @@ public class EnemyCS : MonoBehaviour
         {
             mat.color = Color.gray;
             gameObject.layer = 12; // Layer Idx of "EnemyDead" 
+
+            isChase = false;
+            // nav.enabled = false;
+            animator.SetTrigger("doDie");
 
             // 반작용 넉백
             if (isGrenade)
