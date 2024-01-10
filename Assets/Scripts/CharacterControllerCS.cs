@@ -21,6 +21,7 @@ public class CharacterControllerCS : MonoBehaviour {
     [SerializeField]
     private float rotSensitivity = 10f; // 카메라 회전 감도
     public Camera followCam;
+    public GameObject f;
 
     // Jump
     private float lastJumpTime;
@@ -32,6 +33,12 @@ public class CharacterControllerCS : MonoBehaviour {
     public float jumpPower; // 인스펙터에서 설정 가능하도록 public
     public GameObject[] weapons;
     public bool[] hasWeapons;
+    public GameObject grenadeObject;
+
+    public float grenadeChargeForce = 0f; // 수류탄 던지는 힘
+    private float grenadeChargeTime = 1f;
+    private const float maxGrenadeChargeTime = 4f;
+
     public GameObject[] grenades;
     public int hasGrenades;
     public GameObject leftzet;
@@ -58,7 +65,9 @@ public class CharacterControllerCS : MonoBehaviour {
     bool swapDown2; // Weapon KEY: 2
     bool swapDown3; // Weapon KEY: 3
     bool fireDown; // Attack KEY: (default) left mouse click
-    bool reloadDown; // Key: 
+    bool reloadDown; // Key: R
+    bool grenadeDown; // Key: (default) right mouse hold
+    bool grenadeUp; // Key: (default) right mouse up
 
     bool isWalking;
     bool isJump;
@@ -99,6 +108,7 @@ public class CharacterControllerCS : MonoBehaviour {
         Reload();
         LookAround();
         Jump();
+        Grenade();
     }
 
     // 물리 연산과 관련된 코드
@@ -126,6 +136,8 @@ public class CharacterControllerCS : MonoBehaviour {
         swapDown1 = Input.GetButtonDown("Swap1");
         swapDown2 = Input.GetButtonDown("Swap2");
         swapDown3 = Input.GetButtonDown("Swap3");
+        grenadeDown = Input.GetButton("Fire2"); // 꾹 눌러서 수류탄 던질 힘을 축적할 수 있습니다.
+        grenadeUp = Input.GetButtonUp("Fire2"); // 떼어서 수류탄 발사
     }
 
     /** 마우스 움직임에 따라 카메라 회전 **/
@@ -341,6 +353,73 @@ public class CharacterControllerCS : MonoBehaviour {
         ammo -= reAmmo;
         isReload = false;
         currentState = PlayerState.Idle; // 재장전이 끝나면 Idle 상태로 복귀
+    }
+
+    /** 수류탄 **/
+    void Grenade()
+    {
+        // 마우스 우클릭을 누르고 있는 동안, grenadeChargeTime을 증가시킵니다.
+        if (grenadeDown && !isReload && !isSwap)
+        {
+            // 충전 중에는 수류탄이 발사되지 않도록 합니다.
+            if (grenadeChargeTime < maxGrenadeChargeTime)
+            {
+                grenadeChargeTime += Time.deltaTime;
+            }
+        }
+
+        // 마우스 우클릭을 떼었을 때, 충전된 힘으로 수류탄을 발사합니다.
+        if (grenadeUp && !isReload && !isSwap)
+        {
+            if (grenadeChargeTime > 1f && grenadeChargeTime <= maxGrenadeChargeTime)
+            {
+                ThrowGrenade();
+                Debug.Log("grenadeChargeTime" + grenadeChargeTime);
+            }
+            // 수류탄 발사 후에는 충전 시간을 1으로 초기화합니다.
+            grenadeChargeTime = 1f;
+        }
+    }
+    /** 수류탄 던지기 **/
+    void ThrowGrenade()
+    {
+        if (grenadeObject != null && hasGrenades > 0)
+        {
+            // 목표 지점 계산
+            Vector3 targetPosition = characterBody.position + characterBody.forward * 5f; // 캐릭터 앞으로 5 미터
+            Vector3 throwDirection = (targetPosition - characterBody.position).normalized;
+
+            // 발사 각도 및 힘 계산
+            float throwAngle = CalculateThrowAngle(characterBody.position, targetPosition);
+            float throwForce = CalculateThrowForce(characterBody.position, targetPosition, throwAngle);
+
+            // 수류탄 발사 위치 조정
+            Vector3 grenadeSpawnPosition = characterBody.position + characterBody.up * 1.5f + characterBody.forward * 1.5f;
+            GameObject grenade = Instantiate(grenadeObject, grenadeSpawnPosition, Quaternion.identity);
+            Rigidbody grenadeRigidbody = grenade.GetComponent<Rigidbody>();
+
+            // 수류탄에 힘을 가합니다.
+            Vector3 throwVector = Quaternion.AngleAxis(throwAngle, characterBody.right) * throwDirection;
+            grenadeRigidbody.AddForce(throwVector * throwForce, ForceMode.VelocityChange);
+
+            // 수류탄 개수 감소
+            hasGrenades--;
+            grenades[hasGrenades].SetActive(false);
+        }
+    }
+
+    /** 수류탄 발사 각도 계산 함수 **/
+    float CalculateThrowAngle(Vector3 startPosition, Vector3 targetPosition)
+    {
+        // 여기에 발사 각도 계산 로직을 추가
+        return 45.0f; // 임시 값
+    }
+
+    /** 수류탄 발사 힘 계산 함수 **/
+    float CalculateThrowForce(Vector3 startPosition, Vector3 targetPosition, float angle)
+    {
+        // 여기에 발사 힘 계산 로직을 추가
+        return 10.0f * grenadeChargeTime; // 임시 값
     }
 
     /** 상호작용: E키 **/
