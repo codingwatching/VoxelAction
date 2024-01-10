@@ -401,6 +401,7 @@ public class CharacterControllerCS : MonoBehaviour {
             // 수류탄에 힘을 가합니다.
             Vector3 throwVector = Quaternion.AngleAxis(throwAngle, characterBody.right) * throwDirection;
             grenadeRigidbody.AddForce(throwVector * throwForce, ForceMode.VelocityChange);
+            grenadeRigidbody.AddTorque(Vector3.back * 10, ForceMode.Impulse);
 
             // 수류탄 개수 감소
             hasGrenades--;
