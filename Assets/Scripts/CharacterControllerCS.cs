@@ -18,7 +18,7 @@ public class CharacterControllerCS : MonoBehaviour {
     [SerializeField]
     private Transform cameraArm;
     [SerializeField]
-    private float rotSensitivity = 3f; // 카메라 회전 감도
+    private float rotSensitivity = 10f; // 카메라 회전 감도
     public Camera followCam;
 
     // Jump
