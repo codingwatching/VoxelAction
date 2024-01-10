@@ -19,6 +19,16 @@ public class WeaponCS : MonoBehaviour
     public Transform bulletCasePos;
     public GameObject bulletCase;
 
+    public Camera playerCamera; // 플레이어의 카메라
+
+    void Start()
+    {
+        if (playerCamera == null)
+        {
+            playerCamera = Camera.main; // 메인 카메라를 자동으로 찾음
+        }
+    }
+
     public void Use()
     {
         // 근접 공격 (Hammer)
@@ -53,10 +63,26 @@ public class WeaponCS : MonoBehaviour
 
     IEnumerator Shot()
     {
-        // 1. 총알 발사
-        GameObject instantBullet = Instantiate(bullet, bulletPos.position, bulletPos.rotation);
+        // 총알 발사 로직
+        Ray ray = playerCamera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
+        RaycastHit hit;
+
+        Vector3 targetPoint;
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+        {
+            targetPoint = hit.point;
+        }
+        else
+        {
+            targetPoint = ray.GetPoint(1000); // Ray가 아무것도 맞지 않았을 때의 기본 지점
+        }
+
+        Vector3 targetDirection = targetPoint - bulletPos.position;
+        GameObject instantBullet = Instantiate(bullet, bulletPos.position, Quaternion.LookRotation(targetDirection)); // TPS 버전
+        // GameObject instantBullet = Instantiate(bullet, bulletPos.position, bulletPos.rotation); // 쿼터뷰 버전
         Rigidbody bulletRigidBody = instantBullet.GetComponent<Rigidbody>();
-        bulletRigidBody.velocity = bulletPos.forward * 500;
+        //bulletRigidBody.velocity = bulletPos.forward * 500; // 쿼터뷰 버전
+        bulletRigidBody.velocity = targetDirection.normalized * 500; // TPS 버전
 
         yield return null;
         // 2. 탄피 배출

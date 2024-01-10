@@ -14,6 +14,7 @@ public class CameraOptionCS : MonoBehaviour
 
     private bool isFirstPersonView = false; // 1-3인칭 시점 변환
 
+
     void Awake()
     {
         cam = GetComponent<Camera>(); // 카메라 컴포넌트 참조
