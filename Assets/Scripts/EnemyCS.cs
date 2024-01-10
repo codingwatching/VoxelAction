@@ -41,7 +41,7 @@ public class EnemyCS : MonoBehaviour
         {
             BulletCS bullet = other.GetComponent<BulletCS>();
             curHealth -= bullet.damage;
-            Vector3 reactVec = transform.position - other.transform.position; // 반작용 방향 구하기
+            Vector3 reactVec = transform.position + other.transform.position; // 반작용 방향 구하기 (뒤로 밀려남)
             Destroy(other.gameObject); // 총알과 적이 닿는다면 총알을 제거
 
             Debug.Log("OnTriggerEnter Bullet : " + curHealth);
@@ -61,14 +61,14 @@ public class EnemyCS : MonoBehaviour
         else
         {
             mat.color = Color.gray;
-            gameObject.layer = 14;
-            
+            gameObject.layer = 12; // Layer Idx of "EnemyDead" 
+
             // 반작용 넉백
             reactVec = reactVec.normalized;
-            reactVec += Vector3.up;
+            reactVec += Vector3.up * 2f; // 넉백 벡터에 약간의 위 방향 추가
             rigid.AddForce(reactVec * 5, ForceMode.Impulse);
             
-            Destroy(gameObject, 4);
+            Destroy(gameObject, 3);
         }
     }
 }
