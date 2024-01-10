@@ -65,6 +65,7 @@ public class CharacterControllerCS : MonoBehaviour {
     bool isSwap; // 교체 시간차를 위한 플래그 로직
     bool isFireReady = true; // fireDelayTime 을 기다리면 공격 가능!
     bool isReload;
+    bool isBorder; // 벽 충돌 플래그
     Vector3 moveVec;
     Vector3 dodgeVec;
 
@@ -95,15 +96,18 @@ public class CharacterControllerCS : MonoBehaviour {
         Attack();
         Reload();
         LookAround();
+        Jump();
     }
 
     // 물리 연산과 관련된 코드
-    private void FixedUpdate()
+    void FixedUpdate()
     {
         Move();
         Turn();
         Dodge();
-        Jump();
+        
+        FreezeRotation();
+        StopToWall();
     }
 
     /** 입력 **/
@@ -152,7 +156,9 @@ public class CharacterControllerCS : MonoBehaviour {
             Vector3 lookRight = new Vector3(cameraArm.right.x, 0f, cameraArm.right.z).normalized;
             Vector3 moveDir = lookForward * moveInput.y + lookRight * moveInput.x;
             characterBody.forward = moveDir;
-            transform.position += moveDir * speed * (runDown ? 2f : 1f) * Time.deltaTime; // 달리기 시 이동 속도 증가
+
+            if(!isBorder)
+                transform.position += moveDir * speed * (runDown ? 2f : 1f) * Time.deltaTime; // 달리기 시 이동 속도 증가
 
             isWalking = moveDir != Vector3.zero;
 
@@ -205,10 +211,10 @@ public class CharacterControllerCS : MonoBehaviour {
     /** 점프, 더블 점프 **/
     void Jump()
     {
+        SetJetActive(isJump);
         bool isDoubleJump = (jumpDown && (Time.time - lastJumpTime < doubleJumpDelay));
         if ((jumpDown && !isJump && !isDodge && !isSwap) || isDoubleJump && jumpCount < 2)
         {
-            SetJetActive(isJump);
             Debug.Log("SetActive True");
             float jumpForce = jumpPower;
 
@@ -224,7 +230,6 @@ public class CharacterControllerCS : MonoBehaviour {
             isJump = true;
             jumpCount++;
             lastJumpTime = Time.time;
-
         }
     }
 
@@ -344,6 +349,18 @@ public class CharacterControllerCS : MonoBehaviour {
                 Destroy(nearObject);
             }
         }
+    }
+
+    void FreezeRotation()
+    {
+        rigidbody.angularVelocity = Vector3.zero; // 물리 회전 속도를 0으로 설정
+    } 
+
+    /* 플레이어가 벽을 뚫고 나가는 문제 해결 */
+    void StopToWall()
+    {
+        Debug.DrawRay(characterBody.position, characterBody.forward *5, Color.green);
+        isBorder = Physics.Raycast(characterBody.position, characterBody.forward, 5, LayerMask.GetMask("Wall")); // Wall 과 부딪히면 True
     }
 
     void OnCollisionEnter(Collision collision)
