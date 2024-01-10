@@ -9,7 +9,8 @@ public class CharacterControllerCS : MonoBehaviour {
         Idle,
         Walking,
         Running,
-        Jumping
+        Jumping,
+        Reloading
     }
     private PlayerState currentState;
 
@@ -82,6 +83,7 @@ public class CharacterControllerCS : MonoBehaviour {
     // Initialization
     void Awake()
     {
+        currentState = PlayerState.Idle;
         rigidbody = GetComponent<Rigidbody>();
         animator = GetComponentInChildren<Animator>();
         originalSpeed = speed; // Store the original speed
@@ -147,6 +149,8 @@ public class CharacterControllerCS : MonoBehaviour {
     /** 이동 **/
     void Move()
     {
+        if (currentState == PlayerState.Reloading) return; // Reloading 상태일 때 이동 방지
+
         Vector2 moveInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         bool isWalking = moveInput.magnitude != 0;
 
@@ -177,6 +181,8 @@ public class CharacterControllerCS : MonoBehaviour {
     // 회전 
     void Turn()
     {
+        if (currentState == PlayerState.Reloading) return; // Reloading 상태일 때 회전 방지
+
         // 카메라의 방향을 기준으로 캐릭터가 회전하도록 설정
         Vector3 lookDirection = new Vector3(cameraArm.forward.x, 0f, cameraArm.forward.z).normalized;
         if (lookDirection != Vector3.zero)
@@ -321,9 +327,10 @@ public class CharacterControllerCS : MonoBehaviour {
         // 재장전 가능
         if (reloadDown && !isJump && !isDodge && !isSwap && isFireReady)
         {
+            currentState = PlayerState.Reloading; // 상태를 Reloading으로 설정
             animator.SetTrigger("doReload");
             isReload = true;
-            Invoke("ReloadOut", 1f);
+            Invoke("ReloadOut", 2.3f);
         }
     }
 
@@ -333,6 +340,7 @@ public class CharacterControllerCS : MonoBehaviour {
         equippedWeapon.curAmmo = reAmmo;
         ammo -= reAmmo;
         isReload = false;
+        currentState = PlayerState.Idle; // 재장전이 끝나면 Idle 상태로 복귀
     }
 
     /** 상호작용: E키 **/
