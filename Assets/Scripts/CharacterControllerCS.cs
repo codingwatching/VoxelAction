@@ -13,7 +13,7 @@ public class CharacterControllerCS : MonoBehaviour {
         Reloading
     }
     private PlayerState currentState;
-
+    public Texture2D cursorIcon;
     [SerializeField]
     private Transform characterBody;
     [SerializeField]
@@ -21,7 +21,6 @@ public class CharacterControllerCS : MonoBehaviour {
     [SerializeField]
     private float rotSensitivity = 10f; // 카메라 회전 감도
     public Camera followCam;
-    public GameObject f;
 
     // Jump
     private float lastJumpTime;
@@ -95,6 +94,7 @@ public class CharacterControllerCS : MonoBehaviour {
     // Initialization
     void Awake()
     {
+
         currentState = PlayerState.Idle;
         rigidbody = GetComponent<Rigidbody>();
         animator = GetComponentInChildren<Animator>();
@@ -102,6 +102,11 @@ public class CharacterControllerCS : MonoBehaviour {
         meshs = GetComponentsInChildren<MeshRenderer>();
     }
 
+    void Start()
+    {
+        Cursor.SetCursor(cursorIcon, Vector2.zero, CursorMode.Auto);
+
+    }
     // Update is called once per frame 입력 처리나 애니메이션 관련 코드 
     void Update()
     {
