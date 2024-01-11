@@ -1,18 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Windows.Input;
 using UnityEngine;
 
-public class CharacterControllerCS : MonoBehaviour { 
+public class CharacterControllerCS : MonoBehaviour {
     // State
-    public enum PlayerState
-    {
-        Idle,
-        Walking,
-        Running,
-        Jumping,
-        Reloading
-    }
-    private PlayerState currentState;
+    /*    public enum PlayerState
+        {
+            Idle,
+            Walking,
+            Running,
+            Jumping,
+            Reloading
+        }*/
+
     public Texture2D cursorIcon;
     [SerializeField]
     private Transform characterBody;
@@ -69,7 +70,7 @@ public class CharacterControllerCS : MonoBehaviour {
     bool grenadeUp; // Key: (default) right mouse up
 
     bool isWalking;
-    bool isJump;
+    public bool isJump;
     bool isDodge;
     bool isSwap; // 교체 시간차를 위한 플래그 로직
     bool isFireReady = true; // fireDelayTime 을 기다리면 공격 가능!
@@ -94,8 +95,7 @@ public class CharacterControllerCS : MonoBehaviour {
     // Initialization
     void Awake()
     {
-
-        currentState = PlayerState.Idle;
+        // currentState = PlayerState.Idle;
         rigidbody = GetComponent<Rigidbody>();
         animator = GetComponentInChildren<Animator>();
         originalSpeed = speed; // Store the original speed
@@ -119,8 +119,9 @@ public class CharacterControllerCS : MonoBehaviour {
         Jump();
         Grenade();
         Dodge();
-
     }
+
+
 
     // 물리 연산과 관련된 코드
     void FixedUpdate()
@@ -158,7 +159,7 @@ public class CharacterControllerCS : MonoBehaviour {
         float x = camAngle.x - mouseDelta.y;
         if (x < 180f)
         {
-            x = Mathf.Clamp(x, -1f, 80f);
+            x = Mathf.Clamp(x, -1f, 89f);
         }
         else
         {
@@ -171,7 +172,7 @@ public class CharacterControllerCS : MonoBehaviour {
     /** 이동 **/
     void Move()
     {
-        if (currentState == PlayerState.Reloading) return; // Reloading 상태일 때 이동 방지
+        // if (currentState == PlayerState.Reloading) return; // Reloading 상태일 때 이동 방지
 
         Vector2 moveInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         bool isWalking = moveInput.magnitude != 0;
@@ -203,7 +204,7 @@ public class CharacterControllerCS : MonoBehaviour {
     // 회전 
     void Turn()
     {
-        if (currentState == PlayerState.Reloading) return; // Reloading 상태일 때 회전 방지
+        // if (currentState == PlayerState.Reloading) return; // Reloading 상태일 때 회전 방지
 
         // 카메라의 방향을 기준으로 캐릭터가 회전하도록 설정
         Vector3 lookDirection = new Vector3(cameraArm.forward.x, 0f, cameraArm.forward.z).normalized;
@@ -237,7 +238,7 @@ public class CharacterControllerCS : MonoBehaviour {
     }
 
     /** 점프, 더블 점프 **/
-    void Jump()
+    public void Jump()
     {
         SetJetActive(isJump);
         bool isDoubleJump = (jumpDown && (Time.time - lastJumpTime < doubleJumpDelay));
@@ -261,7 +262,7 @@ public class CharacterControllerCS : MonoBehaviour {
         }
     }
 
-    void SetJetActive(bool active)
+    public void SetJetActive(bool active)
     {
         leftzet.SetActive(active);
         rightzet.SetActive(active);
@@ -349,7 +350,7 @@ public class CharacterControllerCS : MonoBehaviour {
         // 재장전 가능
         if (reloadDown && !isJump && !isDodge && !isSwap && isFireReady)
         {
-            currentState = PlayerState.Reloading; // 상태를 Reloading으로 설정
+            // currentState = PlayerState.Reloading; // 상태를 Reloading으로 설정
             animator.SetTrigger("doReload");
             isReload = true;
             Invoke("ReloadOut", 2.3f);
@@ -362,7 +363,7 @@ public class CharacterControllerCS : MonoBehaviour {
         equippedWeapon.curAmmo = reAmmo;
         ammo -= reAmmo;
         isReload = false;
-        currentState = PlayerState.Idle; // 재장전이 끝나면 Idle 상태로 복귀
+        // currentState = PlayerState.Idle; // 재장전이 끝나면 Idle 상태로 복귀
     }
 
     /** 수류탄 **/
@@ -446,6 +447,11 @@ public class CharacterControllerCS : MonoBehaviour {
                 hasWeapons[weaponIndex] = true;
 
                 Destroy(nearObject);
+            }
+            else if (nearObject.tag == "Shop")
+            {
+                ShopCS shop = nearObject.GetComponent<ShopCS>();
+                shop.Enter(this);
             }
         }
     }
@@ -540,7 +546,7 @@ public class CharacterControllerCS : MonoBehaviour {
     void OnTriggerStay(Collider other)
     {
         // 무기 입수
-        if (other.tag == "Weapon")
+        if (other.tag == "Weapon" || other.tag=="Shop")
             nearObject = other.gameObject;
     }
 
@@ -548,5 +554,11 @@ public class CharacterControllerCS : MonoBehaviour {
     {
         if (other.tag == "Weapon")
             nearObject = null;
+        else if (other.tag == "Shop")
+        {
+            ShopCS shop = other.GetComponent<ShopCS>();
+            shop.Exit();
+            nearObject = null;
+        }
     }
 }

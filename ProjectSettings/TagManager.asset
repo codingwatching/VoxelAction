@@ -13,6 +13,7 @@ TagManager:
   - Enemy
   - EnemyBullet
   - HandGun
+  - Shop
   layers:
   - Default
   - TransparentFX

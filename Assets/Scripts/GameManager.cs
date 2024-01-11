@@ -17,6 +17,9 @@ public class GameManager : MonoBehaviour
 
     private GameState currentState;
 
+    // GameState 변경 시 호출되는 이벤트
+    public delegate void GameStateChangeHandler(GameState newState); // 델리게이트는 C#에서 메서드에 대한 참조를 보관하는 타입
+    public static event GameStateChangeHandler OnGameStateChange; // GameState가 변경될 때마다 알림을 받을 수 있다
 
     private void Awake()
     {
@@ -34,6 +37,7 @@ public class GameManager : MonoBehaviour
     public void ChangeState(GameState newState)
     {
         currentState = newState;
+        OnGameStateChange?.Invoke(newState); // 게임 상태 변경 알림. ?. 연산자는 OnGameStateChange 이벤트가 null이 아닐 경우에만 이벤트를 호출
 
         switch (newState)
         {
@@ -49,6 +53,9 @@ public class GameManager : MonoBehaviour
             case GameState.Dialogue:
                 // 대화 상태로 전환할 때의 로직
                 break;
+            case GameState.Pause:
+                // 게임 일시정지 상태로 전환할 때의 로직
+                break;
         }
     }
 
@@ -59,4 +66,10 @@ public class GameManager : MonoBehaviour
     }
 
     // 추가 게임 관리 로직
+
+    // 게임 상태를 가져오는 함수
+    public GameState GetCurrentState()
+    {
+        return currentState;
+    }
 }

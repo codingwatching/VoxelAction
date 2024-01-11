@@ -63,7 +63,7 @@ public class WeaponCS : MonoBehaviour
 
     IEnumerator Shot()
     {
-        // ÃÑ¾Ë ¹ß»ç ·ÎÁ÷
+        // 1. ÃÑ¾Ë ¹ß»ç
         Ray ray = playerCamera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
         RaycastHit hit;
 
