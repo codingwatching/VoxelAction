@@ -3728,9 +3728,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '1000
-
-'
+  m_text: 10000
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5e332188d05df694e98f98b99e3e3066, type: 2}
   m_sharedMaterial: {fileID: 7410127220756356088, guid: 5e332188d05df694e98f98b99e3e3066, type: 2}
@@ -4156,7 +4154,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 549652140}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 840304255}
+        m_TargetAssemblyTypeName: ShopCS, Assembly-CSharp
+        m_MethodName: Buy
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &549652140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5305,7 +5315,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 632145523}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1178294321}
+        m_TargetAssemblyTypeName: ShopCS, Assembly-CSharp
+        m_MethodName: Buy
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &632145523
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6490,7 +6512,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 747499410}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1178294321}
+        m_TargetAssemblyTypeName: ShopCS, Assembly-CSharp
+        m_MethodName: Buy
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &747499410
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7102,6 +7136,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiGroup: {fileID: 1036924344}
   animator: {fileID: 1765319432}
+  itemObj:
+  - {fileID: 3383734554893223204, guid: 6f6ecbffdefc82545bddbc1d573beb28, type: 3}
+  - {fileID: 2457234844457166365, guid: ca88cf23420455443be2e02f3cb59333, type: 3}
+  - {fileID: 8415097608579367625, guid: 333a46758108adf459cb120dc2a59b58, type: 3}
+  itemPrice: f4010000b80b000088130000
+  itemPos:
+  - {fileID: 1818692243}
+  - {fileID: 882971002}
+  - {fileID: 224374516}
+  talkData:
+  - BUY~~
+  - Your Wallet is empty
+  talkText: {fileID: 1628703625}
 --- !u!135 &840304256
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -12313,11 +12360,43 @@ Transform:
   m_Children: []
   m_Father: {fileID: 278513358}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &891027476 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3383734554893223204, guid: 6f6ecbffdefc82545bddbc1d573beb28, type: 3}
+  m_PrefabInstance: {fileID: 7421550336527175358}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &891027481 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5577947048716286372, guid: 6f6ecbffdefc82545bddbc1d573beb28, type: 3}
   m_PrefabInstance: {fileID: 7421550336527175358}
   m_PrefabAsset: {fileID: 0}
+--- !u!54 &891027482
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 891027476}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &910117372
 GameObject:
   m_ObjectHideFlags: 0
@@ -12403,7 +12482,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 910117375}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 840304255}
+        m_TargetAssemblyTypeName: ShopCS, Assembly-CSharp
+        m_MethodName: Buy
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &910117375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12922,7 +13013,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 971379093}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1178294321}
+        m_TargetAssemblyTypeName: ShopCS, Assembly-CSharp
+        m_MethodName: Buy
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &971379093
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19109,6 +19212,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiGroup: {fileID: 1185387104}
   animator: {fileID: 1394629487}
+  itemObj:
+  - {fileID: 4444147823825409689, guid: 656a0c0e8ad9e324b9690bd08b78b0a9, type: 3}
+  - {fileID: 7915363005542056100, guid: 33c41bbbe37ebab45955b5ba8b815ec0, type: 3}
+  - {fileID: 6312065811236259067, guid: 8dd3c9b83f05afc42b7484a40e08e918, type: 3}
+  itemPrice: e8030000b0040000c4090000
+  itemPos:
+  - {fileID: 180649492}
+  - {fileID: 1356768675}
+  - {fileID: 712725171}
+  talkData:
+  - GOOD LUCK!
+  - Need More Coins!
+  talkText: {fileID: 579736540}
 --- !u!1001 &1178933994
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19708,7 +19824,7 @@ MonoBehaviour:
   leftzet: {fileID: 1455128347}
   rightzet: {fileID: 1459767103}
   ammo: 100
-  coin: 0
+  coin: 10000
   health: 80
   maxAmmo: 99
   maxCoin: 9999
@@ -31007,7 +31123,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1502489920}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 840304255}
+        m_TargetAssemblyTypeName: ShopCS, Assembly-CSharp
+        m_MethodName: Buy
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1502489920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36648,7 +36776,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3383734554893223204, guid: 6f6ecbffdefc82545bddbc1d573beb28, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 891027482}
   m_SourcePrefab: {fileID: 100100000, guid: 6f6ecbffdefc82545bddbc1d573beb28, type: 3}
 --- !u!1001 &8347337147211934775
 PrefabInstance:

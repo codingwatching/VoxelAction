@@ -4926,7 +4926,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5577947048716286372}
-  - component: {fileID: 1970635548960667133}
   - component: {fileID: 5631626628338155501}
   - component: {fileID: 7126883666528482835}
   - component: {fileID: 2366573397400294551}
@@ -4955,33 +4954,6 @@ Transform:
   - {fileID: 6719972171478899281}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 39.513}
---- !u!54 &1970635548960667133
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3383734554893223204}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!135 &5631626628338155501
 SphereCollider:
   m_ObjectHideFlags: 0
