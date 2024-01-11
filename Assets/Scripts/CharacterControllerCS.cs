@@ -16,6 +16,8 @@ public class CharacterControllerCS : MonoBehaviour {
 
     public Texture2D cursorIcon;
     [SerializeField]
+    private Transform character;
+    [SerializeField]
     private Transform characterBody;
     [SerializeField]
     private Transform cameraArm;
@@ -238,6 +240,19 @@ public class CharacterControllerCS : MonoBehaviour {
                 Debug.Log("마우스에 의한 회전 8 ");
             }
         }*/
+    }
+
+    public void ShotTurn()
+    {
+        Debug.Log("ShotTurn 1 비포" + characterBody.rotation);
+        // 월드 좌표계에서 전방 벡터를 기준으로 회전을 설정합니다.
+        Quaternion targetRotation = Quaternion.LookRotation(Vector3.forward);
+
+        // characterBody의 회전을 목표 회전으로 설정합니다.
+        characterBody.rotation = targetRotation;
+
+        Debug.Log("ShotTurn 2 애프터" + characterBody.rotation);
+
     }
 
     /** 점프, 더블 점프 **/

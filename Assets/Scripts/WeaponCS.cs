@@ -19,6 +19,7 @@ public class WeaponCS : MonoBehaviour
     public Transform bulletCasePos;
     public GameObject bulletCase;
 
+    public GameObject characterController;
     public Camera playerCamera; // 플레이어의 카메라
 
     void Start()
@@ -63,6 +64,11 @@ public class WeaponCS : MonoBehaviour
 
     IEnumerator Shot()
     {
+        if (characterController != null)
+        {
+            characterController.GetComponent<CharacterControllerCS>().ShotTurn(); // 인스턴스를 사용하여 ShotTurn 호출
+        }
+
         // 1. 총알 발사
         Ray ray = playerCamera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
         RaycastHit hit;
@@ -82,8 +88,8 @@ public class WeaponCS : MonoBehaviour
         // GameObject instantBullet = Instantiate(bullet, bulletPos.position, bulletPos.rotation); // 쿼터뷰 버전
         Rigidbody bulletRigidBody = instantBullet.GetComponent<Rigidbody>();
         //bulletRigidBody.velocity = bulletPos.forward * 500; // 쿼터뷰 버전
-        bulletRigidBody.velocity = targetDirection.normalized * 300; // TPS 버전
-
+        bulletRigidBody.velocity = targetDirection.normalized * 400; // TPS 버전
+        // main camera 의 forward 방향으로 회전시킨다
         yield return null;
         // 2. 탄피 배출
         GameObject instantCase = Instantiate(bulletCase, bulletCasePos.position, bulletCasePos.rotation);
@@ -93,3 +99,4 @@ public class WeaponCS : MonoBehaviour
         bulletCaseRigidBody.AddTorque(Vector3.up * 10, ForceMode.Impulse);
     }
 }
+

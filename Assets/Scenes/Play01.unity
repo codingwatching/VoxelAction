@@ -4884,7 +4884,8 @@ MonoBehaviour:
   bullet: {fileID: 5997335303731221406, guid: ae87540cbb9160b4d91564727beff7cb, type: 3}
   bulletCasePos: {fileID: 313458409}
   bulletCase: {fileID: 8180536178103766957, guid: 1eb7c82decf9ad6429af235d3eadb813, type: 3}
-  playerCamera: {fileID: 0}
+  characterController: {fileID: 1200201007}
+  playerCamera: {fileID: 963194227}
 --- !u!1 &604394187
 GameObject:
   m_ObjectHideFlags: 0
@@ -19878,6 +19879,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cursorIcon: {fileID: 2800000, guid: 2f3fa997466248a42b9e4886b0bab895, type: 3}
+  character: {fileID: 684963914}
   characterBody: {fileID: 684963914}
   cameraArm: {fileID: 588415215}
   rotSensitivity: 3
@@ -31362,6 +31364,7 @@ MonoBehaviour:
   bullet: {fileID: 5299443505601146984, guid: d9c273e26457d874caf68479b086cd0b, type: 3}
   bulletCasePos: {fileID: 1971920101}
   bulletCase: {fileID: 8180536178103766957, guid: 1eb7c82decf9ad6429af235d3eadb813, type: 3}
+  characterController: {fileID: 1200201007}
   playerCamera: {fileID: 963194227}
 --- !u!1001 &1514573664
 PrefabInstance:
@@ -34328,6 +34331,7 @@ MonoBehaviour:
   bullet: {fileID: 5997335303731221406, guid: ae87540cbb9160b4d91564727beff7cb, type: 3}
   bulletCasePos: {fileID: 313458409}
   bulletCase: {fileID: 8180536178103766957, guid: 1eb7c82decf9ad6429af235d3eadb813, type: 3}
+  characterController: {fileID: 0}
   playerCamera: {fileID: 963194227}
 --- !u!65 &1946393047
 BoxCollider:
