@@ -77,6 +77,7 @@ public class CharacterControllerCS : MonoBehaviour {
     bool isReload;
     bool isBorder; // 벽 충돌 플래그
     bool isDamage; // 무적 타임을 위해
+    bool isShop; // 쇼핑 중
 
     Vector3 moveVec;
     Vector3 dodgeVec;
@@ -331,7 +332,7 @@ public class CharacterControllerCS : MonoBehaviour {
         fireDelayTime += Time.deltaTime; // 공격딜레이에 시간을 더해주고 공격 가능 여부를 확인
         isFireReady = equippedWeapon.rate < fireDelayTime; // 공격속도보다 시간이 커지면, 공격 가능
 
-        if (fireDown && isFireReady && !isDodge && !isSwap)
+        if (fireDown && isFireReady && !isDodge && !isSwap && !isShop)
         {
             equippedWeapon.Use();
             animator.SetTrigger(equippedWeapon.type == WeaponCS.Type.Melee ?  "doSwing" : "doShot"); // HandGun 또는 SubMachineGun
@@ -348,7 +349,7 @@ public class CharacterControllerCS : MonoBehaviour {
         if (ammo == 0) return;
 
         // 재장전 가능
-        if (reloadDown && !isJump && !isDodge && !isSwap && isFireReady)
+        if (reloadDown && !isJump && !isDodge && !isSwap && isFireReady && !isShop)
         {
             // currentState = PlayerState.Reloading; // 상태를 Reloading으로 설정
             animator.SetTrigger("doReload");
@@ -452,6 +453,7 @@ public class CharacterControllerCS : MonoBehaviour {
             {
                 ShopCS shop = nearObject.GetComponent<ShopCS>();
                 shop.Enter(this);
+                isShop = true;
             }
         }
     }
@@ -558,6 +560,7 @@ public class CharacterControllerCS : MonoBehaviour {
         {
             ShopCS shop = other.GetComponent<ShopCS>();
             shop.Exit();
+            isShop = false;
             nearObject = null;
         }
     }
