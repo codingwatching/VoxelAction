@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -20,6 +21,19 @@ public class GameManager : MonoBehaviour
     // GameState 변경 시 호출되는 이벤트
     public delegate void GameStateChangeHandler(GameState newState); // 델리게이트는 C#에서 메서드에 대한 참조를 보관하는 타입
     public static event GameStateChangeHandler OnGameStateChange; // GameState가 변경될 때마다 알림을 받을 수 있다
+
+
+    public GameObject gameCam; // main cam
+    public CharacterControllerCS player;
+    public int stage;
+    public float playTime;
+    public bool isBattle;
+    public int enemyCntA;
+
+    public GameObject menuPanel;
+    public GameObject gamePanel;
+    public TMP_Text maxScoreText;
+
 
     private void Awake()
     {

@@ -101,6 +101,8 @@ public class CharacterControllerCS : MonoBehaviour {
         animator = GetComponentInChildren<Animator>();
         originalSpeed = speed; // Store the original speed
         meshs = GetComponentsInChildren<MeshRenderer>();
+
+        PlayerPrefs.SetInt("MaxScore", 200714);
     }
 
     void Start()
