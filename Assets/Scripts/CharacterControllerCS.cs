@@ -96,6 +96,7 @@ public class CharacterControllerCS : MonoBehaviour {
     float fireDelayTime;
     private float originalSpeed; // Store original speed for dodging
 
+    private int loadCheck = 0;
     // Initialization
     void Awake()
     {
@@ -108,11 +109,14 @@ public class CharacterControllerCS : MonoBehaviour {
         {
             Destroy(gameObject);
         }
+        loadCheck++;
+        Debug.Log("CHECK: " + loadCheck);
+
         // currentState = PlayerState.Idle;
         rigidbody = GetComponent<Rigidbody>();
         animator = GetComponentInChildren<Animator>();
         originalSpeed = speed; // Store the original speed
-        meshs = GetComponentsInChildren<MeshRenderer>();
+        meshs = GetComponentsInChildren<MeshRenderer>(); // 복수의 메시를 가지고 온다
 
         PlayerPrefs.SetInt("MaxScore", 200714);
     }
@@ -558,7 +562,7 @@ public class CharacterControllerCS : MonoBehaviour {
     /** AI 몬스터로부터 피격 시 리액션 **/
     IEnumerator OnDamage()
     {
-        isDamage = true;
+        isDamage = true; // 무적 타임
         foreach(MeshRenderer mesh in meshs){
             mesh.material.color = Color.yellow;
         }
