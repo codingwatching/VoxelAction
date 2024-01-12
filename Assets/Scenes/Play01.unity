@@ -3135,7 +3135,7 @@ GameObject:
   - component: {fileID: 418663059}
   m_Layer: 0
   m_Name: SceneTransition
-  m_TagString: Shop
+  m_TagString: SceneTransition
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -24959,7 +24959,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1200201008
 Transform:
   m_ObjectHideFlags: 0
