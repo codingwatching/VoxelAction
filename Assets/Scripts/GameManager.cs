@@ -6,7 +6,8 @@ using TMPro;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-    
+    public CharacterData currentCharacterData;
+
     public enum GameState
     {
         Lobby,
@@ -85,5 +86,21 @@ public class GameManager : MonoBehaviour
     public GameState GetCurrentState()
     {
         return currentState;
+    }
+
+    public void UpdateCharacterData(CharacterControllerCS character)
+    {
+        currentCharacterData = new CharacterData(character);
+    }
+
+    public void LoadCharacterDataIntoScene(CharacterControllerCS character)
+    {
+        if (currentCharacterData != null)
+        {
+            character.health = currentCharacterData.health;
+            character.ammo = currentCharacterData.ammo;
+            character.coin = currentCharacterData.coin;
+            // 다른 필요한 데이터를 여기에 복사합니다.
+        }
     }
 }
