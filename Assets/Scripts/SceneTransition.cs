@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class SceneTransition : MonoBehaviour
 {
@@ -7,18 +6,20 @@ public class SceneTransition : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            SavePlayerState(other);
-            UnityEngine.SceneManagement.SceneManager.LoadScene("Play02");  // 충돌을 피하기 위해 전체 네임스페이스 사용
+            // SavePlayerState(other);
+
+            // 현재 활성화된 씬의 이름을 얻음
+            string currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+
+            // 씬 이름에 따라 다음 씬을 결정
+            string nextScene = currentScene == "Play01" ? "Play02" : "Play01";
+
+            UnityEngine.SceneManagement.SceneManager.LoadScene(nextScene);  // 충돌을 피하기 위해 전체 네임스페이스 사용
         }
     }
 
-    private void SavePlayerState(Collider player)
+/*    private void SavePlayerState(Collider player)
     {
-        CharacterControllerCS characterController = player.GetComponent<CharacterControllerCS>();
-        if (characterController != null)
-        {
-            // 현재 캐릭터 상태를 저장
-            GameManager.instance.UpdateCharacterData(characterController);
-        }
-    }
+
+    }*/
 }

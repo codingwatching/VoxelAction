@@ -17,6 +17,13 @@ public class OrbitCS : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (target == null)
+        {
+            // target이 없다면, 필요한 조치를 취합니다 (예: 스크립트 비활성화)
+            return;
+        }
+
+        // target이 유효할 때만 실행
         transform.position = target.position + offSet;
         transform.RotateAround(target.position, Vector3.up, orbitSpeed*Time.deltaTime);
         offSet = transform.position - target.position;

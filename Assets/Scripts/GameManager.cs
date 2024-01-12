@@ -74,11 +74,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void CompleteLevel()
+/*    public void CompleteLevel()
     {
         // 레벨이 완료될 때 호출되며, SceneManager의 LoadNextScene을 사용하여 다음 씬으로 전환
         SceneManager.instance.LoadNextScene();
-    }
+    }*/
 
     // 추가 게임 관리 로직
 
@@ -88,12 +88,12 @@ public class GameManager : MonoBehaviour
         return currentState;
     }
 
-    public void UpdateCharacterData(CharacterControllerCS character)
+/*    public void UpdateCharacterData(CharacterControllerCS character)
     {
         currentCharacterData = new CharacterData(character);
-    }
+    }*/
 
-    public void LoadCharacterDataIntoScene(CharacterControllerCS character)
+/*    public void LoadCharacterDataIntoScene(CharacterControllerCS character)
     {
         if (currentCharacterData != null)
         {
@@ -102,5 +102,5 @@ public class GameManager : MonoBehaviour
             character.coin = currentCharacterData.coin;
             // 다른 필요한 데이터를 여기에 복사합니다.
         }
-    }
+    }*/
 }

@@ -13,6 +13,7 @@ public class CharacterControllerCS : MonoBehaviour {
             Jumping,
             Reloading
         }*/
+    public static CharacterControllerCS instance;
 
     public Texture2D cursorIcon;
     [SerializeField]
@@ -98,6 +99,15 @@ public class CharacterControllerCS : MonoBehaviour {
     // Initialization
     void Awake()
     {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
         // currentState = PlayerState.Idle;
         rigidbody = GetComponent<Rigidbody>();
         animator = GetComponentInChildren<Animator>();
