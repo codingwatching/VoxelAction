@@ -364,7 +364,7 @@ public class CharacterControllerCS : MonoBehaviour {
             equippedWeapon.Use();
             animator.SetTrigger(equippedWeapon.type == WeaponCS.Type.Melee ?  "doSwing" : "doShot"); // HandGun 또는 SubMachineGun
             fireDelayTime = 0; // 공격했으니 초기화
-            Debug.Log("Swing");
+            Debug.Log("Attacked");
         }
     }
 
