@@ -5,14 +5,18 @@ using UnityEngine;
 
 public class CharacterControllerCS : MonoBehaviour {
     // State
-    /*    public enum PlayerState
-        {
-            Idle,
-            Walking,
-            Running,
-            Jumping,
-            Reloading
-        }*/
+    public enum PlayerState
+    {
+        Idle,
+        Walking,
+        Running,
+        Jumping,
+        Dodging,
+        Attacking,
+        Reloading,
+        Interacting
+    }
+    private PlayerState currentState;
     public static CharacterControllerCS instance;
 
     public Texture2D cursorIcon;
@@ -82,6 +86,10 @@ public class CharacterControllerCS : MonoBehaviour {
     bool isDamage; // 무적 타임을 위해
     bool isShop; // 쇼핑 중
 
+    private const float dodgeDuration = 0.5f;
+    private const float swapDuration = 0.4f;
+    private const float reloadDuration = 2.3f;
+
     Vector3 moveVec;
     Vector3 dodgeVec;
 
@@ -123,13 +131,19 @@ public class CharacterControllerCS : MonoBehaviour {
 
     void Start()
     {
+        // 초기 상태 설정
+        currentState = PlayerState.Idle;
+
         Cursor.SetCursor(cursorIcon, Vector2.zero, CursorMode.Auto);
 
     }
+
     // Update is called once per frame 입력 처리나 애니메이션 관련 코드 
     void Update()
     {
         GetInput();
+        UpdateState();
+
         Swap();
         Interaction();
         Attack();
@@ -168,6 +182,57 @@ public class CharacterControllerCS : MonoBehaviour {
         swapDown3 = Input.GetButtonDown("Swap3");
         grenadeDown = Input.GetButton("Fire2"); // 꾹 눌러서 수류탄 던질 힘을 축적할 수 있습니다.
         grenadeUp = Input.GetButtonUp("Fire2"); // 떼어서 수류탄 발사
+    }
+
+    void UpdateState()
+    {
+        // 예시: 상태에 따른 조건 체크 및 업데이트
+        if (isJump)
+        {
+            currentState = PlayerState.Jumping;
+        }
+        else if (isDodge)
+        {
+            currentState = PlayerState.Dodging;
+        }
+        else if (fireDown)
+        {
+            currentState = PlayerState.Attacking;
+        }
+        else if (isReload)
+        {
+            currentState = PlayerState.Reloading;
+        }
+        else if (iteractionDown)
+        {
+            currentState = PlayerState.Interacting;
+        }
+        else if (isWalking)
+        {
+            currentState = currentState == PlayerState.Running ? PlayerState.Running : PlayerState.Walking;
+        }
+        else
+        {
+            currentState = PlayerState.Idle;
+        }
+
+        // 상태에 따른 애니메이션 및 행동 제어
+        HandleStateActions();
+    }
+
+    void HandleStateActions()
+    {
+        // 각 상태에 따른 애니메이션 및 행동 처리
+        switch (currentState)
+        {
+            case PlayerState.Jumping:
+                // 점프 관련 처리
+                break;
+            case PlayerState.Dodging:
+                // 회피 관련 처리
+                break;
+                // ... 다른 상태들에 대한 처리 ...
+        }
     }
 
     /** 마우스 움직임에 따라 카메라 회전 **/
@@ -312,7 +377,7 @@ public class CharacterControllerCS : MonoBehaviour {
             animator.SetTrigger("doDodge");
             isDodge = true;
 
-            Invoke("DodgeOut", 0.5f); // 시간차를 두어서 함수를 호출
+            Invoke("DodgeOut", dodgeDuration); // 시간차를 두어서 함수를 호출
         }
     }
 
@@ -347,7 +412,7 @@ public class CharacterControllerCS : MonoBehaviour {
 
             animator.SetTrigger("doSwap");
             isSwap = true;
-            Invoke("SwapOut", 0.4f);
+            Invoke("SwapOut", swapDuration);
         }
     }
 
@@ -385,7 +450,7 @@ public class CharacterControllerCS : MonoBehaviour {
             // currentState = PlayerState.Reloading; // 상태를 Reloading으로 설정
             animator.SetTrigger("doReload");
             isReload = true;
-            Invoke("ReloadOut", 2.3f);
+            Invoke("ReloadOut", reloadDuration);
         }
     }
 
