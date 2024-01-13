@@ -31,6 +31,7 @@ public class Casing : MonoBehaviour
         StartCoroutine("DeactivateAfterTime");
     }
 
+    // 탄피가 다른 오브젝트와 부딪히면 재생되는 사운드입니다. 랜덤으로 재생됩니다.
     private void OnCollisionEnter(Collision collision)
     {
         // 여러 개의 탄피 사운드 중 임의의 사운드 선택
