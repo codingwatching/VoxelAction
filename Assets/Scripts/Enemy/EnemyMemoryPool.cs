@@ -35,7 +35,7 @@ public class EnemyMemoryPool : MonoBehaviour
         while (true)
         {
             // 동시에 numberOfEnemiesSpawnedAtOnce 숫자만큼 적이 생성되도록 반복문 사용
-            for(int i= 0; i < numberOfEnemiesSpawnedAtOnce; i++)
+            for(int i= 0; i < numberOfEnemiesSpawnedAtOnce; ++i)
             {
                 // 맵 내 임의의 위치에 적 생성 위치를 알려주는 아이템 생성
                 GameObject item = spawnPointMemoryPool.ActivatePoolItem();
@@ -62,10 +62,8 @@ public class EnemyMemoryPool : MonoBehaviour
 
         // 적 오브젝트를 생성하고, 적의 위치를 현재 생성되어있는 타일과 같은 point의 위치로 설정
         GameObject item = enemyMemoryPool.ActivatePoolItem();
-        if (item != null)
-        {
-            item.transform.position = point.transform.position;
-        }
+        item.transform.position = point.transform.position;
+        
         // 타일 오브젝트를 비활성화
         spawnPointMemoryPool.DeactivatePoolItem(point);
     }
