@@ -105,7 +105,7 @@ public class WeaponCS : MonoBehaviour
             yield return null;
 
             // 2. ≈∫«« πË√‚
-            casingMemoryPool.SpawnCasing(casingSpawnPoint.position, transform.right);
+            casingMemoryPool.SpawnCasing(casingSpawnPoint.position, transform.right+new Vector3(5,3,0));
             /*
             GameObject instantCase = Instantiate(bulletCase, bulletCasePos.position, bulletCasePos.rotation);
             Rigidbody bulletCaseRigidBody = instantCase.GetComponent<Rigidbody>();
