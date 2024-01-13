@@ -276,7 +276,19 @@ public class CharacterControllerCS : MonoBehaviour {
         Quaternion targetRotation = Quaternion.LookRotation(Vector3.forward);
 
         // characterBody의 회전을 목표 회전으로 설정합니다.
-        characterBody.rotation = targetRotation;
+        // characterBody.rotation = targetRotation;
+        Vector2 mouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+        Vector3 camAngle = cameraArm.rotation.eulerAngles;
+        float x = camAngle.x - mouseDelta.y;
+        if (x < 180f)
+        {
+            x = Mathf.Clamp(x, -1f, 89f);
+        }
+        else
+        {
+            x = Mathf.Clamp(x, 335f, 361f);
+        }
+        characterBody.rotation = Quaternion.Euler(x, camAngle.y + mouseDelta.x * rotSensitivity, camAngle.z); // 국내에서는 일치한다
 
         Debug.Log("ShotTurn 2 애프터" + characterBody.rotation);
 

@@ -26,7 +26,7 @@ public class EnemyMemoryPool : MonoBehaviour
         StartCoroutine("SpawnTile");
     }
     
-    // 임의의 위치에 적 생성 위치를 알려줍니다. 처음에는 하나, 시간이 지날수록 증가합니다.
+    // 임의의 위치에 적 생성 위치를 알려줍니다. 처음에는 하나, 시간이 지날수록 동시 생성 수가 증가합니다.
     private IEnumerator SpawnTile()
     {
         int currentNumber = 0;
@@ -37,7 +37,7 @@ public class EnemyMemoryPool : MonoBehaviour
             // 동시에 numberOfEnemiesSpawnedAtOnce 숫자만큼 적이 생성되도록 반복문 사용
             for(int i= 0; i < numberOfEnemiesSpawnedAtOnce; i++)
             {
-                // 임의의 위치에 적 생성 위치를 알려주는 아이템 생성
+                // 맵 내 임의의 위치에 적 생성 위치를 알려주는 아이템 생성
                 GameObject item = spawnPointMemoryPool.ActivatePoolItem();
                 item.transform.position = new Vector3(Random.Range(-mapSize.x * 0.49f, mapSize.x * 0.49f), 1,
                                                                            Random.Range(-mapSize.y * 0.49f, mapSize.y * 0.49f));
@@ -45,6 +45,7 @@ public class EnemyMemoryPool : MonoBehaviour
             }
 
             currentNumber++;
+
             if(currentNumber >= maximumNumber)
             {
                 currentNumber = 0;

@@ -32,14 +32,4 @@ public class PosEnemySpawn : MonoBehaviour
             meshRenderer.material.color = color;
         }
     }
-
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
 }

@@ -97,14 +97,13 @@ public class WeaponCS : MonoBehaviour
             }
 
             Vector3 targetDirection = targetPoint - bulletPos.position;
-            GameObject instantBullet = Instantiate(bullet, bulletPos.position, Quaternion.LookRotation(targetDirection)); // TPS 버전
-                                                                                                                          // GameObject instantBullet = Instantiate(bullet, bulletPos.position, bulletPos.rotation); // 쿼터뷰 버전
+            GameObject instantBullet = Instantiate(bullet, bulletPos.position, bulletPos.rotation); // 쿼터뷰 버전
             Rigidbody bulletRigidBody = instantBullet.GetComponent<Rigidbody>();
             //bulletRigidBody.velocity = bulletPos.forward * 500; // 쿼터뷰 버전
-            bulletRigidBody.velocity = targetDirection.normalized * 400; // TPS 버전
+            bulletRigidBody.velocity = targetDirection.normalized * 100; // TPS 버전
             yield return null;
 
-            // 2. 탄피 배출
+            // 2. 탄피 배출 (메모리풀)
             casingMemoryPool.SpawnCasing(casingSpawnPoint.position, transform.right+new Vector3(5,3,0));
             /*
             GameObject instantCase = Instantiate(bulletCase, bulletCasePos.position, bulletCasePos.rotation);
@@ -113,10 +112,7 @@ public class WeaponCS : MonoBehaviour
             bulletCaseRigidBody.AddForce(caseVec, ForceMode.Impulse);
             bulletCaseRigidBody.AddTorque(Vector3.up * 10, ForceMode.Impulse);
             */
-        
         }
-
-
     }
 }
 
