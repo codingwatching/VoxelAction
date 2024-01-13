@@ -126,7 +126,8 @@ public class CharacterControllerCS : MonoBehaviour {
         originalSpeed = speed; // Store the original speed
         meshs = GetComponentsInChildren<MeshRenderer>(); // 복수의 메시를 가지고 온다
 
-        PlayerPrefs.SetInt("MaxScore", 200714);
+        // Cursor.visible = false;
+        // Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Start()
@@ -142,8 +143,6 @@ public class CharacterControllerCS : MonoBehaviour {
     void Update()
     {
         GetInput();
-        UpdateState();
-
         Swap();
         Interaction();
         Attack();
@@ -184,58 +183,7 @@ public class CharacterControllerCS : MonoBehaviour {
         grenadeUp = Input.GetButtonUp("Fire2"); // 떼어서 수류탄 발사
     }
 
-    void UpdateState()
-    {
-        // 예시: 상태에 따른 조건 체크 및 업데이트
-        if (isJump)
-        {
-            currentState = PlayerState.Jumping;
-        }
-        else if (isDodge)
-        {
-            currentState = PlayerState.Dodging;
-        }
-        else if (fireDown)
-        {
-            currentState = PlayerState.Attacking;
-        }
-        else if (isReload)
-        {
-            currentState = PlayerState.Reloading;
-        }
-        else if (iteractionDown)
-        {
-            currentState = PlayerState.Interacting;
-        }
-        else if (isWalking)
-        {
-            currentState = currentState == PlayerState.Running ? PlayerState.Running : PlayerState.Walking;
-        }
-        else
-        {
-            currentState = PlayerState.Idle;
-        }
-
-        // 상태에 따른 애니메이션 및 행동 제어
-        HandleStateActions();
-    }
-
-    void HandleStateActions()
-    {
-        // 각 상태에 따른 애니메이션 및 행동 처리
-        switch (currentState)
-        {
-            case PlayerState.Jumping:
-                // 점프 관련 처리
-                break;
-            case PlayerState.Dodging:
-                // 회피 관련 처리
-                break;
-                // ... 다른 상태들에 대한 처리 ...
-        }
-    }
-
-    /** 마우스 움직임에 따라 카메라 회전 **/
+    /** 마우스 입력을 받아 카메라를 회전시켜, 플레이어가 게임 세계를 다른 각도에서 볼 수 있게 합니다. **/
     private void LookAround()
     {
         Vector2 mouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
@@ -285,7 +233,7 @@ public class CharacterControllerCS : MonoBehaviour {
         animator.SetBool("isRun", characterBody.forward != Vector3.zero && runDown);
     }
 
-    // 회전 
+    // 회전 : 플레이어가 이동 키를 누르면, 캐릭터는 이동하는 방향으로 회전하여 이동 방향을 바라보게 됩니다.
     void Turn()
     {
         // if (currentState == PlayerState.Reloading) return; // Reloading 상태일 때 회전 방지
@@ -428,13 +376,21 @@ public class CharacterControllerCS : MonoBehaviour {
         fireDelayTime += Time.deltaTime; // 공격딜레이에 시간을 더해주고 공격 가능 여부를 확인
         isFireReady = equippedWeapon.rate < fireDelayTime; // 공격속도보다 시간이 커지면, 공격 가능
 
-        if (fireDown && isFireReady && !isDodge && !isSwap && !isShop)
+        if (fireDown && isFireReady && !isDodge && !isSwap && !isShop && ammo > 0)
         {
-            equippedWeapon.Use();
-            animator.SetTrigger(equippedWeapon.type == WeaponCS.Type.Melee ?  "doSwing" : "doShot"); // HandGun 또는 SubMachineGun
-            fireDelayTime = 0; // 공격했으니 초기화
-            Debug.Log("Attacked");
+            if (equippedWeapon.curAmmo > 0)
+            {
+                equippedWeapon.Use();
+                animator.SetTrigger(equippedWeapon.type == WeaponCS.Type.Melee ? "doSwing" : "doShot"); // HandGun 또는 SubMachineGun
+                fireDelayTime = 0; // 공격했으니 초기화
+                Debug.Log("Attacked");
+            }
+/*            else if (equippedWeapon.curAmmo <= 0)
+            {
+                Reload();
+            }*/
         }
+
     }
 
     void Reload()
