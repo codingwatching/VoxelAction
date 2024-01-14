@@ -3,16 +3,38 @@ using System.Collections;
 
 public class Unit : MonoBehaviour
 {
-
-
     public Transform target;
-    public float speed = 50;
+    public float speed = 20;
+    public float pathUpdateSeconds = 0.5f; // Time interval for updating the path
+
     Vector3[] path;
     int targetIndex;
 
     void Start()
     {
+        StartCoroutine(UpdatePath());
+    }
+
+    IEnumerator UpdatePath()
+    {
+        if (Time.timeSinceLevelLoad < .3f)
+        {
+            yield return new WaitForSeconds(.3f);
+        }
         PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
+
+        float sqrMoveThreshold = pathUpdateSeconds * pathUpdateSeconds;
+        Vector3 targetPosOld = target.position;
+
+        while (true)
+        {
+            yield return new WaitForSeconds(pathUpdateSeconds);
+            if ((target.position - targetPosOld).sqrMagnitude > sqrMoveThreshold)
+            {
+                PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
+                targetPosOld = target.position;
+            }
+        }
     }
 
     public void OnPathFound(Vector3[] newPath, bool pathSuccessful)
@@ -20,7 +42,6 @@ public class Unit : MonoBehaviour
         if (pathSuccessful)
         {
             path = newPath;
-            targetIndex = 0;
             StopCoroutine("FollowPath");
             StartCoroutine("FollowPath");
         }
@@ -28,7 +49,14 @@ public class Unit : MonoBehaviour
 
     IEnumerator FollowPath()
     {
+        if (path.Length == 0)
+        {
+            yield break;
+        }
+
+        targetIndex = 0;
         Vector3 currentWaypoint = path[0];
+
         while (true)
         {
             if (transform.position == currentWaypoint)
@@ -43,7 +71,6 @@ public class Unit : MonoBehaviour
 
             transform.position = Vector3.MoveTowards(transform.position, currentWaypoint, speed * Time.deltaTime);
             yield return null;
-
         }
     }
 
