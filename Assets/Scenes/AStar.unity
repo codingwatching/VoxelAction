@@ -411,6 +411,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 1342524874}
   speed: 20
+  pathUpdateSeconds: 0.5
 --- !u!1 &804746254
 GameObject:
   m_ObjectHideFlags: 0
@@ -538,6 +539,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 1342524874}
   speed: 20
+  pathUpdateSeconds: 0.5
 --- !u!136 &838388392
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -876,6 +878,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 1342524874}
   speed: 20
+  pathUpdateSeconds: 0.5
 --- !u!136 &1283031896
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1435,6 +1438,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 1342524874}
   speed: 20
+  pathUpdateSeconds: 0.5
 --- !u!136 &1767252761
 CapsuleCollider:
   m_ObjectHideFlags: 0
