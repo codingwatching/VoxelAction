@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6913306684549123677}
   - component: {fileID: 5166658199180002260}
   - component: {fileID: -6198417618983761581}
+  - component: {fileID: 3395765721834398540}
   m_Layer: 0
   m_Name: TileBlue
   m_TagString: Floor
@@ -65,7 +66,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 59947b73e60bb9f45bc5ab478344e541, type: 2}
+  - {fileID: 2100000, guid: 4deda2aab2f9aa647abb38880f60df34, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -120,6 +121,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7aa29586432fbd64cb6d97e460de6289, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coord:
-    horizontal: 0
-    vertiacl: 0
+  Parent: {fileID: 0}
+  idea:
+    State: 0
+    coord: {x: 0, y: 0}
+    distance: 0
+  trigger: {fileID: 0}
+  hasOwner: 0
+  Renderer: {fileID: 0}
+--- !u!114 &3395765721834398540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4889808586085627554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates: []
