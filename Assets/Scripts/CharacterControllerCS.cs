@@ -391,13 +391,12 @@ public class CharacterControllerCS : MonoBehaviour {
 
         if (fireDown && isFireReady && !isDodge && !isSwap && !isShop && ammo > 0)
         {
-            if (equippedWeapon.curAmmo > 0)
-            {
+            
                 equippedWeapon.Use();
                 animator.SetTrigger(equippedWeapon.type == WeaponCS.Type.Melee ? "doSwing" : "doShot"); // HandGun 또는 SubMachineGun
                 fireDelayTime = 0; // 공격했으니 초기화
                 Debug.Log("Attacked");
-            }
+            
 /*            else if (equippedWeapon.curAmmo <= 0)
             {
                 Reload();

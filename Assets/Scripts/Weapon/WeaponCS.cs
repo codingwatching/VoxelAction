@@ -100,7 +100,7 @@ public class WeaponCS : MonoBehaviour
             GameObject instantBullet = Instantiate(bullet, bulletPos.position, bulletPos.rotation); // 쿼터뷰 버전
             Rigidbody bulletRigidBody = instantBullet.GetComponent<Rigidbody>();
             //bulletRigidBody.velocity = bulletPos.forward * 500; // 쿼터뷰 버전
-            bulletRigidBody.velocity = targetDirection.normalized * 100; // TPS 버전
+            bulletRigidBody.velocity = targetDirection.normalized * 500; // TPS 버전
             yield return null;
 
             // 2. 탄피 배출 (메모리풀)

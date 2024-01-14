@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7069199086240914937}
   - component: {fileID: 2221903248869180740}
   - component: {fileID: 2753047520771822344}
+  - component: {fileID: 6831622987767081925}
   m_Layer: 11
   m_Name: Enemy A
   m_TagString: Enemy
@@ -98,10 +99,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 50
   curHealth: 50
-  target: {fileID: 0}
+  target: {fileID: 5903297864969995812, guid: 8f5e135a19626f544908fc8f156144b9, type: 3}
   isChase: 0
   isAttack: 0
   meleeArea: {fileID: 2669460478970665228}
+--- !u!114 &6831622987767081925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 328409505970683906}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a384571115705dc41ba33045edff706d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 2675521919344731257, guid: 6aa08a4f97610bb47a7c06ac6c58c8f1, type: 3}
+  speed: 20
+  pathUpdateSeconds: 0.5
 --- !u!1 &8439345759947775609
 GameObject:
   m_ObjectHideFlags: 0
