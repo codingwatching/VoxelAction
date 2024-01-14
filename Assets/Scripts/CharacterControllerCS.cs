@@ -106,21 +106,6 @@ public class CharacterControllerCS : MonoBehaviour {
 
     private int loadCheck = 0;
 
-
-
-
-    // Map Test
-    public Tile currentStand;
-    public List<Tile> preMoveTile = new List<Tile>();
-    protected List<Tile> moveableArea = new List<Tile>();
-    protected Coroutine moveCoroutine;
-
-
-
-
-
-
-
     // Initialization
     void Awake()
     {
