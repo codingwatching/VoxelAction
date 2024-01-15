@@ -86,8 +86,7 @@ public class WeaponCS : MonoBehaviour
         }
 
         // 1. 총알 발사
-        if(curAmmo > 0)
-        {
+
             // 광선을 발사해 원하는 위치 공격 (+Impact Effect)
             TwoStepRaycast();
 
@@ -120,7 +119,7 @@ public class WeaponCS : MonoBehaviour
             bulletCaseRigidBody.AddForce(caseVec, ForceMode.Impulse);
             bulletCaseRigidBody.AddTorque(Vector3.up * 10, ForceMode.Impulse);
             */
-        }
+        
     }
 
     // 총구의 위치에서 공격 시 타격이 제대로 이뤄지지 않을 수 있습니다.
