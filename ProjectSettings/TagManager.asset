@@ -15,6 +15,7 @@ TagManager:
   - HandGun
   - Shop
   - SceneTransition
+  - Obstacle
   layers:
   - Default
   - TransparentFX

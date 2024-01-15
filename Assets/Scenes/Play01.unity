@@ -3874,6 +3874,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: VoxelPink (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 2988850700572611865, guid: d2beb2309f1f1bc4092bd3fc748fa4cd, type: 3}
+      propertyPath: m_TagString
+      value: Obstacle
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5028,6 +5032,10 @@ PrefabInstance:
     - target: {fileID: 2988850700572611865, guid: d2beb2309f1f1bc4092bd3fc748fa4cd, type: 3}
       propertyPath: m_Name
       value: VoxelPink (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2988850700572611865, guid: d2beb2309f1f1bc4092bd3fc748fa4cd, type: 3}
+      propertyPath: m_TagString
+      value: Obstacle
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -12265,6 +12273,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1509416925549156319, guid: a2e051660762cbe4494c17a095a95e10, type: 3}
       insertIndex: -1
       addedObject: {fileID: 596896977}
+    - targetCorrespondingSourceObject: {fileID: 1509416925549156319, guid: a2e051660762cbe4494c17a095a95e10, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 596896978}
   m_SourcePrefab: {fileID: 100100000, guid: a2e051660762cbe4494c17a095a95e10, type: 3}
 --- !u!4 &596896974 stripped
 Transform:
@@ -12295,10 +12306,9 @@ MonoBehaviour:
   curAmmo: 7
   meleeArea: {fileID: 0}
   trailRendererEffect: {fileID: 0}
-  bulletPos: {fileID: 542810869}
   bullet: {fileID: 5997335303731221406, guid: ae87540cbb9160b4d91564727beff7cb, type: 3}
-  casingSpawnPoint: {fileID: 1074134427}
-  bulletCasePos: {fileID: 313458409}
+  casingSpawnPoint: {fileID: 313458409}
+  bulletSpawnPoint: {fileID: 1074134427}
   bulletCase: {fileID: 8180536178103766957, guid: 1eb7c82decf9ad6429af235d3eadb813, type: 3}
   characterController: {fileID: 1200201007}
   playerCamera: {fileID: 963194227}
@@ -12315,6 +12325,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   casingPrefab: {fileID: 8180536178103766957, guid: 1eb7c82decf9ad6429af235d3eadb813, type: 3}
+--- !u!114 &596896978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 596896975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cfa384baaa0e634da5e9c855e163d3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  impactPrefab:
+  - {fileID: 2775473873441640363, guid: 416e656667fa26e4784a7101c0e1f3bf, type: 3}
+  - {fileID: 2775473873441640363, guid: 4a9d99c62beec0d499671463878493f9, type: 3}
 --- !u!1 &605492502
 GameObject:
   m_ObjectHideFlags: 0
@@ -13042,6 +13067,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: VoxelPink (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 2988850700572611865, guid: d2beb2309f1f1bc4092bd3fc748fa4cd, type: 3}
+      propertyPath: m_TagString
+      value: Obstacle
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -13467,6 +13496,10 @@ PrefabInstance:
     - target: {fileID: 2988850700572611865, guid: d2beb2309f1f1bc4092bd3fc748fa4cd, type: 3}
       propertyPath: m_Name
       value: VoxelPink
+      objectReference: {fileID: 0}
+    - target: {fileID: 2988850700572611865, guid: d2beb2309f1f1bc4092bd3fc748fa4cd, type: 3}
+      propertyPath: m_TagString
+      value: Obstacle
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -15374,7 +15407,7 @@ GameObject:
   - component: {fileID: 806628132}
   m_Layer: 0
   m_Name: Plane
-  m_TagString: Untagged
+  m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -21583,6 +21616,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: VoxelPink (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 2988850700572611865, guid: d2beb2309f1f1bc4092bd3fc748fa4cd, type: 3}
+      propertyPath: m_TagString
+      value: Obstacle
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -21864,6 +21901,10 @@ PrefabInstance:
     - target: {fileID: 2988850700572611865, guid: d2beb2309f1f1bc4092bd3fc748fa4cd, type: 3}
       propertyPath: m_Name
       value: VoxelPink (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2988850700572611865, guid: d2beb2309f1f1bc4092bd3fc748fa4cd, type: 3}
+      propertyPath: m_TagString
+      value: Obstacle
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -43222,10 +43263,9 @@ MonoBehaviour:
   curAmmo: 30
   meleeArea: {fileID: 0}
   trailRendererEffect: {fileID: 0}
-  bulletPos: {fileID: 542810869}
   bullet: {fileID: 5299443505601146984, guid: d9c273e26457d874caf68479b086cd0b, type: 3}
   casingSpawnPoint: {fileID: 0}
-  bulletCasePos: {fileID: 1971920101}
+  bulletSpawnPoint: {fileID: 0}
   bulletCase: {fileID: 8180536178103766957, guid: 1eb7c82decf9ad6429af235d3eadb813, type: 3}
   characterController: {fileID: 1200201007}
   playerCamera: {fileID: 963194227}
@@ -47889,10 +47929,9 @@ MonoBehaviour:
   curAmmo: 0
   meleeArea: {fileID: 1946393047}
   trailRendererEffect: {fileID: 1662611127}
-  bulletPos: {fileID: 1074134427}
   bullet: {fileID: 5997335303731221406, guid: ae87540cbb9160b4d91564727beff7cb, type: 3}
   casingSpawnPoint: {fileID: 0}
-  bulletCasePos: {fileID: 313458409}
+  bulletSpawnPoint: {fileID: 0}
   bulletCase: {fileID: 8180536178103766957, guid: 1eb7c82decf9ad6429af235d3eadb813, type: 3}
   characterController: {fileID: 0}
   playerCamera: {fileID: 963194227}
