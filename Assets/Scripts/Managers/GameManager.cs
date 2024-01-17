@@ -9,6 +9,9 @@ public class GameManager : MonoBehaviour
     public CharacterData currentCharacterData;
     public UIManager UIManager;
 
+    public GameObject characterPrefab;
+    public Transform characterSpawnPos;
+
     public enum GameState
     {
         Lobby,
@@ -20,9 +23,9 @@ public class GameManager : MonoBehaviour
 
     private GameState currentState;
 
-    // GameState º¯°æ ½Ã È£ÃâµÇ´Â ÀÌº¥Æ®
-    public delegate void GameStateChangeHandler(GameState newState); // µ¨¸®°ÔÀÌÆ®´Â C#¿¡¼­ ¸Þ¼­µå¿¡ ´ëÇÑ ÂüÁ¶¸¦ º¸°üÇÏ´Â Å¸ÀÔ
-    public static event GameStateChangeHandler OnGameStateChange; // GameState°¡ º¯°æµÉ ¶§¸¶´Ù ¾Ë¸²À» ¹ÞÀ» ¼ö ÀÖ´Ù
+    // GameState ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ È£ï¿½ï¿½Ç´ï¿½ ï¿½Ìºï¿½Æ®
+    public delegate void GameStateChangeHandler(GameState newState); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ C#ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¼ï¿½ï¿½å¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ Å¸ï¿½ï¿½
+    public static event GameStateChangeHandler OnGameStateChange; // GameStateï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ë¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½
 
 
     public GameObject gameCam; // main cam
@@ -34,6 +37,8 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        GameObject myCharacter = Instantiate(characterPrefab, characterSpawnPos.position, characterSpawnPos.rotation); // ï¿½ï¿½ï¿½Íºï¿½ ï¿½ï¿½ï¿½ï¿½
+
         if (instance == null)
         {
             instance = this;
@@ -48,37 +53,37 @@ public class GameManager : MonoBehaviour
     public void ChangeState(GameState newState)
     {
         currentState = newState;
-        OnGameStateChange?.Invoke(newState); // °ÔÀÓ »óÅÂ º¯°æ ¾Ë¸². ?. ¿¬»êÀÚ´Â OnGameStateChange ÀÌº¥Æ®°¡ nullÀÌ ¾Æ´Ò °æ¿ì¿¡¸¸ ÀÌº¥Æ®¸¦ È£Ãâ
+        OnGameStateChange?.Invoke(newState); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ë¸ï¿½. ?. ï¿½ï¿½ï¿½ï¿½ï¿½Ú´ï¿½ OnGameStateChange ï¿½Ìºï¿½Æ®ï¿½ï¿½ nullï¿½ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½ì¿¡ï¿½ï¿½ ï¿½Ìºï¿½Æ®ï¿½ï¿½ È£ï¿½ï¿½
 
         switch (newState)
         {
             case GameState.Lobby:
-                // Lobby Scene¿¡ ÀÖÀ» ¶§ÀÇ ·ÎÁ÷
+                // Lobby Sceneï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 break;
             case GameState.Exploration:
-                // Å½Çè »óÅÂ·Î ÀüÈ¯ÇÒ ¶§ÀÇ ·ÎÁ÷
+                // Å½ï¿½ï¿½ ï¿½ï¿½ï¿½Â·ï¿½ ï¿½ï¿½È¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 break;
             case GameState.Combat:
-                // ÀüÅõ »óÅÂ·Î ÀüÈ¯ÇÒ ¶§ÀÇ ·ÎÁ÷
+                // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â·ï¿½ ï¿½ï¿½È¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 break;
             case GameState.Dialogue:
-                // ´ëÈ­ »óÅÂ·Î ÀüÈ¯ÇÒ ¶§ÀÇ ·ÎÁ÷
+                // ï¿½ï¿½È­ ï¿½ï¿½ï¿½Â·ï¿½ ï¿½ï¿½È¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 break;
             case GameState.Pause:
-                // °ÔÀÓ ÀÏ½ÃÁ¤Áö »óÅÂ·Î ÀüÈ¯ÇÒ ¶§ÀÇ ·ÎÁ÷
+                // ï¿½ï¿½ï¿½ï¿½ ï¿½Ï½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â·ï¿½ ï¿½ï¿½È¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 break;
         }
     }
 
 /*    public void CompleteLevel()
     {
-        // ·¹º§ÀÌ ¿Ï·áµÉ ¶§ È£ÃâµÇ¸ç, SceneManagerÀÇ LoadNextSceneÀ» »ç¿ëÇÏ¿© ´ÙÀ½ ¾ÀÀ¸·Î ÀüÈ¯
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½ï¿½ ï¿½ï¿½ È£ï¿½ï¿½Ç¸ï¿½, SceneManagerï¿½ï¿½ LoadNextSceneï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
         SceneManager.instance.LoadNextScene();
     }*/
 
-    // Ãß°¡ °ÔÀÓ °ü¸® ·ÎÁ÷
+    // ï¿½ß°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-    // °ÔÀÓ »óÅÂ¸¦ °¡Á®¿À´Â ÇÔ¼ö
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
     public GameState GetCurrentState()
     {
         return currentState;
@@ -96,7 +101,7 @@ public class GameManager : MonoBehaviour
             character.health = currentCharacterData.health;
             character.ammo = currentCharacterData.ammo;
             character.coin = currentCharacterData.coin;
-            // ´Ù¸¥ ÇÊ¿äÇÑ µ¥ÀÌÅÍ¸¦ ¿©±â¿¡ º¹»çÇÕ´Ï´Ù.
+            // ï¿½Ù¸ï¿½ ï¿½Ê¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½â¿¡ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
         }
     }*/
 }

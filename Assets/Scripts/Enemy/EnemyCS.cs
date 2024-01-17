@@ -7,10 +7,10 @@ public class EnemyCS : MonoBehaviour
 {
     public int maxHealth;
     public int curHealth;
-    public Transform target; // ÃßÀûÇÒ »ó´ë (ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ)
+    public Transform target; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ (ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½)
     public bool isChase=false;
-    public bool isAttack; // °ø°Ý ÁßÀÔ´Ï´Ù
-    public BoxCollider meleeArea; // ÀÏ¹ÝÇü ¸ó½ºÅÍ EnemyA Å¸ÀÔÀÇ EnemyBullet
+    public bool isAttack; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ô´Ï´ï¿½
+    public BoxCollider meleeArea; // ï¿½Ï¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ EnemyA Å¸ï¿½ï¿½ï¿½ï¿½ EnemyBullet
 
     Rigidbody rigid;
     BoxCollider boxCollider;
@@ -25,7 +25,7 @@ public class EnemyCS : MonoBehaviour
         mat = GetComponentInChildren<MeshRenderer>().material;
         animator = GetComponentInChildren<Animator>();
         // nav = GetComponent<NavMeshAgent>();
-        Invoke("ChaseStart", 2); // »ý¼ºµÇ¸é 2ÃÊ ÈÄ¿¡ ÃßÀûÀ» ½ÃÀÛ
+        // Invoke("ChaseStart", 2); // ï¿½ï¿½ï¿½ï¿½ï¿½Ç¸ï¿½ 2ï¿½ï¿½ ï¿½Ä¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     }
 
     void ChaseStart()
@@ -60,7 +60,7 @@ public class EnemyCS : MonoBehaviour
     public void HitByGrenade(Vector3 explosionPos)
     {
         curHealth -= 100;
-        Vector3 reactVec = transform.position - explosionPos; // ¹ÝÀÛ¿ë ¹æÇâ ±¸ÇÏ±â (µÚ·Î ¹Ð·Á³²)
+        Vector3 reactVec = transform.position - explosionPos; // ï¿½ï¿½ï¿½Û¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï±ï¿½ (ï¿½Ú·ï¿½ ï¿½Ð·ï¿½ï¿½ï¿½)
 
         StartCoroutine(OnDamage(reactVec, true));
     }
@@ -69,13 +69,15 @@ public class EnemyCS : MonoBehaviour
     {
         Debug.Log("EnemyCS OnTriggerEnter");
 
+        // AgroSphere 
+        /*
         if (other.tag == "Melee")
         {
             WeaponCS weapon = other.GetComponent<WeaponCS>();
             if (weapon != null)
             {
                 curHealth -= weapon.damage;
-                Vector3 reactVec = transform.position - other.transform.position; // ¹ÝÀÛ¿ë ¹æÇâ ±¸ÇÏ±â
+                Vector3 reactVec = transform.position - other.transform.position; // ï¿½ï¿½ï¿½Û¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï±ï¿½
 
                 Debug.Log("OnTriggerEnter Melee : " + curHealth);
                 StartCoroutine(OnDamage(reactVec, false));
@@ -86,12 +88,13 @@ public class EnemyCS : MonoBehaviour
         {
             BulletCS bullet = other.GetComponent<BulletCS>();
             curHealth -= bullet.damage;
-            Vector3 reactVec = transform.position + other.transform.position; // ¹ÝÀÛ¿ë ¹æÇâ ±¸ÇÏ±â (µÚ·Î ¹Ð·Á³²)
-            Destroy(other.gameObject); // ÃÑ¾Ë°ú ÀûÀÌ ´ê´Â´Ù¸é ÃÑ¾ËÀ» Á¦°Å
+            Vector3 reactVec = transform.position + other.transform.position; // ï¿½ï¿½ï¿½Û¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï±ï¿½ (ï¿½Ú·ï¿½ ï¿½Ð·ï¿½ï¿½ï¿½)
+            Destroy(other.gameObject); // ï¿½Ñ¾Ë°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Â´Ù¸ï¿½ ï¿½Ñ¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
             Debug.Log("OnTriggerEnter Bullet : " + curHealth);
             StartCoroutine(OnDamage(reactVec, false));
         }
+        */
     }
 
     IEnumerator OnDamage(Vector3 reactVec, bool isGrenade)
@@ -112,11 +115,11 @@ public class EnemyCS : MonoBehaviour
             // nav.enabled = false;
             animator.SetTrigger("doDie");
 
-            // ¹ÝÀÛ¿ë ³Ë¹é
+            // ï¿½ï¿½ï¿½Û¿ï¿½ ï¿½Ë¹ï¿½
             if (isGrenade)
             {
                 reactVec = reactVec.normalized;
-                reactVec += Vector3.up * 3f; // ³Ë¹é º¤ÅÍ¿¡ ¾à°£ÀÇ À§ ¹æÇâ Ãß°¡
+                reactVec += Vector3.up * 3f; // ï¿½Ë¹ï¿½ ï¿½ï¿½ï¿½Í¿ï¿½ ï¿½à°£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
                 
                 rigid.freezeRotation = false;
                 rigid.AddForce(reactVec * 5, ForceMode.Impulse);
@@ -124,7 +127,7 @@ public class EnemyCS : MonoBehaviour
             }
             else { 
              reactVec = reactVec.normalized;
-             reactVec += Vector3.up * 2f; // ³Ë¹é º¤ÅÍ¿¡ ¾à°£ÀÇ À§ ¹æÇâ Ãß°¡
+             reactVec += Vector3.up * 2f; // ï¿½Ë¹ï¿½ ï¿½ï¿½ï¿½Í¿ï¿½ ï¿½à°£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
              rigid.AddForce(reactVec * 5, ForceMode.Impulse);
             }
             Destroy(gameObject, 3);

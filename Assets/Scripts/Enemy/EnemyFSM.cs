@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum EnemyState { None = -1, Idle = 0, Wander, }
+public enum EnemyState { None = -1, Idle = 0, Wander = 1, }
 
 public class EnemyFSM : MonoBehaviour
 {
-    private EnemyState enemyState = EnemyState.None; // ÇöÀç Àû Çàµ¿
-    private Status status; // ÀÌµ¿¼Óµµ µîÀÇ Á¤º¸
-    private Unit unit; // ÆĞ½ºÆÄÀÎµùÀ» À§ÇÑ Á¤º¸
+    private EnemyState enemyState = EnemyState.None; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½àµ¿
+    private Status status; // ï¿½Ìµï¿½ï¿½Óµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    private Unit unit; // ï¿½Ğ½ï¿½ï¿½ï¿½ï¿½Îµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
     private void Awake()
     {
@@ -18,51 +18,128 @@ public class EnemyFSM : MonoBehaviour
 
     private void OnEnable()
     {
-        // ÀûÀÌ È°¼ºÈ­µÉ ¶§ »óÅÂ¸¦ "´ë±â"·Î ¼³Á¤
-        enemyState = EnemyState.None;        
+        // ï¿½ï¿½ï¿½ï¿½ È°ï¿½ï¿½È­ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Â¸ï¿½ "ï¿½ï¿½ï¿½"ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        ChangeState(EnemyState.Idle);      
+    }
+
+    private void OnDisable()
+    {
+        StopCoroutine(enemyState.ToString());
+        enemyState = EnemyState.None;
     }
 
     public void ChangeState(EnemyState newState)
     {
-        // ÇöÀç Àç»ı ÁßÀÎ »óÅÂ¿Í ¹Ù²Ù·Á°í ÇÏ´Â »óÅÂ°¡ °°À¸¸é ¹Ù²Ü ÇÊ¿ä°¡ ¾øÀ¸¹Ç·Î return
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â¿ï¿½ ï¿½Ù²Ù·ï¿½ï¿½ï¿½ ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½Â°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²ï¿½ ï¿½Ê¿ä°¡ ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ return
         if (enemyState == newState) return;
 
-        // ÀÌÀü¿¡ Àç»ıÁßÀÌ´ø »óÅÂ Á¾·á
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         StopCoroutine(enemyState.ToString());
-        // ÇöÀç ÀûÀÇ »óÅÂ¸¦ newState ·Î ¼³Á¤
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â¸ï¿½ newState ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         enemyState = newState;
-        // »õ·Î¿î »óÅÂ Àç»ı
+        // ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         StartCoroutine(enemyState.ToString());
     }
 
     private IEnumerator Idle()
     {
-        // nÃÊ ÈÄ "¹èÈ¸" »óÅÂ·Î º¯°æÇÏ´Â ÄÚ·çÆ¾ ½ÇÇà
+        Debug.Log("FSM Idle");
+
+        // nï¿½ï¿½ ï¿½ï¿½ "ï¿½ï¿½È¸" ï¿½ï¿½ï¿½Â·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ú·ï¿½Æ¾ ï¿½ï¿½ï¿½ï¿½
         StartCoroutine("AutoChangeFromIdleToWander");
         while(true)
         {
-            // "´ë±â" »óÅÂÀÏ ¶§ ÇÏ´Â Çàµ¿
+            // "ï¿½ï¿½ï¿½" ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ï´ï¿½ ï¿½àµ¿
             yield return null;
         }
     }
 
     private IEnumerator AutoChangeFromIdleToWander()
     {
-        // 1~4ÃÊ ´ë±â
+        Debug.Log("FSM AutoChangeFromIdleToWander");
+        // 1~4ï¿½ï¿½ ï¿½ï¿½ï¿½
         int changeTime = Random.Range(1, 5);
-        yield return new WaitForSeconds(changeTime);
+        Debug.Log("FSM WaitForSeconds " + changeTime);
 
-        // »óÅÂ¸¦ "¹èÈ¸"·Î º¯°æ
+        yield return new WaitForSeconds(changeTime);
+        Debug.Log("FSM BEFORE Wander"); // ì—¬ê¸°ê¹Œì§€ ì•ˆë“¤ì–´ì˜¤ë„¤
+
+        // ï¿½ï¿½ï¿½Â¸ï¿½ "ï¿½ï¿½È¸"ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         ChangeState(EnemyState.Wander);
+        Debug.Log("FSM GOTO Wander");
+        // yield return null;
+
     }
 
     private IEnumerator Wander()
     {
+        Debug.Log("FSM Wander");
+
         float currentTime = 0;
         float maxTime = 10;
 
-        // ÀÌµ¿ ¼Óµµ ¼³Á¤
+        // ì´ë™ ì†ë„ ì„¤ì •
+        unit.speed = status.WalkSpeed;
+        // ëª©í‘œ ìœ„ì¹˜ ì„¤ì •
+        // unit.transform.LookAt(unit.target.transform); // ?? 
+
+        // ëª©í‘œ ìœ„ì¹˜ë¡œ íšŒì „
+        Vector3 to = new Vector3(unit.target.transform.position.x, 0, unit.target.transform.position.z);
+        Vector3 from = new Vector3(transform.position.x, 0 , transform.position.z);
+        transform.rotation = Quaternion.LookRotation(to-from);
+
+        while(true)
+        {
+            currentTime += Time.deltaTime;
+
+            // ëª©í‘œìœ„ì¹˜ì— ê·¼ì ‘í•˜ê²Œ ë„ë‹¬í•˜ê±°ë‚˜ ë„ˆë¬´ ì˜¤ëœì‹œê°„ë™ì•ˆ "ë°°íšŒ" ìƒíƒœì— ë¨¸ë¬¼ëŸ¬ ìˆìœ¼ë©´
+            to = new Vector3(unit.target.transform.position.x, 0, unit.target.transform.position.z);
+            from = new Vector3(transform.position.x, 0 , transform.position.z);
+            if((to-from).sqrMagnitude < 0.01f || currentTime >= maxTime)
+            {
+                ChangeState(EnemyState.Idle);
+            }
+        }
 
         yield return null;
     }
+
+    private Vector3 CalculateWanderPosition()
+    {
+        float wanderRadius = 10; // í˜„ì¬ ìœ„ì¹˜ë¥¼ ì›ì ìœ¼ë¡œ í•˜ëŠ” ì›ì˜ ë°˜ì§€ë¦„
+        int wanderJitter = 0; // ì„ íƒëœ ê°ë„ (wanderJitterMin ~ wanderJitterMax)
+        int wanderJitterMin = 0; // ìµœì†Œ ê°ë„
+        int wanderJitterMax = 360; // ìµœëŒ€ ê°ë„
+
+        // í˜„ì¬ ì  ìºë¦­í„°ê°€ ìˆëŠ” ì›”ë“œì˜ ì¤‘ì‹¬ ìœ„ì¹˜ì™€ í¬ê¸° (êµ¬ì—­ì„ ë²—ì–´ë‚œ í–‰ë™ì„ í•˜ì§€ ì•Šë„ë¡)
+        Vector3 rangePosition = Vector3.zero;
+        Vector3 rangeScale = Vector3.one * 100.0f; // (1, 1, 1) * 100
+
+        // ìì‹ ì˜ ìœ„ì¹˜ë¥¼ ì¤‘ì‹¬ìœ¼ë¡œ ë°˜ì§€ë¦„(wanderRadius) ê±°ë¦¬, ì„ íƒëœ ê°ë„(wanderJitter) ì— ìœ„ì¹˜í•œ ì¢Œí‘œë¥¼ ëª©í‘œì§€ì ìœ¼ë¡œ ì„¤ì •
+        wanderJitter = Random.Range(wanderJitterMin, wanderJitterMax);
+        Vector3 targetPosition = transform.position + SetAngle(wanderRadius, wanderJitter);
+
+        // ìƒì„±ëœ ëª©í‘œ ìœ„ì¹˜ê°€ ìì‹ ì˜ ì´ë™ êµ¬ì—­ì„ ë²—ì–´ë‚˜ì§€ ì•Šë„ë¡ ì¡°ì ˆ
+        targetPosition.x = Mathf.Clamp(targetPosition.x, rangePosition.x-rangeScale.x*0.5f, rangePosition.x+rangeScale.x*0.5f);
+        targetPosition.y = 0.0f;
+        targetPosition.z = Mathf.Clamp(targetPosition.z, rangePosition.z-rangeScale.z*0.5f, rangePosition.z+rangeScale.z*0.5f);
+    
+        return targetPosition;
+    }
+
+    private Vector3 SetAngle(float radius, int angle)
+    {
+        Vector3 position = Vector3.zero;
+
+        position.x = Mathf.Cos(angle) * radius;
+        position.z = Mathf.Sin(angle) * radius;
+
+        return position;
+    }
+
+//    private void OnDrawGizmos(){
+        // ë°°íšŒ ìƒíƒœì¼ ë•Œ ì´ë™ ê²½ë¡œ í‘œì‹œ
+  //      Gizmos.color = Color.black;
+    //    Gizmos.DrawRay(transform.position, unit.target.transform.position - transform.position);
+    //}
 }

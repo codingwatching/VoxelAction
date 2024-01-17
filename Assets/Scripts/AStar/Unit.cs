@@ -3,16 +3,22 @@ using System.Collections;
 
 public class Unit : MonoBehaviour
 {
-    public Transform target;
+    public GameObject target;
     public float speed = 20;
     public float pathUpdateSeconds = 0.5f; // Time interval for updating the path
+
+    public bool isUpdate = false; 
 
     Vector3[] path;
     int targetIndex;
 
     void Start()
     {
-        StartCoroutine(UpdatePath());
+        //target 을 씬에서 Character 이름으로 찾기
+        target = GameObject.Find("Character(Clone)");
+        
+        if(isUpdate == true && target != null)
+            StartCoroutine(UpdatePath());
     }
 
     IEnumerator UpdatePath()
@@ -21,18 +27,18 @@ public class Unit : MonoBehaviour
         {
             yield return new WaitForSeconds(.3f);
         }
-        PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
+        PathRequestManager.RequestPath(transform.position, target.transform.position, OnPathFound);
 
         float sqrMoveThreshold = pathUpdateSeconds * pathUpdateSeconds;
-        Vector3 targetPosOld = target.position;
+        Vector3 targetPosOld = target.transform.position;
 
         while (true)
         {
             yield return new WaitForSeconds(pathUpdateSeconds);
-            if ((target.position - targetPosOld).sqrMagnitude > sqrMoveThreshold)
+            if ((target.transform.position - targetPosOld).sqrMagnitude > sqrMoveThreshold)
             {
-                PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
-                targetPosOld = target.position;
+                PathRequestManager.RequestPath(transform.position, target.transform.position, OnPathFound);
+                targetPosOld = target.transform.position;
             }
         }
     }
