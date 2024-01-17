@@ -9,11 +9,15 @@ public class EnemyFSM : MonoBehaviour
     private EnemyState enemyState = EnemyState.None; // ���� �� �ൿ
     private Status status; // �̵��ӵ� ���� ����
     private Unit unit; // �н����ε��� ���� ����
+    Animator animator;
+    Vector3 wanderPosition = Vector3.zero;
 
     private void Awake()
     {
         status = GetComponent<Status>();
         unit = GetComponent<Unit>();
+        animator = GetComponentInChildren<Animator>();
+
     }
 
     // 활성화 될 때마다 호출되는 함수입니다
@@ -40,9 +44,10 @@ public class EnemyFSM : MonoBehaviour
     private IEnumerator Idle()
     {
         Debug.Log("FSM Idle");
+        animator.SetBool("isWalk", false);
 
         // StartCoroutine("AutoChangeFromIdleToWander");
-        while(true)
+        while (true)
         {
             yield return StartCoroutine("AutoChangeFromIdleToWander");
         }
@@ -64,41 +69,47 @@ public class EnemyFSM : MonoBehaviour
 
     private IEnumerator Wander()
     {
-        
         Debug.Log("FSM Wander");
 
         float currentTime = 0;
-        float maxTime = 10;
+        float maxTime = 2;
+        float rotationSpeed = 2.0f; // 회전 속도 조절을 위한 변수
+        float arrivalDistance = 1f; // 도착으로 간주할 거리
 
-        // 이동 속도 설정
         unit.speed = status.WalkSpeed;
-        // 목표 위치 설정
-        // unit.transform.LookAt(unit.target.transform); // ?? 
-        Vector3 wanderPosition = CalculateWanderPosition();
+        wanderPosition = CalculateWanderPosition();
         unit.SetDestination(wanderPosition);
 
-        // 목표 위치로 회전
-        Vector3 to = new Vector3(unit.target.transform.position.x, 0, unit.target.transform.position.z);
-        Vector3 from = new Vector3(transform.position.x, 0 , transform.position.z);
-        transform.rotation = Quaternion.LookRotation(to-from);
+        animator.SetBool("isWalk", true); // 이동 시작 시 isWalk를 true로 설정
 
-        while(true)
+        while (true)
         {
             currentTime += Time.deltaTime;
 
-            // 목표위치에 근접하게 도달하거나 너무 오랜시간동안 "배회" 상태에 머물러 있으면
-            to = new Vector3(unit.target.transform.position.x, 0, unit.target.transform.position.z);
-            from = new Vector3(transform.position.x, 0 , transform.position.z);
-            if((to-from).sqrMagnitude < 0.01f || currentTime >= maxTime)
+            // 목표 위치로 회전
+            Quaternion targetRotation = Quaternion.LookRotation(wanderPosition - transform.position);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+
+            // 목적지에 근접하면
+            if ((wanderPosition - transform.position).sqrMagnitude < arrivalDistance * arrivalDistance)
             {
+                animator.SetBool("isWalk", false); // 이동 중지 시 isWalk를 false로 설정
                 ChangeState(EnemyState.Idle);
+                break;
             }
+
+            // 최대 시간 초과 시
+            if (currentTime >= maxTime)
+            {
+                animator.SetBool("isWalk", false);
+                ChangeState(EnemyState.Idle);
+                break;
+            }
+
             yield return null;
-
         }
-
-        yield return null;
     }
+
 
     private Vector3 CalculateWanderPosition()
     {
@@ -136,6 +147,6 @@ public class EnemyFSM : MonoBehaviour
     private void OnDrawGizmos(){
         // 배회 상태일 때 이동 경로 표시
         Gizmos.color = Color.black;
-        Gizmos.DrawRay(transform.position, unit.target.transform.position - transform.position);
+        Gizmos.DrawRay(transform.position, wanderPosition - transform.position);
     }
 }
