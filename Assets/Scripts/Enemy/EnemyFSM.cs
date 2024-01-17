@@ -16,28 +16,24 @@ public class EnemyFSM : MonoBehaviour
         unit = GetComponent<Unit>();
     }
 
+    // 활성화 될 때마다 호출되는 함수입니다
     private void OnEnable()
     {
-        // ���� Ȱ��ȭ�� �� ���¸� "���"�� ����
         ChangeState(EnemyState.Idle);      
     }
 
     private void OnDisable()
     {
-        StopCoroutine(enemyState.ToString());
+        StopAllCoroutines();
         enemyState = EnemyState.None;
     }
 
     public void ChangeState(EnemyState newState)
     {
-        // ���� ��� ���� ���¿� �ٲٷ��� �ϴ� ���°� ������ �ٲ� �ʿ䰡 �����Ƿ� return
         if (enemyState == newState) return;
 
-        // ������ ������̴� ���� ����
         StopCoroutine(enemyState.ToString());
-        // ���� ���� ���¸� newState �� ����
         enemyState = newState;
-        // ���ο� ���� ���
         StartCoroutine(enemyState.ToString());
     }
 
@@ -45,34 +41,30 @@ public class EnemyFSM : MonoBehaviour
     {
         Debug.Log("FSM Idle");
 
-        // n�� �� "��ȸ" ���·� �����ϴ� �ڷ�ƾ ����
-        StartCoroutine("AutoChangeFromIdleToWander");
+        // StartCoroutine("AutoChangeFromIdleToWander");
         while(true)
         {
-            // "���" ������ �� �ϴ� �ൿ
-            yield return null;
+            yield return StartCoroutine("AutoChangeFromIdleToWander");
         }
     }
 
     private IEnumerator AutoChangeFromIdleToWander()
     {
         Debug.Log("FSM AutoChangeFromIdleToWander");
-        // 1~4�� ���
+        // 1~4
         int changeTime = Random.Range(1, 5);
         Debug.Log("FSM WaitForSeconds " + changeTime);
 
         yield return new WaitForSeconds(changeTime);
-        Debug.Log("FSM BEFORE Wander"); // 여기까지 안들어오네
+        Debug.Log("FSM BEFORE Wander"); 
 
-        // ���¸� "��ȸ"�� ����
         ChangeState(EnemyState.Wander);
         Debug.Log("FSM GOTO Wander");
-        // yield return null;
-
     }
 
     private IEnumerator Wander()
     {
+        
         Debug.Log("FSM Wander");
 
         float currentTime = 0;
@@ -82,7 +74,8 @@ public class EnemyFSM : MonoBehaviour
         unit.speed = status.WalkSpeed;
         // 목표 위치 설정
         // unit.transform.LookAt(unit.target.transform); // ?? 
-
+        // unit.SetDestination(CalculateWanderPosition());
+        
         // 목표 위치로 회전
         Vector3 to = new Vector3(unit.target.transform.position.x, 0, unit.target.transform.position.z);
         Vector3 from = new Vector3(transform.position.x, 0 , transform.position.z);
@@ -99,6 +92,8 @@ public class EnemyFSM : MonoBehaviour
             {
                 ChangeState(EnemyState.Idle);
             }
+            yield return null;
+
         }
 
         yield return null;
@@ -137,9 +132,9 @@ public class EnemyFSM : MonoBehaviour
         return position;
     }
 
-//    private void OnDrawGizmos(){
+    private void OnDrawGizmos(){
         // 배회 상태일 때 이동 경로 표시
-  //      Gizmos.color = Color.black;
-    //    Gizmos.DrawRay(transform.position, unit.target.transform.position - transform.position);
-    //}
+        Gizmos.color = Color.black;
+        Gizmos.DrawRay(transform.position, unit.target.transform.position - transform.position);
+    }
 }

@@ -121,7 +121,7 @@ MonoBehaviour:
   target: {fileID: 4291014390566137146, guid: 07f2f55ea87554071b1e6bf088daa8e1, type: 3}
   speed: 5
   pathUpdateSeconds: 0.5
-  isUpdate: 1
+  isUpdate: 0
 --- !u!114 &310455161046335282
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,7 +151,7 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Radius: 15
   m_Center: {x: 0, y: 0, z: 0}

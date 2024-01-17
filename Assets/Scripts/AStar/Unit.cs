@@ -12,7 +12,7 @@ public class Unit : MonoBehaviour
     Vector3[] path;
     int targetIndex;
 
-    void Start()
+    void OnEnable()
     {
         //target 을 씬에서 Character 이름으로 찾기
         target = GameObject.Find("Character(Clone)");
