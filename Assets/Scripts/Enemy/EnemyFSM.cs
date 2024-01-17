@@ -74,8 +74,9 @@ public class EnemyFSM : MonoBehaviour
         unit.speed = status.WalkSpeed;
         // 목표 위치 설정
         // unit.transform.LookAt(unit.target.transform); // ?? 
-        // unit.SetDestination(CalculateWanderPosition());
-        
+        Vector3 wanderPosition = CalculateWanderPosition();
+        unit.SetDestination(wanderPosition);
+
         // 목표 위치로 회전
         Vector3 to = new Vector3(unit.target.transform.position.x, 0, unit.target.transform.position.z);
         Vector3 from = new Vector3(transform.position.x, 0 , transform.position.z);

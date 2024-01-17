@@ -100,4 +100,10 @@ public class Unit : MonoBehaviour
             }
         }
     }
+
+    // 새로운 목표 위치를 설정하는 메서드
+    public void SetDestination(Vector3 destination)
+    {
+        PathRequestManager.RequestPath(transform.position, destination, OnPathFound);
+    }
 }
