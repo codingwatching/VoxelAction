@@ -72,6 +72,7 @@ public class UIManager : MonoBehaviour
     private void UpdateHPHUD(int previous, int current)
     {
         textHP.text = "HP " + current;
+        if (current < previous)
         {
             StopCoroutine("OnBloodScreen");
             StartCoroutine("OnBloodScreen");
@@ -82,6 +83,10 @@ public class UIManager : MonoBehaviour
         float percent = 0;
         while(percent < 1)
         {
+            if (imageBloodScreen.IsActive() == false)
+            {
+                imageBloodScreen.gameObject.SetActive(true);
+            }
             percent += Time.deltaTime;
             Color color = imageBloodScreen.color;
             color.a = Mathf.Lerp(1,0,curveBloodScreen.Evaluate(percent));

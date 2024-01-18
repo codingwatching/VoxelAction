@@ -46,7 +46,15 @@ public class Status : MonoBehaviour
         {
             return true;
         }
-
         return false;
+    }
+
+    public void IncreaseHP(int heart) 
+    {
+        int previousHP = currentHP;
+
+        currentHP = currentHP + heart > 100 ? 100 : currentHP + heart;
+
+        onHPEvent.Invoke(previousHP, currentHP);
     }
 }

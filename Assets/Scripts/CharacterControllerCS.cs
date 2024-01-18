@@ -539,14 +539,13 @@ public class CharacterControllerCS : MonoBehaviour {
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Floor")
+        if (collision.gameObject.tag == "Floor" || collision.gameObject.tag == "Obstacle")
         {
             animator.SetBool("isJump", false);
             isJump = false;
             jumpCount = 0;
 
             SetJetActive(isJump);
-            Debug.Log("SetActive False!!!!!!!!!!");
         }
     }
 

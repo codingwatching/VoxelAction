@@ -283,7 +283,14 @@ public class EnemyFSM : MonoBehaviour
         bool isDie = status.DecreaseHP(damage);
         if(isDie == true)
         {
-            enemyMemoryPool.DeactivateEnemy(gameObject);
+            animator.SetTrigger("doDie");
+            StartCoroutine(DeactivateEnemyAfterDelay(2));
         }
+    }
+
+    IEnumerator DeactivateEnemyAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        enemyMemoryPool.DeactivateEnemy(gameObject);
     }
 }

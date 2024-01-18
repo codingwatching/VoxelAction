@@ -31,8 +31,8 @@ public class GameManager : MonoBehaviour
     public GameObject gameCam; // main cam
     public CharacterControllerCS player;
     public int stage;
-    public float playTime;
-    public bool isBattle;
+    public float playTime = 0f;
+    public bool isBattle = true;
     public int enemyCntA;
 
     private void Awake()
@@ -48,6 +48,31 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    void Update()
+    {
+        //if(isBattle)
+        //{
+            playTime += Time.deltaTime;
+            Debug.Log("playTime : " + playTime);
+        //}
+    }
+
+    void LateUpdate()
+    {
+        PlayTimeCheck();
+
+
+    }
+
+    void PlayTimeCheck()
+    {
+        int hour = (int)(playTime / 3600);
+        int min = (int)((playTime - hour * 3600) / 60);
+        int second = (int)(playTime % 60);
+        UIManager.instance.playTimeText.text = string.Format("{0:00}", hour) + ":" + string.Format("{0:00}", min) + ":" + string.Format("{0:00}", second);
+        //Debug.Log("TIME : " + string.Format("{0:00}", hour) + ":" + string.Format("{0:00}", min) + ":" + string.Format("{0:00}", second));
     }
 
     public void ChangeState(GameState newState)
