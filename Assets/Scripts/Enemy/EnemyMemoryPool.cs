@@ -46,6 +46,7 @@ public class EnemyMemoryPool : MonoBehaviour
         while (true)
         {
             // 동시에 numberOfEnemiesSpawnedAtOnce 숫자만큼 적이 생성되도록 반복문 사용
+            /*
             for(int i= 0; i < numberOfEnemiesSpawnedAtOnce; ++i)
             {
                 // 맵 내 임의의 위치에 적 생성 위치를 알려주는 아이템 생성
@@ -53,6 +54,36 @@ public class EnemyMemoryPool : MonoBehaviour
                 item.transform.position = new Vector3(Random.Range(-mapSize.x * 0.49f, mapSize.x * 0.49f), 1,
                                                                            Random.Range(-mapSize.y * 0.49f, mapSize.y * 0.49f));
                 StartCoroutine("SpawnEnemy", item);
+            }
+            */
+
+            for (int i = 0; i < numberOfEnemiesSpawnedAtOnce; ++i)
+            {
+                Vector3 spawnPosition = new Vector3(Random.Range(-mapSize.x * 0.49f, mapSize.x * 0.49f), 1,
+                                                    Random.Range(-mapSize.y * 0.49f, mapSize.y * 0.49f));
+
+                // 장애물 검사를 위한 반경 설정
+                float checkRadius = 1.0f; // 이 값을 조정하여 검사 범위를 변경
+
+                // 해당 위치 주변에 "Obstacle" 태그를 가진 오브젝트가 있는지 확인
+                Collider[] hitColliders = Physics.OverlapSphere(spawnPosition, checkRadius);
+                bool isObstacleNearby = false;
+                foreach (var hitCollider in hitColliders)
+                {
+                    if (hitCollider.CompareTag("Obstacle"))
+                    {
+                        isObstacleNearby = true;
+                        break;
+                    }
+                }
+
+                // "Obstacle" 태그를 가진 오브젝트가 없는 경우에만 적 생성
+                if (!isObstacleNearby)
+                {
+                    GameObject item = spawnPointMemoryPool.ActivatePoolItem();
+                    item.transform.position = spawnPosition;
+                    StartCoroutine("SpawnEnemy", item);
+                }
             }
 
             currentNumber++;

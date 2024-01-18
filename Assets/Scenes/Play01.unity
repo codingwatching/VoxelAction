@@ -1260,8 +1260,6 @@ MonoBehaviour:
   - prefab: {fileID: 4746311693946814806, guid: dade468079a1d384088f6c348cccdc51, type: 3}
     chance: 85
   maxItemCount: 50
-  min: {x: -8, y: -4}
-  max: {x: 8, y: 4}
 --- !u!4 &189457070
 Transform:
   m_ObjectHideFlags: 0
@@ -16559,7 +16557,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2287573430382687325, guid: d2beb2309f1f1bc4092bd3fc748fa4cd, type: 3}
       propertyPath: m_LocalScale.x
-      value: 22.1856
+      value: 13.052233
       objectReference: {fileID: 0}
     - target: {fileID: 2287573430382687325, guid: d2beb2309f1f1bc4092bd3fc748fa4cd, type: 3}
       propertyPath: m_LocalScale.y
@@ -16567,7 +16565,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2287573430382687325, guid: d2beb2309f1f1bc4092bd3fc748fa4cd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -11.31
+      value: -27.4
       objectReference: {fileID: 0}
     - target: {fileID: 2287573430382687325, guid: d2beb2309f1f1bc4092bd3fc748fa4cd, type: 3}
       propertyPath: m_LocalPosition.y
@@ -23554,7 +23552,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3105350319719200237, guid: 8dd3c9b83f05afc42b7484a40e08e918, type: 3}
       propertyPath: type
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5848455613883030001, guid: 8dd3c9b83f05afc42b7484a40e08e918, type: 3}
       propertyPath: m_IsTrigger
@@ -23563,6 +23561,10 @@ PrefabInstance:
     - target: {fileID: 6312065811236259067, guid: 8dd3c9b83f05afc42b7484a40e08e918, type: 3}
       propertyPath: m_Name
       value: Weapon Grenade (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6312065811236259067, guid: 8dd3c9b83f05afc42b7484a40e08e918, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -24171,7 +24173,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2287573430382687325, guid: d2beb2309f1f1bc4092bd3fc748fa4cd, type: 3}
       propertyPath: m_LocalScale.x
-      value: 22.1856
+      value: 12.779794
       objectReference: {fileID: 0}
     - target: {fileID: 2287573430382687325, guid: d2beb2309f1f1bc4092bd3fc748fa4cd, type: 3}
       propertyPath: m_LocalScale.y
@@ -25316,7 +25318,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3105350319719200237, guid: 8dd3c9b83f05afc42b7484a40e08e918, type: 3}
       propertyPath: type
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5848455613883030001, guid: 8dd3c9b83f05afc42b7484a40e08e918, type: 3}
       propertyPath: m_IsTrigger
@@ -25325,6 +25327,10 @@ PrefabInstance:
     - target: {fileID: 6312065811236259067, guid: 8dd3c9b83f05afc42b7484a40e08e918, type: 3}
       propertyPath: m_Name
       value: Weapon Grenade (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6312065811236259067, guid: 8dd3c9b83f05afc42b7484a40e08e918, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -26749,7 +26755,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2287573430382687325, guid: d2beb2309f1f1bc4092bd3fc748fa4cd, type: 3}
       propertyPath: m_LocalScale.z
-      value: 18.264359
+      value: 8.291288
       objectReference: {fileID: 0}
     - target: {fileID: 2287573430382687325, guid: d2beb2309f1f1bc4092bd3fc748fa4cd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -27998,7 +28004,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3105350319719200237, guid: 8dd3c9b83f05afc42b7484a40e08e918, type: 3}
       propertyPath: type
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5848455613883030001, guid: 8dd3c9b83f05afc42b7484a40e08e918, type: 3}
       propertyPath: m_IsTrigger
@@ -28007,6 +28013,10 @@ PrefabInstance:
     - target: {fileID: 6312065811236259067, guid: 8dd3c9b83f05afc42b7484a40e08e918, type: 3}
       propertyPath: m_Name
       value: Weapon Grenade (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6312065811236259067, guid: 8dd3c9b83f05afc42b7484a40e08e918, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -29466,6 +29476,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Item Ammo
       objectReference: {fileID: 0}
+    - target: {fileID: 7915363005542056100, guid: 33c41bbbe37ebab45955b5ba8b815ec0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -29738,7 +29752,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3105350319719200237, guid: 8dd3c9b83f05afc42b7484a40e08e918, type: 3}
       propertyPath: type
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5848455613883030001, guid: 8dd3c9b83f05afc42b7484a40e08e918, type: 3}
       propertyPath: m_IsTrigger
@@ -29747,6 +29761,10 @@ PrefabInstance:
     - target: {fileID: 6312065811236259067, guid: 8dd3c9b83f05afc42b7484a40e08e918, type: 3}
       propertyPath: m_Name
       value: Weapon Grenade
+      objectReference: {fileID: 0}
+    - target: {fileID: 6312065811236259067, guid: 8dd3c9b83f05afc42b7484a40e08e918, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -29804,6 +29822,10 @@ PrefabInstance:
     - target: {fileID: 7307623660769259952, guid: ae53bdd8a329e744eb4a971966a89aa5, type: 3}
       propertyPath: m_Name
       value: Coin Silver
+      objectReference: {fileID: 0}
+    - target: {fileID: 7307623660769259952, guid: ae53bdd8a329e744eb4a971966a89aa5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -29948,6 +29970,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Item Heart
       objectReference: {fileID: 0}
+    - target: {fileID: 4444147823825409689, guid: 656a0c0e8ad9e324b9690bd08b78b0a9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8325781649105029682, guid: 656a0c0e8ad9e324b9690bd08b78b0a9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -30044,6 +30070,10 @@ PrefabInstance:
     - target: {fileID: 5185086539487233612, guid: 9e1f37f6b8fc6ab4f90c7c560ee83507, type: 3}
       propertyPath: m_Name
       value: Coin Bronze
+      objectReference: {fileID: 0}
+    - target: {fileID: 5185086539487233612, guid: 9e1f37f6b8fc6ab4f90c7c560ee83507, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -30392,6 +30422,10 @@ PrefabInstance:
     - target: {fileID: 4746311693946814806, guid: dade468079a1d384088f6c348cccdc51, type: 3}
       propertyPath: m_Name
       value: Coin Gold
+      objectReference: {fileID: 0}
+    - target: {fileID: 4746311693946814806, guid: dade468079a1d384088f6c348cccdc51, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6950504014006280830, guid: dade468079a1d384088f6c348cccdc51, type: 3}
       propertyPath: m_LocalPosition.x
