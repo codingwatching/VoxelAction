@@ -11,6 +11,7 @@ public class EnemyCS : MonoBehaviour
     public bool isChase=false;
     public bool isAttack; // ���� ���Դϴ�
     public BoxCollider meleeArea; // �Ϲ��� ���� EnemyA Ÿ���� EnemyBullet
+    private int damage = 5;
 
     Rigidbody rigid;
     BoxCollider boxCollider;
@@ -67,10 +68,8 @@ public class EnemyCS : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("EnemyCS OnTriggerEnter");
-
-        // AgroSphere 
-        /*
+        // Debug.Log("EnemyCS OnTriggerEnter");
+        
         if (other.tag == "Melee")
         {
             WeaponCS weapon = other.GetComponent<WeaponCS>();
@@ -84,6 +83,7 @@ public class EnemyCS : MonoBehaviour
 
             }
         }
+        /*
         else if (other.tag == "Bullet")
         {
             BulletCS bullet = other.GetComponent<BulletCS>();
@@ -95,6 +95,12 @@ public class EnemyCS : MonoBehaviour
             StartCoroutine(OnDamage(reactVec, false));
         }
         */
+        else if (other.CompareTag("Player"))
+        {
+            Debug.Log("Player HIT");
+            other.GetComponent<CharacterControllerCS>().TakeDamage(damage);
+            // Destroy(gameObject); // 자폭?!
+        }
     }
 
     IEnumerator OnDamage(Vector3 reactVec, bool isGrenade)
@@ -133,4 +139,6 @@ public class EnemyCS : MonoBehaviour
             Destroy(gameObject, 3);
         }
     }
+
+
 }

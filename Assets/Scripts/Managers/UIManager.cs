@@ -6,6 +6,18 @@ using TMPro;
 
 public class UIManager : MonoBehaviour
 {
+    [Header("Components")]
+    [SerializeField]
+    private Status status; // 플레이어의 상태 (이동 속도, 체력)
+
+    [Header("HP & BloodScreen UI")]
+    [SerializeField]
+    private TextMeshProUGUI textHP; // 플레이어의 체력을 출력하는 Text
+    [SerializeField]
+    private Image imageBloodScreen; // 플레이어가 공격받았을 때 화면에 표시되는 Image
+    [SerializeField]
+    private AnimationCurve curveBloodScreen;
+
     public static UIManager instance;
 
     public GameObject menuPanel;
@@ -40,6 +52,9 @@ public class UIManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        GameObject target = GameObject.Find("Character(Clone)");
+        status = target.transform.GetComponent<Status>();
+        status.onHPEvent.AddListener(UpdateHPHUD);
     }
 
     // Start is called before the first frame update
@@ -52,5 +67,26 @@ public class UIManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    private void UpdateHPHUD(int previous, int current)
+    {
+        textHP.text = "HP " + current;
+        {
+            StopCoroutine("OnBloodScreen");
+            StartCoroutine("OnBloodScreen");
+        }
+    }
+    private IEnumerator OnBloodScreen()
+    {
+        float percent = 0;
+        while(percent < 1)
+        {
+            percent += Time.deltaTime;
+            Color color = imageBloodScreen.color;
+            color.a = Mathf.Lerp(1,0,curveBloodScreen.Evaluate(percent));
+            imageBloodScreen.color= color;
+            yield return null;  
+        }
     }
 }

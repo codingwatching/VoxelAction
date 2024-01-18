@@ -80,6 +80,12 @@ public class Unit : MonoBehaviour
         }
     }
 
+    public void StopMovement()
+    {
+        StopCoroutine("FollowPath"); // 현재 진행 중인 FollowPath 코루틴을 중단합니다.
+        path = new Vector3[0]; // 경로를 비워서 목표지점이 없도록 설정합니다.
+    }
+
     public void OnDrawGizmos()
     {
         if (path != null)

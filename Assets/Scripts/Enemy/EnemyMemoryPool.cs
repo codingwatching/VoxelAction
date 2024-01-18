@@ -6,6 +6,8 @@ using UnityEngine;
 public class EnemyMemoryPool : MonoBehaviour
 {
     [SerializeField]
+    private GameObject target; // 적의 목표 (플레이어)
+    [SerializeField]
     private GameObject enemySpawnPointPrefab; // 적이 등장하기 전 적의 등장 위치를 알려주는 프리팹
     [SerializeField]
     private GameObject enemyPrefab; // 생성되는 적 프리팹
@@ -26,11 +28,20 @@ public class EnemyMemoryPool : MonoBehaviour
         StartCoroutine("SpawnTile");
     }
     
+    public void Start()
+    {
+        target = GameObject.FindGameObjectWithTag("Player");
+        if (target == null)
+        {
+            Debug.LogError("Player target not found in the scene.");
+        }
+    }
+
     // 임의의 위치에 적 생성 위치를 알려줍니다. 처음에는 하나, 시간이 지날수록 동시 생성 수가 증가합니다.
     private IEnumerator SpawnTile()
     {
         int currentNumber = 0;
-        int maximumNumber = 50;
+        int maximumNumber = 10;
 
         while (true)
         {
@@ -59,11 +70,17 @@ public class EnemyMemoryPool : MonoBehaviour
     private IEnumerator SpawnEnemy(GameObject point)
     {
         yield return new WaitForSeconds(enemySpawnLatency);
-
+        if (target == null)
+        {
+            target = GameObject.Find("Character(Clone)");
+            yield break; // 타겟이 없으면 적 생성 중단
+        }
         // 적 오브젝트를 생성하고, 적의 위치를 현재 생성되어있는 타일과 같은 point의 위치로 설정
         GameObject item = enemyMemoryPool.ActivatePoolItem();
         item.transform.position = point.transform.position;
-        
+
+        item.GetComponent<EnemyFSM>().Setup(target);
+
         // 타일 오브젝트를 비활성화
         spawnPointMemoryPool.DeactivatePoolItem(point);
     }

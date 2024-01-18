@@ -106,6 +106,8 @@ public class CharacterControllerCS : MonoBehaviour {
 
     private int loadCheck = 0;
 
+    Status status;
+
     // Initialization
     void Awake()
     {
@@ -126,6 +128,7 @@ public class CharacterControllerCS : MonoBehaviour {
         animator = GetComponentInChildren<Animator>();
         originalSpeed = speed; // Store the original speed
         meshs = GetComponentsInChildren<MeshRenderer>(); // 복수의 메시를 가지고 온다
+        status = GetComponent<Status>();
 
         // Cursor.visible = false;
         // Cursor.lockState = CursorLockMode.Locked;
@@ -586,10 +589,15 @@ public class CharacterControllerCS : MonoBehaviour {
                 // 데미지는 언제나 피격받는 입장이 자신의 체력을 깎도록 합니다.
                 // 이후 리액션 코루틴을 호출합니다.
                 BulletCS enemyBullet = other.GetComponent<BulletCS>();
-                health -= enemyBullet.damage;
-                StartCoroutine("OnDamage");
+                // health -= enemyBullet.damage;
+                // StartCoroutine("OnDamage");
             }
         }
+    }
+
+    public void TakeDamage(int damage)
+    {
+        bool isDie = status.DecreaseHP(damage);
     }
 
     /** AI 몬스터로부터 피격 시 리액션 **/
