@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
     public GameObject gameCam; // main cam
     public CharacterControllerCS player;
     public int stage;
-    public float playTime = 0f;
+    public float playTime = 61f; // 1분 (60초)으로 초기 설정
     public bool isBattle = true;
     public int enemyCntA;
 
@@ -52,11 +52,17 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        //if(isBattle)
-        //{
-        playTime += Time.deltaTime;
-        Debug.Log("playTime : " + playTime);
-        //}
+        // playTime += Time.deltaTime;
+
+        if (playTime > 0)
+        {
+            playTime -= Time.deltaTime; // 시간 감소
+            if (playTime < 0)
+            {
+                playTime = 0; // 시간이 0보다 작아지지 않도록 처리
+                // 시간이 끝났을 때 수행할 코드
+            }
+        }
     }
 
     void LateUpdate()
@@ -66,10 +72,16 @@ public class GameManager : MonoBehaviour
 
     void PlayTimeCheck()
     {
+        /*
         int hour = (int)(playTime / 3600);
         int min = (int)((playTime - hour * 3600) / 60);
         int second = (int)(playTime % 60);
         UIManager.instance.playTimeText.text = string.Format("{0:00}", hour) + ":" + string.Format("{0:00}", min) + ":" + string.Format("{0:00}", second);
+        */
+
+        int min = (int)(playTime / 60);
+        int second = (int)(playTime % 60);
+        UIManager.instance.playTimeText.text = string.Format("{0:00}", min) + ":" + string.Format("{0:00}", second);
     }
 
     public void ChangeState(GameState newState)

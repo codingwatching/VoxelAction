@@ -71,7 +71,7 @@ public class UIManager : MonoBehaviour
 
     private void UpdateEnemyCnt()
     {
-        enemyAText.text = GameManager.instance.enemyCntA.ToString();
+        enemyAText.text = "x " + GameManager.instance.enemyCntA.ToString();
     }
 
     private void UpdateHPHUD(int previous, int current)

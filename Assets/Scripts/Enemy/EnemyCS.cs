@@ -138,6 +138,7 @@ public class EnemyCS : MonoBehaviour
              rigid.AddForce(reactVec * 5, ForceMode.Impulse);
             }
             Destroy(gameObject, 3);
+            // transform.GetComponent<EnemyFSM>().TakeDamage(damage);
         }
     }
 
