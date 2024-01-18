@@ -54,16 +54,14 @@ public class GameManager : MonoBehaviour
     {
         //if(isBattle)
         //{
-            playTime += Time.deltaTime;
-            Debug.Log("playTime : " + playTime);
+        playTime += Time.deltaTime;
+        Debug.Log("playTime : " + playTime);
         //}
     }
 
     void LateUpdate()
     {
         PlayTimeCheck();
-
-
     }
 
     void PlayTimeCheck()
@@ -72,61 +70,51 @@ public class GameManager : MonoBehaviour
         int min = (int)((playTime - hour * 3600) / 60);
         int second = (int)(playTime % 60);
         UIManager.instance.playTimeText.text = string.Format("{0:00}", hour) + ":" + string.Format("{0:00}", min) + ":" + string.Format("{0:00}", second);
-        //Debug.Log("TIME : " + string.Format("{0:00}", hour) + ":" + string.Format("{0:00}", min) + ":" + string.Format("{0:00}", second));
     }
 
     public void ChangeState(GameState newState)
     {
         currentState = newState;
-        OnGameStateChange?.Invoke(newState); // ���� ���� ���� �˸�. ?. �����ڴ� OnGameStateChange �̺�Ʈ�� null�� �ƴ� ��쿡�� �̺�Ʈ�� ȣ��
+        OnGameStateChange?.Invoke(newState);
 
         switch (newState)
         {
             case GameState.Lobby:
-                // Lobby Scene�� ���� ���� ����
                 break;
             case GameState.Exploration:
-                // Ž�� ���·� ��ȯ�� ���� ����
                 break;
             case GameState.Combat:
-                // ���� ���·� ��ȯ�� ���� ����
                 break;
             case GameState.Dialogue:
-                // ��ȭ ���·� ��ȯ�� ���� ����
                 break;
             case GameState.Pause:
-                // ���� �Ͻ����� ���·� ��ȯ�� ���� ����
                 break;
         }
     }
 
-/*    public void CompleteLevel()
-    {
-        // ������ �Ϸ�� �� ȣ��Ǹ�, SceneManager�� LoadNextScene�� ����Ͽ� ���� ������ ��ȯ
-        SceneManager.instance.LoadNextScene();
-    }*/
 
-    // �߰� ���� ���� ����
 
-    // ���� ���¸� �������� �Լ�
     public GameState GetCurrentState()
     {
         return currentState;
     }
-
-/*    public void UpdateCharacterData(CharacterControllerCS character)
+    /*    public void CompleteLevel()
     {
-        currentCharacterData = new CharacterData(character);
-    }*/
-
-/*    public void LoadCharacterDataIntoScene(CharacterControllerCS character)
-    {
-        if (currentCharacterData != null)
+        SceneManager.instance.LoadNextScene();
+    }
+       public void UpdateCharacterData(CharacterControllerCS character)
         {
-            character.health = currentCharacterData.health;
-            character.ammo = currentCharacterData.ammo;
-            character.coin = currentCharacterData.coin;
-            // �ٸ� �ʿ��� �����͸� ���⿡ �����մϴ�.
+            currentCharacterData = new CharacterData(character);
         }
-    }*/
+
+        public void LoadCharacterDataIntoScene(CharacterControllerCS character)
+        {
+            if (currentCharacterData != null)
+            {
+                character.health = currentCharacterData.health;
+                character.ammo = currentCharacterData.ammo;
+                character.coin = currentCharacterData.coin;
+                // �ٸ� �ʿ��� �����͸� ���⿡ �����մϴ�.
+            }
+        }*/
 }

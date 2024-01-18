@@ -2647,7 +2647,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -110, y: 222}
+  m_AnchoredPosition: {x: -110, y: 68.5}
   m_SizeDelta: {x: 68.75, y: 50}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &395910002
@@ -23744,7 +23744,7 @@ MonoBehaviour:
   weapon2Img: {fileID: 0}
   weapon3Img: {fileID: 0}
   weapon4Img: {fileID: 0}
-  enemyAText: {fileID: 0}
+  enemyAText: {fileID: 2015246739}
   enemyBText: {fileID: 0}
   enemyCText: {fileID: 0}
   bossHealthGroup: {fileID: 0}
@@ -28480,7 +28480,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -22, y: 206}
+  m_AnchoredPosition: {x: -22, y: 52.499996}
   m_SizeDelta: {x: 700, y: 50}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &2015246739

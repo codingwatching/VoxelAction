@@ -35,9 +35,9 @@ public class UIManager : MonoBehaviour
     public Image weapon2Img;
     public Image weapon3Img;
     public Image weapon4Img;
-    public Text enemyAText;
-    public Text enemyBText;
-    public Text enemyCText;
+    public TMP_Text enemyAText;
+    public TMP_Text enemyBText;
+    public TMP_Text enemyCText;
     public RectTransform bossHealthGroup;
     public RectTransform bossHealthBar;
 
@@ -66,7 +66,12 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        UpdateEnemyCnt();
+    }
+
+    private void UpdateEnemyCnt()
+    {
+        enemyAText.text = GameManager.instance.enemyCntA.ToString();
     }
 
     private void UpdateHPHUD(int previous, int current)

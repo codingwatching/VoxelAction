@@ -120,6 +120,7 @@ public class EnemyCS : MonoBehaviour
             isChase = false;
             // nav.enabled = false;
             animator.SetTrigger("doDie");
+            GameManager.instance.enemyCntA++;
 
             // ���ۿ� �˹�
             if (isGrenade)

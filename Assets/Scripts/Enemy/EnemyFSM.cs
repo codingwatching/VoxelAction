@@ -284,6 +284,7 @@ public class EnemyFSM : MonoBehaviour
         if(isDie == true)
         {
             animator.SetTrigger("doDie");
+            GameManager.instance.enemyCntA++;
             StartCoroutine(DeactivateEnemyAfterDelay(2));
         }
     }
