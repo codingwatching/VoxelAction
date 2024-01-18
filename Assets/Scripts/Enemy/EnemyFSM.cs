@@ -32,11 +32,14 @@ public class EnemyFSM : MonoBehaviour
     Vector3 wanderPosition = Vector3.zero;
     [SerializeField]
     private GameObject target; // 적의 공격 대상 (플레이어)
+    private EnemyMemoryPool enemyMemoryPool; // 적 메모리 풀 (적 오브젝트 비활성화에 사용)
 
     // private void Awake()
-    public void Setup(GameObject target)
+    public void Setup(GameObject target, EnemyMemoryPool enemyMemoryPool)
     {
         this.target = target;
+        this.enemyMemoryPool = enemyMemoryPool;
+
         status = GetComponent<Status>();
         unit = GetComponent<Unit>();
         animator = GetComponentInChildren<Animator>();
@@ -273,5 +276,14 @@ public class EnemyFSM : MonoBehaviour
         // 공격 범위
         Gizmos.color = new Color(0.39f, 0.04f, 0.04f);
         Gizmos.DrawWireSphere(transform.position, attackRange);
+    }
+
+    public void TakeDamage(int damage)
+    {
+        bool isDie = status.DecreaseHP(damage);
+        if(isDie == true)
+        {
+            enemyMemoryPool.DeactivateEnemy(gameObject);
+        }
     }
 }

@@ -5206,10 +5206,10 @@ MonoBehaviour:
   grenadeObject: {fileID: 4838909430144703007, guid: 48eab566f6cd1754e8992cd8383869b0, type: 3}
   grenadeChargeForce: 0
   grenades:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 5984912337599987787, guid: ae1c70dd4fa027547a457e07232d9433, type: 3}
+  - {fileID: 8481942563673963881, guid: 8de848c3cdd4d4d4e96e75dceddb9640, type: 3}
+  - {fileID: 4775714299662874875, guid: 96b63e01f1fcc6646afc59fc323af3dc, type: 3}
+  - {fileID: 2031022305602589686, guid: e0a08511e8a48f74b8dda54e6992d214, type: 3}
   hasGrenades: 0
   leftzet: {fileID: 4010705742481907655}
   rightzet: {fileID: 6601392581385183679}
@@ -11075,7 +11075,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 1
-  damage: 0
+  damage: 50
   rate: 0.4
   maxAmmo: 7
   curAmmo: 7
@@ -11115,6 +11115,7 @@ MonoBehaviour:
   impactPrefab:
   - {fileID: 2775473873441640363, guid: 416e656667fa26e4784a7101c0e1f3bf, type: 3}
   - {fileID: 2775473873441640363, guid: 4a9d99c62beec0d499671463878493f9, type: 3}
+  - {fileID: 2775473873441640363, guid: 776fc23b4c5bbab49bbff9e6553d90b3, type: 3}
 --- !u!4 &7858043538249381542 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2285952976136801637, guid: a2e051660762cbe4494c17a095a95e10, type: 3}

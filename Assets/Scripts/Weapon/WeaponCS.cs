@@ -6,7 +6,7 @@ public class WeaponCS : MonoBehaviour
 {
     public enum Type { Melee, Range };
     public Type type;
-    public int damage;
+    public int damage = 10;
     public float rate; // 공격속도
     public int maxAmmo; // 소지 가능한 최대 탄약 개수
     public int curAmmo; // 실제 탄약 수
@@ -148,6 +148,11 @@ public class WeaponCS : MonoBehaviour
         if(Physics.Raycast(bulletSpawnPoint.position, attackDirection, out hit, Mathf.Infinity)) 
         {
             impactMemoryPool.SpawnImpact(hit);
+
+            if (hit.transform.CompareTag("Enemy"))
+            {
+                hit.transform.GetComponent<EnemyFSM>().TakeDamage(damage);
+            }
         }
     }
 }
