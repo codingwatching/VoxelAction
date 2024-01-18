@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        GameObject myCharacter = Instantiate(characterPrefab, characterSpawnPos.position + new Vector3(3,0,0), characterSpawnPos.rotation); // ���ͺ� ����
+        GameObject myCharacter = Instantiate(characterPrefab, characterSpawnPos.position + new Vector3(0,0,-10), characterSpawnPos.rotation); // ���ͺ� ����
 
         if (instance == null)
         {

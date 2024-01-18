@@ -573,8 +573,12 @@ public class CharacterControllerCS : MonoBehaviour {
                         health = maxHealth;
                     break;
                 case ItemCS.Type.Grenade:
-                    grenades[hasGrenades].SetActive(true);
-                    hasGrenades += item.value;
+                    if (grenades.Length <= 4)
+                    {
+                        grenades[hasGrenades].SetActive(true);
+                        hasGrenades += item.value;
+                    }
+                    
                     if (hasGrenades > maxHasGrenades)
                         hasGrenades = maxHasGrenades;
                     break;
