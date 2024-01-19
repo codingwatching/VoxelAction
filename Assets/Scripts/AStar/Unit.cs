@@ -15,9 +15,10 @@ public class Unit : MonoBehaviour
     void OnEnable()
     {
         //target 을 씬에서 Character 이름으로 찾기
+        // target = GameObject.Find("Character(Clone)");
         target = GameObject.Find("Character(Clone)");
-        
-        if(isUpdate == true && target != null)
+
+        if (isUpdate == true && target != null)
             StartCoroutine(UpdatePath());
     }
 

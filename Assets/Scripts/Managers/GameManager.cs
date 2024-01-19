@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
     public GameObject gameCam; // main cam
     public CharacterControllerCS player;
     public int stage;
-    public float playTime = 61f; // 1분 (60초)으로 초기 설정
+    public float playTime = 181f; // 3분 (180초)으로 초기 설정
     public bool isBattle = true;
     public int enemyCntA;
 

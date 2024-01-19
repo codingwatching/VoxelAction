@@ -32,8 +32,8 @@ TagManager:
   - EnemyDead
   - PlayerCamera
   - Unwalkable
-  - 
-  - 
+  - MainCamera
+  - MinimapCamera
   - 
   - 
   - 
