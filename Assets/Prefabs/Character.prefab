@@ -10897,7 +10897,7 @@ MonoBehaviour:
   damage: 25
   rate: 0.5
   maxAmmo: 0
-  curAmmo: 0
+  curAmmo: 1
   meleeArea: {fileID: 5717219601246841381}
   trailRendererEffect: {fileID: 524584265054447057}
   bullet: {fileID: 5997335303731221406, guid: ae87540cbb9160b4d91564727beff7cb, type: 3}
