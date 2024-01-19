@@ -300,6 +300,7 @@ MonoBehaviour:
   meshObject: {fileID: 4068789072679920051}
   effectObject: {fileID: 8908479847420226475}
   rigid: {fileID: 8781850886187735836}
+  damage: 100
 --- !u!1001 &7895003130958778346
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -367,6 +368,34 @@ PrefabInstance:
     - target: {fileID: 4824182400241798983, guid: 46ffadbb188f9ab498b623c4290ef656, type: 3}
       propertyPath: m_Materials.Array.size
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8638940641552346735, guid: 46ffadbb188f9ab498b623c4290ef656, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].time
+      value: 0.35049814
+      objectReference: {fileID: 0}
+    - target: {fileID: 8638940641552346735, guid: 46ffadbb188f9ab498b623c4290ef656, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].inSlope
+      value: 1.5974061
+      objectReference: {fileID: 0}
+    - target: {fileID: 8638940641552346735, guid: 46ffadbb188f9ab498b623c4290ef656, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].inSlope
+      value: 1.2727929
+      objectReference: {fileID: 0}
+    - target: {fileID: 8638940641552346735, guid: 46ffadbb188f9ab498b623c4290ef656, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].outSlope
+      value: 1.5974061
+      objectReference: {fileID: 0}
+    - target: {fileID: 8638940641552346735, guid: 46ffadbb188f9ab498b623c4290ef656, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].inWeight
+      value: 0.1974677
+      objectReference: {fileID: 0}
+    - target: {fileID: 8638940641552346735, guid: 46ffadbb188f9ab498b623c4290ef656, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].outSlope
+      value: 1.2727929
+      objectReference: {fileID: 0}
+    - target: {fileID: 8638940641552346735, guid: 46ffadbb188f9ab498b623c4290ef656, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].outWeight
+      value: 0.27062133
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
