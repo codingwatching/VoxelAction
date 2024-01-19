@@ -5511,7 +5511,7 @@ Transform:
   m_GameObject: {fileID: 6579747278573965323}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 2, z: 0}
+  m_LocalPosition: {x: 0, y: 10, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11017,6 +11017,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 547435428816858648, guid: 203326381d9b54d489646c6c2f61f53a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3191240659699242748}
+    - targetCorrespondingSourceObject: {fileID: 547435428816858648, guid: 203326381d9b54d489646c6c2f61f53a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4665840355453323588}
+    - targetCorrespondingSourceObject: {fileID: 547435428816858648, guid: 203326381d9b54d489646c6c2f61f53a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3388627927746676053}
   m_SourcePrefab: {fileID: 100100000, guid: 203326381d9b54d489646c6c2f61f53a, type: 3}
 --- !u!1 &6133016926666526833 stripped
 GameObject:
@@ -11036,18 +11042,47 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 1
-  damage: 10
+  damage: 25
   rate: 0.15
   maxAmmo: 30
   curAmmo: 30
   meleeArea: {fileID: 0}
   trailRendererEffect: {fileID: 0}
   bullet: {fileID: 5299443505601146984, guid: d9c273e26457d874caf68479b086cd0b, type: 3}
-  casingSpawnPoint: {fileID: 0}
-  bulletSpawnPoint: {fileID: 0}
+  casingSpawnPoint: {fileID: 5730898845223311223}
+  bulletSpawnPoint: {fileID: 696741809814518865}
   bulletCase: {fileID: 8180536178103766957, guid: 1eb7c82decf9ad6429af235d3eadb813, type: 3}
   characterController: {fileID: 4291014390566137146}
   playerCamera: {fileID: 2129572069468154809}
+--- !u!114 &4665840355453323588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6133016926666526833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34d82d2a6797cda4ba1206eccf93a620, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  casingPrefab: {fileID: 8180536178103766957, guid: 1eb7c82decf9ad6429af235d3eadb813, type: 3}
+--- !u!114 &3388627927746676053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6133016926666526833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cfa384baaa0e634da5e9c855e163d3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  impactPrefab:
+  - {fileID: 2775473873441640363, guid: 416e656667fa26e4784a7101c0e1f3bf, type: 3}
+  - {fileID: 2775473873441640363, guid: 4a9d99c62beec0d499671463878493f9, type: 3}
+  - {fileID: 2775473873441640363, guid: 776fc23b4c5bbab49bbff9e6553d90b3, type: 3}
 --- !u!4 &6797914025404058315 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 924136447322616994, guid: 203326381d9b54d489646c6c2f61f53a, type: 3}
