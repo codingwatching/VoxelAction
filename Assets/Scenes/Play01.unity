@@ -7914,7 +7914,7 @@ MonoBehaviour:
   gameCam: {fileID: 0}
   player: {fileID: 0}
   stage: 0
-  playTime: 61
+  playTime: 181
   isBattle: 0
   enemyCntA: 0
 --- !u!1001 &472180148
@@ -23881,6 +23881,7 @@ MonoBehaviour:
   weapon2Img: {fileID: 0}
   weapon3Img: {fileID: 0}
   weapon4Img: {fileID: 0}
+  aimImg: {fileID: 1481262373}
   enemyAText: {fileID: 2015246739}
   enemyBText: {fileID: 0}
   enemyCText: {fileID: 0}
@@ -27071,7 +27072,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 90039
+    m_Bits: 87991
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: 9c5d4e07d7d269644accfd6e370d8193, type: 2}
   m_TargetDisplay: 0

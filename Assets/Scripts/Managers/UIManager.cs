@@ -35,6 +35,8 @@ public class UIManager : MonoBehaviour
     public Image weapon2Img;
     public Image weapon3Img;
     public Image weapon4Img;
+    public Image aimImg;
+
     public TMP_Text enemyAText;
     public TMP_Text enemyBText;
     public TMP_Text enemyCText;
@@ -55,6 +57,8 @@ public class UIManager : MonoBehaviour
         GameObject target = GameObject.Find("Character(Clone)");
         status = target.transform.GetComponent<Status>();
         status.onHPEvent.AddListener(UpdateHPHUD);
+
+        TurnOnOffAimImg(false);
     }
 
     // Start is called before the first frame update
@@ -98,5 +102,10 @@ public class UIManager : MonoBehaviour
             imageBloodScreen.color= color;
             yield return null;  
         }
+    }
+
+    public void TurnOnOffAimImg(bool turn)
+    {
+        aimImg.gameObject.SetActive(turn);
     }
 }

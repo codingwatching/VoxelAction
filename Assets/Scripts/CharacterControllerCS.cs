@@ -365,6 +365,15 @@ public class CharacterControllerCS : MonoBehaviour {
         if (swapDown2) weaponIndex = 1;
         if (swapDown3) weaponIndex = 2;
 
+        if (swapDown1)
+        {
+            UIManager.instance.TurnOnOffAimImg(false);
+        }
+        if (swapDown2 || swapDown3)
+        {
+            UIManager.instance.TurnOnOffAimImg(true);
+        }
+
         if (swapDown1 || swapDown2 || swapDown3 && !isJump && !isDodge)
         {
             if (equippedWeapon != null)
