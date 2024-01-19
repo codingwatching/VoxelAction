@@ -15,4 +15,4 @@
 ### 개발 일지 📌
 Velog 시리즈 [Project Voxel Action](https://velog.io/@strurao/series/Unity) 에 기록 중입니다. 
 
-![DALL·E 2024-01-08 15 03 14 - Create a simple and cute cover for a voxel action game, with a focus on a white color theme  The design should feature adorable voxel characters, poss](https://github.com/strurao/VoxelAction/assets/126440235/35014dcc-a0d7-46a8-9176-e229af6a2e80)
+![image](https://github.com/strurao/VoxelAction/assets/126440235/850ba1e1-4ee8-485d-9de5-b5a899b35722)
