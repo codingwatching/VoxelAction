@@ -130,6 +130,10 @@ public class CharacterControllerCS : MonoBehaviour {
         meshs = GetComponentsInChildren<MeshRenderer>(); // 복수의 메시를 가지고 온다
         status = GetComponent<Status>();
 
+        ammo = status.CurrentAmmo;
+        coin = status.CurrentCoin;
+        health = status.CurrentHP;
+
         // Cursor.visible = false;
         // Cursor.lockState = CursorLockMode.Locked;
     }
@@ -401,9 +405,8 @@ public class CharacterControllerCS : MonoBehaviour {
         fireDelayTime += Time.deltaTime; // 공격딜레이에 시간을 더해주고 공격 가능 여부를 확인
         isFireReady = equippedWeapon.rate < fireDelayTime; // 공격속도보다 시간이 커지면, 공격 가능
 
-        if (fireDown && isFireReady && !isDodge && !isSwap && !isShop && ammo > 0)
+        if (fireDown && isFireReady && !isDodge && !isSwap && !isShop && equippedWeapon.curAmmo > 0)
         {
-            
                 equippedWeapon.Use();
                 animator.SetTrigger(equippedWeapon.type == WeaponCS.Type.Melee ? "doSwing" : "doShot"); // HandGun 또는 SubMachineGun
                 fireDelayTime = 0; // 공격했으니 초기화
@@ -422,7 +425,7 @@ public class CharacterControllerCS : MonoBehaviour {
         // 근접무기이거나 총알이나 무기가 없다면 return
         if (equippedWeapon == null) return;
         if (equippedWeapon.type == WeaponCS.Type.Melee) return;
-        if (ammo == 0) return;
+        if (status.CurrentAmmo == 0) return;
 
         // 재장전 가능
         if (reloadDown && !isJump && !isDodge && !isSwap && isFireReady && !isShop)
@@ -436,10 +439,13 @@ public class CharacterControllerCS : MonoBehaviour {
 
     void ReloadOut()
     {
-        int reAmmo = ammo < equippedWeapon.maxAmmo ? ammo : equippedWeapon.maxAmmo;
+
+        int reAmmo = status.CurrentAmmo < equippedWeapon.maxAmmo ? status.CurrentAmmo : equippedWeapon.maxAmmo;
         equippedWeapon.curAmmo = reAmmo;
-        ammo -= reAmmo;
+        status.currentAmmo -= reAmmo;
         isReload = false;
+        status.DecreasAmmo_ReloadOut(status.currentAmmo);
+
         // currentState = PlayerState.Idle; // 재장전이 끝나면 Idle 상태로 복귀
     }
 
@@ -548,7 +554,7 @@ public class CharacterControllerCS : MonoBehaviour {
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Floor" || collision.gameObject.tag == "Obstacle")
+        if (collision.gameObject.tag == "Floor" || collision.gameObject.tag == "Obstacle" || collision.gameObject.tag == "Enemy")
         {
             animator.SetBool("isJump", false);
             isJump = false;
@@ -567,24 +573,36 @@ public class CharacterControllerCS : MonoBehaviour {
             switch (item.type)
             {
                 case ItemCS.Type.Ammo:
+                    /*
                     ammo += item.value;
                     if (ammo > maxAmmo)
                         ammo = maxAmmo;
+                    */
+                    status.IncreaseAmmo(item.value);
                     break;
+
                 case ItemCS.Type.Coin:
+                    /*
                     coin += item.value;
                     if (coin > maxCoin)
                         coin = maxCoin;
+                    */
+                    status.IncreaseCoin(item.value);
                     break;
+
                 case ItemCS.Type.Heart:
+                    /*
                     health += item.value;
                     if (health > maxHealth)
                         health = maxHealth;
+                    */
+                    status.IncreaseHP(item.value);
                     break;
+
                 case ItemCS.Type.Grenade:
                     if (grenades.Length <= 4)
                     {
-                        grenades[hasGrenades].SetActive(true);
+                        // grenades[hasGrenades].SetActive(true);
                         hasGrenades += item.value;
                     }
                     

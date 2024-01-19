@@ -46,7 +46,7 @@ public class Spawner : MonoBehaviour
             // 3D 환경에 맞게 Vector3를 사용하여 랜덤 위치 생성
             Vector3 position = new Vector3(
                 Random.Range(-mapSize.x * 0.49f, mapSize.x * 0.49f),
-                Random.Range(0, mapSize.y), // 높이는 0부터 mapSize.y까지 랜덤
+                Random.Range(15, 40), // 높이는 플랫폼에 올라야 얻을 수 있는 위치에 있도록
                 Random.Range(-mapSize.z * 0.49f, mapSize.z * 0.49f)
             );
 

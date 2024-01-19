@@ -38,10 +38,10 @@ public class UIManager : MonoBehaviour
     public Image aimImg;
 
     public TMP_Text enemyAText;
-    public TMP_Text enemyBText;
-    public TMP_Text enemyCText;
-    public RectTransform bossHealthGroup;
-    public RectTransform bossHealthBar;
+    // public TMP_Text enemyBText;
+    // public TMP_Text enemyCText;
+    // public RectTransform bossHealthGroup;
+    // public RectTransform bossHealthBar;
 
     private void Awake()
     {
@@ -57,6 +57,8 @@ public class UIManager : MonoBehaviour
         GameObject target = GameObject.Find("Character(Clone)");
         status = target.transform.GetComponent<Status>();
         status.onHPEvent.AddListener(UpdateHPHUD);
+        status.onAmmoEvent.AddListener(UpdateAmmoHUD);
+        status.onCoinEvent.AddListener(UpdateCoinHUD);
 
         TurnOnOffAimImg(false);
     }
@@ -87,6 +89,18 @@ public class UIManager : MonoBehaviour
             StartCoroutine("OnBloodScreen");
         }
     }
+
+    private void UpdateAmmoHUD(int previous, int current)
+    {
+        playerAmmoText.text = current +"/" + status.MaxAmmo ;
+    }
+
+    private void UpdateCoinHUD(int previous, int current)
+    {
+        playerCoinText.text = status.CurrentCoin + "/" + status.MaxCoin;
+    }
+
+
     private IEnumerator OnBloodScreen()
     {
         float percent = 0;
