@@ -6,6 +6,8 @@ using TMPro;
 
 public class UIManager : MonoBehaviour
 {
+    public static UIManager instance;
+
     [Header("Components")]
     [SerializeField]
     private Status status; // 플레이어의 상태 (이동 속도, 체력)
@@ -18,13 +20,19 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private AnimationCurve curveBloodScreen;
 
-    public static UIManager instance;
+    [Header("Enemy Count")]
+    [SerializeField]
+    private TextMeshProUGUI enemyAText; // 플레이어의 체력을 출력하는 Text
+    // public TMP_Text enemyBText;
+    // public TMP_Text enemyCText;
+    // public RectTransform bossHealthGroup;
+    // public RectTransform bossHealthBar;
 
     public GameObject menuPanel;
     public GameObject gamePanel;
 
     public TMP_Text maxScoreText;
-    public TMP_Text scoreText;
+    public TMP_Text scoreText; // Score
     public TMP_Text stageText;
     public TMP_Text playTimeText;
     public TMP_Text playerHealthText;
@@ -36,12 +44,6 @@ public class UIManager : MonoBehaviour
     public Image weapon3Img;
     public Image weapon4Img;
     public Image aimImg;
-
-    public TMP_Text enemyAText;
-    // public TMP_Text enemyBText;
-    // public TMP_Text enemyCText;
-    // public RectTransform bossHealthGroup;
-    // public RectTransform bossHealthBar;
 
     private void Awake()
     {
@@ -59,6 +61,7 @@ public class UIManager : MonoBehaviour
         status.onHPEvent.AddListener(UpdateHPHUD);
         status.onAmmoEvent.AddListener(UpdateAmmoHUD);
         status.onCoinEvent.AddListener(UpdateCoinHUD);
+        status.onEnemyEvent.AddListener(UpdateEnemyCountHUD);
 
         TurnOnOffAimImg(false);
     }
@@ -72,13 +75,15 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        UpdateEnemyCnt();
+        // UpdateEnemyCnt();
     }
 
+    /*
     private void UpdateEnemyCnt()
     {
         enemyAText.text = "x " + GameManager.instance.enemyCntA.ToString();
     }
+    */
 
     private void UpdateHPHUD(int previous, int current)
     {
@@ -100,6 +105,10 @@ public class UIManager : MonoBehaviour
         playerCoinText.text = status.CurrentCoin + "/" + status.MaxCoin;
     }
 
+    public void UpdateEnemyCountHUD(int previous, int current)
+    {
+        enemyAText.text = "x " + status.CurrentEnemyCount.ToString();
+    }
 
     private IEnumerator OnBloodScreen()
     {

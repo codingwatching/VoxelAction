@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum EnemyState { None = -1, Idle = 0, Wander = 1, Pursuit, Attack, }
+public enum EnemyState { None = -1, Idle = 0, Wander = 1, Pursuit, Attack, Dead}
 
 public class EnemyFSM : MonoBehaviour
 {
@@ -33,6 +33,7 @@ public class EnemyFSM : MonoBehaviour
     [SerializeField]
     private GameObject target; // 적의 공격 대상 (플레이어)
     private EnemyMemoryPool enemyMemoryPool; // 적 메모리 풀 (적 오브젝트 비활성화에 사용)
+
 
     // private void Awake()
     public void Setup(GameObject target, EnemyMemoryPool enemyMemoryPool)
@@ -283,9 +284,9 @@ public class EnemyFSM : MonoBehaviour
         bool isDie = status.DecreaseHP(damage);
         if(isDie == true)
         {
-            animator.SetTrigger("doDie");
-            GameManager.instance.enemyCntA++;
-            StartCoroutine(DeactivateEnemyAfterDelay(2));
+            animator.SetTrigger("doDie");            
+            GameManager.instance.player.transform.GetComponent<Status>().IncreaseEnemyCount();
+            StartCoroutine(DeactivateEnemyAfterDelay(1f));
         }
     }
 

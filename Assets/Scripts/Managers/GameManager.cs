@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
 
 
     public GameObject gameCam; // main cam
-    public CharacterControllerCS player;
+    public GameObject player;
     public int stage;
     public float playTime = 181f; // 3분 (180초)으로 초기 설정
     public bool isBattle = true;
@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         GameObject myCharacter = Instantiate(characterPrefab, characterSpawnPos.position + new Vector3(0,0,-10), characterSpawnPos.rotation); // ���ͺ� ����
-
+        player = GameObject.FindGameObjectWithTag("Player");
         if (instance == null)
         {
             instance = this;

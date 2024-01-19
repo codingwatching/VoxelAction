@@ -7,6 +7,7 @@ using UnityEngine;
 public class HPEvent : UnityEngine.Events.UnityEvent<int, int> { }
 public class AmmoEvent : UnityEngine.Events.UnityEvent<int, int> { }
 public class CoinEvent : UnityEngine.Events.UnityEvent<int, int> { }
+public class EnemyEvent : UnityEngine.Events.UnityEvent<int, int> { }
 
 public class Status : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class Status : MonoBehaviour
     public HPEvent onHPEvent = new HPEvent();
     public AmmoEvent onAmmoEvent = new AmmoEvent();
     public CoinEvent onCoinEvent = new CoinEvent();
+    public EnemyEvent onEnemyEvent = new EnemyEvent();
 
     [Header("Walk, Run Speed")]
     [SerializeField]
@@ -39,6 +41,11 @@ public class Status : MonoBehaviour
     [SerializeField]
     private int currentCoin;
 
+    // 처치한 적의 수
+    [Header("EnemyCount")]
+    [SerializeField]
+    private int currentEnemyCount;
+
     // 외부에서 값 확인하는 Get 속성
     public float WalkSpeed => walkSpeed;
     public float RunSpeed => runSpeed;
@@ -51,6 +58,8 @@ public class Status : MonoBehaviour
 
     public int CurrentCoin => currentCoin;
     public int MaxCoin => maxCoin;
+    
+    public int CurrentEnemyCount => currentEnemyCount;
 
     private void Awake()
     {
@@ -67,9 +76,9 @@ public class Status : MonoBehaviour
 
         if (currentHP == 0)
         {
-            return true;
+            return true; // isDie true
         }
-        return false;
+        return false; // isDie false
     }
 
     public void IncreaseHP(int heart) 
@@ -104,5 +113,14 @@ public class Status : MonoBehaviour
         int previousAmmo = currentAmmo > 0 ? currentAmmo : 0;
 
         onAmmoEvent.Invoke(previousAmmo, currentAmmo);
+    }
+
+    public void IncreaseEnemyCount()
+    {
+        int previousEnemyCount = currentEnemyCount;
+
+        currentEnemyCount += 1;
+
+        onEnemyEvent.Invoke(previousEnemyCount, currentEnemyCount);
     }
 }

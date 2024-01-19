@@ -7,7 +7,8 @@ public class GrenadeCS : MonoBehaviour
     public GameObject meshObject;
     public GameObject effectObject;
     public Rigidbody rigid;
-    
+    public int damage= 100;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,7 +36,7 @@ public class GrenadeCS : MonoBehaviour
 
         foreach(RaycastHit hitObj in rayHits)
         {
-            hitObj.transform.GetComponent<EnemyCS>().HitByGrenade(transform.position);
+            hitObj.transform.GetComponent<EnemyCS>().HitByGrenade(transform.position, damage);
         }
 
         Destroy(gameObject, 5);

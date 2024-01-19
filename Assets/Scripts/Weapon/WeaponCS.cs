@@ -89,37 +89,10 @@ public class WeaponCS : MonoBehaviour
 
             // 광선을 발사해 원하는 위치 공격 (+Impact Effect)
             TwoStepRaycast();
-
-            /*Ray ray = playerCamera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
-            RaycastHit hit;
-
-            Vector3 targetPoint;
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
-            {
-                targetPoint = hit.point;
-            }
-            else
-            {
-                targetPoint = ray.GetPoint(1000); // Ray가 아무것도 맞지 않았을 때의 기본 지점
-            }
-
-            Vector3 targetDirection = targetPoint - bulletSpawnPoint.position;
-            GameObject instantBullet = Instantiate(bullet, bulletSpawnPoint.position, bulletSpawnPoint.rotation); // 쿼터뷰 버전
-            Rigidbody bulletRigidBody = instantBullet.GetComponent<Rigidbody>();
-            //bulletRigidBody.velocity = bulletSpawnPoint.forward * 500; // 쿼터뷰 버전
-            bulletRigidBody.velocity = targetDirection.normalized * 500; // TPS 버전*/
             yield return null;
 
             // 2. 탄피 배출 (메모리풀)
             casingMemoryPool.SpawnCasing(casingSpawnPoint.position, transform.right+new Vector3(5,3,0));
-            /*
-            GameObject instantCase = Instantiate(bulletCase, bulletCasePos.position, bulletCasePos.rotation);
-            Rigidbody bulletCaseRigidBody = instantCase.GetComponent<Rigidbody>();
-            Vector3 caseVec = bulletCasePos.forward * Random.Range(-3, -2) + Vector3.up * Random.Range(2, 3);
-            bulletCaseRigidBody.AddForce(caseVec, ForceMode.Impulse);
-            bulletCaseRigidBody.AddTorque(Vector3.up * 10, ForceMode.Impulse);
-            */
-        
     }
 
     // 총구의 위치에서 공격 시 타격이 제대로 이뤄지지 않을 수 있습니다.
